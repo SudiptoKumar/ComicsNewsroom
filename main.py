@@ -4646,3 +4646,13 @@ def self_test():
     fitted = fit_full_poster(portrait)
     assert fitted.size == (700,1100)
     logger.info("SELF-TEST: PASS | ComicsNewsroom V3")
+
+
+# ============================================================
+# EXECUTABLE ENTRYPOINT
+# ============================================================
+if __name__ == "__main__":
+    if "--self-test" in __import__("sys").argv:
+        self_test()
+    else:
+        run()
