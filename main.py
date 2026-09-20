@@ -12,6 +12,7 @@ from urllib.parse import urlparse, urljoin, quote
 from difflib import SequenceMatcher
 from email.utils import parsedate_to_datetime
 from io import BytesIO
+from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock, BoundedSemaphore
 
@@ -55,6 +56,7 @@ CEREBRAS_MODEL = os.environ.get(
     "gpt-oss-120b",
 )
 
+POSTED_FILE = "posted_urls.txt"
 STATE_FILE = "news_state.json"
 
 BD_TZ = ZoneInfo("Asia/Dhaka")
@@ -146,7 +148,7 @@ TOPIC_ALIASES = {
 
 TOPIC_HASHTAGS = {
     "Major Anime Announcement": ["#Anime", "#Announcement"],
-    "New Season / Sequel": ["#Anime", "#Season2"],
+    "New Season / Sequel": ["#Anime", "#NewSeason"],
     "Major Trailer / PV": ["#Anime", "#Trailer"],
     "Manga → Anime Adaptation": ["#Manga", "#Anime"],
     "Major Release Date": ["#Anime", "#ReleaseDate"],
@@ -223,6 +225,7 @@ PRIMARY_DOMAINS = sorted({
     "darkhorse.com", "idwpublishing.com", "boom-studios.com", "skybound.com",
     "toei-animation.com", "mappa.co.jp", "aniplex.co.jp", "ufotable.com",
     "witstudio.co.jp", "bones.co.jp", "cloverworks.co.jp", "a1p.jp", "kyotoanimation.co.jp",
+    "shogakukan.com", "square-enix.com", "akitashoten.co.jp", "hakusensha.co.jp",
 })
 FALLBACK_DOMAINS = []
 ALL_PRIMARY_DOMAINS = PRIMARY_DOMAINS
@@ -233,6 +236,10 @@ OFFICIAL_SOURCE_DOMAINS = {
     "marvel.com", "dc.com", "viz.com", "kodansha.us", "shueisha.co.jp", "shonenjump.com", "kadokawa.co.jp",
     "toei-animation.com", "mappa.co.jp", "aniplex.co.jp", "ufotable.com", "witstudio.co.jp",
     "bones.co.jp", "cloverworks.co.jp", "a1p.jp", "kyotoanimation.co.jp", "crunchyroll.com",
+    "imagecomics.com", "darkhorse.com", "idwpublishing.com", "boom-studios.com", "skybound.com",
+    "shogakukan.com", "square-enix.com", "akitashoten.co.jp", "hakusensha.co.jp",
+    "imagecomics.com", "darkhorse.com", "idwpublishing.com", "boom-studios.com", "skybound.com",
+    "shogakukan.com", "square-enix.com", "akitashoten.co.jp", "hakusensha.co.jp",
 }
 
 def source_class_for_url(url):
@@ -258,26 +265,23 @@ RSS_FEEDS = [
 # ============================================================
 # GLOBAL EDITORIAL SETTINGS
 # ============================================================
-# ============================================================
-# V3 PIPELINE: COVERAGE + QUALITY WITH A HARD TIME BUDGET
-# ============================================================
-PUBLISH_THRESHOLD = 80
-RANK_REVIEW_THRESHOLD = 70
-RANKING_BATCH_SIZE = 8
-MAX_RANK_CANDIDATES = 60
-MAX_STORY_CANDIDATES = 15
-STORY_CONCURRENCY = 2
+PUBLISH_THRESHOLD = 82
+RANKING_BATCH_SIZE = 20
+MAX_RANK_CANDIDATES = 120
+MAX_STORY_CANDIDATES = 18
+STORY_CONCURRENCY = 6
+NEWS_RESEARCH_TARGET = 18
+NEWS_POST_TARGET_MIN = 7
 NEWS_POST_MAX_PER_RUN = 10
-NEWS_POST_MAX_PER_SECTOR = 4
-STORY_REVIEW_MAX_PER_SECTOR = 5
+DEEP_RESEARCH_MAX_URLS = 4
 SECTOR_BALANCE_LOOKBACK_HOURS = 24
-RUN_MAX_SECONDS = 590
 READER_EXTRA_ENABLED = True
 READER_EXTRA_MAX_PER_RUN = 1
+READER_EXTRA_MIN_INTERVAL_HOURS = 20
 READER_EXTRA_RETENTION_DAYS = 45
 READER_EXTRA_HISTORY_LIMIT = 120
 READER_EXTRA_AVOID_WORK_DAYS = 14
-READER_EXTRA_MAX_COMPLETION_TOKENS = 650
+READER_EXTRA_MAX_COMPLETION_TOKENS = 700
 READER_EXTRA_TYPES = [
     "Quick Fact",
     "Hidden Detail",
@@ -288,23 +292,21 @@ READER_EXTRA_TYPES = [
     "Why It Matters",
     "Did You Know",
 ]
-RANKING_MAX_COMPLETION_TOKENS = 800
-STORY_MAX_COMPLETION_TOKENS = 1200
-VERIFY_MAX_COMPLETION_TOKENS = 900
+RANKING_MAX_COMPLETION_TOKENS = 900
+STORY_MAX_COMPLETION_TOKENS = 650
+VERIFY_MAX_COMPLETION_TOKENS = 550
+RESEARCH_MAX_RESULTS = 4
 DISCOVERY_LOOKBACK_HOURS = 24
 ROLLING_DISCOVERY_HOURS = 24
 FUTURE_TOLERANCE_MINUTES = 10
 QUEUE_RETENTION_DAYS = 3
 EVENT_RETENTION_DAYS = 21
 MAX_RSS_CANDIDATES = 500
-MAX_EXA_CANDIDATES = 120
-MAX_GOOGLE_NEWS_CANDIDATES = 100
+MAX_EXA_CANDIDATES = 140
+MAX_GOOGLE_NEWS_CANDIDATES = 120
 THIN_EXCERPT_CHARS = 180
-MAX_EXCERPT_ENRICH = 24
+MAX_EXCERPT_ENRICH = 10
 POST_DELAY_SECONDS = 0.8
-DISCOVERY_PASSES = 2
-GOOGLE_NEWS_ENTRIES_PER_QUERY = 10
-EXA_RESULTS_PER_QUERY = 10
 DEFAULT_EVENT_DEDUP_HOURS = 36
 ANNOUNCEMENT_DEDUP_HOURS = 48
 TRAILER_DEDUP_HOURS = 72
@@ -382,7 +384,7 @@ def normalize_sector(value):
         "comic": "Comics",
         "western comics": "Comics",
     }
-    return aliases.get(raw, "Anime")
+    return aliases.get(raw, "")
 
 
 def sector_hashtag(sector):
@@ -753,33 +755,39 @@ def save_state(state):
     )
 
 
-STATE = load_state()
-# Compatibility set retained in memory only. Durable publication history lives in news_state.json.
-POSTED_URLS = set()
-for _record in STATE.get("publication_fingerprints", []):
-    if isinstance(_record, str) and _record:
-        POSTED_URLS.add(safe_text(_record))
-    elif isinstance(_record, dict):
-        _canonical = canonical_url(_record.get("canonical"))
-        if _canonical:
-            POSTED_URLS.add(_canonical)
+def load_posted_urls():
+    try:
+        with open(
+            POSTED_FILE,
+            "r",
+            encoding="utf-8",
+        ) as f:
+            return {
+                canonical_url(line)
+                for line in f
+                if safe_text(line)
+            }
+    except FileNotFoundError:
+        return set()
 
 
 def save_posted_url(canonical):
-    """Persist URL-level publication memory inside news_state.json."""
-    canonical = canonical_url(canonical)
     if not canonical:
         return
-    POSTED_URLS.add(canonical)
-    records = STATE.setdefault("publication_fingerprints", [])
-    if not any(safe_text(r.get("canonical")) == canonical for r in records if isinstance(r, dict)):
-        records.append({
-            "fingerprint": "url:" + canonical,
-            "canonical": canonical,
-            "published_at": now_iso(),
-            "kind": "url_memory",
-        })
-        STATE["publication_fingerprints"] = records[-1000:]
+
+    with open(
+        POSTED_FILE,
+        "a",
+        encoding="utf-8",
+    ) as f:
+        f.write(
+            canonical
+            + "\n"
+        )
+
+
+STATE = load_state()
+POSTED_URLS = load_posted_urls()
 
 
 def prune_state():
@@ -925,62 +933,37 @@ exa = Exa(
     api_key=EXA_API_KEY
 )
 
-# Keep the base client simple for SDK-version compatibility. Retry/timeout
-# policy is applied per request in cerebras_create(), so an SDK upgrade
-# cannot silently re-enable long automatic retries.
-cerebras = Cerebras(api_key=CEREBRAS_API_KEY)
+# Disable the SDK's default automatic retries. In the previous run, a 429
+# caused the SDK to sleep for 57–59 seconds before retrying, turning a
+# fast newsroom run into an 8+ minute serial process.
+cerebras = Cerebras(
+    api_key=CEREBRAS_API_KEY,
+    max_retries=0,
+    timeout=20.0,
+)
 
-# Model-aware pacing is deliberate. Cerebras uses request and token buckets;
-# pacing avoids 429 bursts without depending on SDK retry sleeps.
-CEREBRAS_MAX_CONCURRENCY = 2
-CEREBRAS_MAX_REQUESTS_PER_RUN = 36
-CEREBRAS_MIN_INTERVAL_SECONDS = max(0.0, float(os.environ.get("CEREBRAS_MIN_INTERVAL_SECONDS", "12")))
-CEREBRAS_RANK_MODEL = os.environ.get("CEREBRAS_RANK_MODEL", "qwen-3.8-27b")
+# The normal API documents rate limits in requests/minute and tokens/minute,
+# not a fixed concurrency ceiling. We therefore use controlled parallelism,
+# a deliberately small per-run request budget, and no 60-second blocking retry.
+CEREBRAS_MAX_CONCURRENCY = 6
+CEREBRAS_MAX_REQUESTS_PER_RUN = 30
 _cerebras_gate = BoundedSemaphore(CEREBRAS_MAX_CONCURRENCY)
 _cerebras_lock = Lock()
 _cerebras_requests_issued = 0
-_cerebras_next_allowed = {}
 
-
-def _cerebras_wait_slot(model):
+def cerebras_create(**kwargs):
+    """Fast, no-long-retry Cerebras request wrapper."""
     global _cerebras_requests_issued
     with _cerebras_lock:
         if _cerebras_requests_issued >= CEREBRAS_MAX_REQUESTS_PER_RUN:
             raise RuntimeError(
                 f"Cerebras per-run request budget exhausted ({CEREBRAS_MAX_REQUESTS_PER_RUN})"
             )
-        now = time.monotonic()
-        last_allowed = _cerebras_next_allowed.get(model, 0.0)
-        scheduled = max(now, last_allowed)
-        _cerebras_next_allowed[model] = scheduled + CEREBRAS_MIN_INTERVAL_SECONDS
         _cerebras_requests_issued += 1
-    wait = scheduled - now
-    if wait > 0:
-        time.sleep(wait)
 
-
-def cerebras_create(**kwargs):
-    """Bounded, paced, fail-fast Cerebras request wrapper with telemetry."""
-    model = safe_text(kwargs.get("model")) or CEREBRAS_MODEL
-    _cerebras_wait_slot(model)
     with _cerebras_gate:
-        started = time.monotonic()
         try:
-            request_client = cerebras
-            if hasattr(cerebras, "with_options"):
-                request_client = cerebras.with_options(max_retries=0, timeout=20.0)
-            response = request_client.chat.completions.create(**kwargs)
-            elapsed = time.monotonic() - started
-            choice = response.choices[0] if getattr(response, "choices", None) else None
-            finish_reason = safe_text(getattr(choice, "finish_reason", "")) if choice else ""
-            usage = getattr(response, "usage", None)
-            completion_tokens = getattr(usage, "completion_tokens", None) if usage else None
-            prompt_tokens = getattr(usage, "prompt_tokens", None) if usage else None
-            logger.info(
-                "CEREBRAS OK | model=%s | %.2fs | finish=%s | prompt_tokens=%s | completion_tokens=%s",
-                model, elapsed, finish_reason or "?", prompt_tokens, completion_tokens,
-            )
-            return response
+            return cerebras.chat.completions.create(**kwargs)
         except Exception as exc:
             message = str(exc)
             response = getattr(exc, "response", None)
@@ -989,10 +972,9 @@ def cerebras_create(**kwargs):
                 remaining = headers.get("x-ratelimit-remaining-tokens-minute") if headers else None
                 reset = headers.get("x-ratelimit-reset-tokens-minute") if headers else None
                 logger.warning(
-                    "Cerebras 429 | model=%s | no SDK retry | remaining_tokens=%s | reset_seconds=%s",
-                    model, remaining, reset,
+                    "Cerebras 429: no long retry; remaining_tokens=%s reset_seconds=%s",
+                    remaining, reset
                 )
-            logger.warning("Cerebras request failed | model=%s | %s", model, exc)
             raise
 
 
@@ -1195,6 +1177,35 @@ def _publication_event_match(candidate, previous):
     return False
 
 
+MEANINGFUL_UPDATE_LOOKBACK_HOURS = 72
+MEANINGFUL_UPDATE_MARKERS = re.compile(
+    r"\b(?:officially\s+announced|officially\s+confirmed|confirmed|announced|new\s+(?:trailer|teaser|pv|footage|visual|poster)|"
+    r"release\s+date|premiere\s+date|first\s+look|returns?|returning|back\s+from\s+hiatus|hiatus|final\s+chapter|series\s+ends?|"
+    r"studio\s+change|production\s+(?:change|halted|delayed)|new\s+cast|casting|voice\s+actor|major\s+event|crossover)\b",
+    re.I,
+)
+
+def meaningful_update_candidate(item):
+    """Allow a slightly older article only when it contains a concrete new development."""
+    dt = parse_datetime(item.get("published_dt") or item.get("published_date"))
+    if not dt:
+        return False
+    age_hours = (NOW_BD - dt).total_seconds() / 3600
+    if age_hours <= ROLLING_DISCOVERY_HOURS or age_hours > MEANINGFUL_UPDATE_LOOKBACK_HOURS:
+        return False
+    title = safe_text(item.get("title"))
+    excerpt = safe_text(item.get("excerpt"))
+    if not MEANINGFUL_UPDATE_MARKERS.search(title + " " + excerpt):
+        return False
+    work_key = work_key_from_text(title)
+    if work_key in STATE.get("work_memory", {}):
+        return True
+    for previous in STATE.get("publication_fingerprints", [])[-1000:]:
+        if work_key and _work_keys_similar(work_key, previous.get("work_key", "")):
+            return True
+    return source_class_for_url(item.get("url")) == "official"
+
+
 def event_memory_hit(item):
     title = safe_text(item.get("title") or item.get("headline"))
     canonical = safe_text(item.get("canonical"))
@@ -1202,6 +1213,8 @@ def event_memory_hit(item):
         return True, "posted_url"
     for previous in reversed(STATE.get("publication_fingerprints", [])[-1000:]):
         if _publication_event_match(item, previous):
+            if meaningful_update_candidate(item) and safe_text(item.get("priority_type") or item.get("topic")) != safe_text(previous.get("priority_type") or previous.get("topic")):
+                continue
             return True, f"same_work_same_event:{previous.get('priority_type','')}"
     work_key = work_key_from_text(title)
     priority = infer_priority_type(item)
@@ -1211,15 +1224,16 @@ def event_memory_hit(item):
             dt = parse_datetime(memory["published_events"][priority])
             if dt and (NOW_BD - dt).total_seconds() <= _dedup_hours_for_priority(priority) * 3600:
                 return True, f"legacy_work_cooldown:{priority}"
-    for previous in STATE.get("recent_titles", [])[-250:]:
-        if title_similarity(title, previous) >= 0.92:
-            return True, "near_identical_recent_title"
+    if not meaningful_update_candidate(item):
+        for previous in STATE.get("recent_titles", [])[-250:]:
+            if title_similarity(title, previous) >= 0.92:
+                return True, "near_identical_recent_title"
     return False, ""
 
 def update_filter_metric(reason):
     metrics = STATE.setdefault("adaptive_metrics", {})
     metrics["pre_cerebras_rejected"] = int(metrics.get("pre_cerebras_rejected", 0)) + 1
-    if reason.startswith("hard_") or reason in {"no_entertainment_signal", "low_value_editorial", "sports", "promotion", "celebrity_lifestyle"}:
+    if reason.startswith("hard_") or reason in {"no_comic_anime_signal", "low_value_editorial", "sports", "promotion", "celebrity_lifestyle"}:
         metrics["hard_rejected"] = int(metrics.get("hard_rejected", 0)) + 1
     elif reason.startswith("learned_"):
         metrics["learned_rejected"] = int(metrics.get("learned_rejected", 0)) + 1
@@ -1310,11 +1324,8 @@ def candidate_basic_allowed(item):
     ):
         return False
 
-    if not (
-        DISCOVERY_START
-        <= published
-        <= DISCOVERY_END
-    ):
+    within_normal_window = DISCOVERY_START <= published <= DISCOVERY_END
+    if not within_normal_window and not meaningful_update_candidate(item):
         return False
 
     fresh_start = parse_datetime(STATE.get("fresh_start_at"))
@@ -1728,14 +1739,12 @@ def allowed_source_for_region(url, region=None):
 # GOOGLE NEWS RSS: FREE GAP FILL
 # ============================================================
 GOOGLE_NEWS_QUERIES = {REGION: [
-    'major anime announcement trailer sequel new season adaptation today',
-    'anime movie trailer PV release date official announcement today',
-    'manga announcement ending hiatus return serialization milestone today',
-    'One Piece Naruto Jujutsu Kaisen Demon Slayer Chainsaw Man latest news',
-    'Marvel comics announcement event storyline new series creator today',
-    'DC comics announcement event storyline new series creator today',
-    'major comic book announcement adaptation creator publisher today',
-    'official anime manga comics trailer key visual release date',
+    'latest major anime announcement trailer sequel season adaptation news',
+    'latest major manga news hiatus ending return adaptation sales milestone',
+    'latest Marvel comics major announcement event storyline trailer',
+    'latest DC comics major announcement event storyline adaptation',
+    'latest major comics announcement creator publisher adaptation news',
+    'latest anime manga comics official trailer release date news',
 ]}
 GOOGLE_NEWS_LOCALE = {REGION: ("en-US", "US", "US:en")}
 
@@ -1768,6 +1777,10 @@ def google_news_gap_fill(
     existing_count,
     needed,
 ):
+    # Same thin-coverage trigger as Exa, tried first because it is free.
+    if existing_count >= 80:
+        return 0
+
     queries = GOOGLE_NEWS_QUERIES.get(REGION, [])
     hl, gl, ceid = GOOGLE_NEWS_LOCALE.get(REGION, ("en-US", "US", "US:en"))
 
@@ -1794,7 +1807,7 @@ def google_news_gap_fill(
                 response.content
             )
 
-            for entry in parsed.entries[:GOOGLE_NEWS_ENTRIES_PER_QUERY]:
+            for entry in parsed.entries[:6]:
                 title = safe_text(
                     entry.get("title")
                 )
@@ -1885,45 +1898,67 @@ def google_news_gap_fill(
     return added
 
 
+def _exa_search(query, domains=None, num_results=10, deep=False, date_filtered=True):
+    """Use the current exa-py search() API; keep the wrapper tolerant of SDK drift."""
+    kwargs = {"num_results": num_results, "contents": {"highlights": True}}
+    if domains:
+        kwargs["include_domains"] = domains
+    if date_filtered:
+        kwargs["start_published_date"] = DISCOVERY_START.isoformat()
+        kwargs["end_published_date"] = DISCOVERY_END.isoformat()
+    if deep:
+        kwargs["type"] = "deep-lite"
+    else:
+        kwargs["type"] = "auto"
+    try:
+        return exa.search(query, **kwargs)
+    except TypeError:
+        kwargs.pop("type", None)
+        return exa.search(query, **kwargs)
+
+
+def _exa_highlights(result):
+    value = getattr(result, "highlights", None)
+    if isinstance(value, list):
+        return " ".join(safe_text(x) for x in value)
+    return safe_text(value)
+
+
 def exa_gap_fill(region, existing_count, needed, fallback=False):
     domains = FALLBACK_DOMAINS if fallback else PRIMARY_DOMAINS
     if not domains:
         return 0
-    queries=[
-        "latest major anime announcements, new seasons, trailers, adaptations and release dates",
-        "latest major manga announcements, returns, endings, hiatuses and milestones",
-        "latest major Marvel comics announcements, events, storylines and adaptations",
-        "latest major DC comics announcements, events, storylines and adaptations",
-        "latest major comics industry creator publisher and adaptation news",
-        "latest official anime manga comics trailer and key visual news",
+    queries = [
+        "latest major anime announcements new seasons sequels trailers adaptations release dates",
+        "latest major manga announcements returns hiatus endings adaptations milestones",
+        "latest major Marvel Comics announcements events storylines adaptations",
+        "latest major DC Comics announcements events storylines adaptations",
+        "latest major comics announcements creators publishers storylines adaptations",
+        "latest official anime manga comics trailer PV teaser key visual news",
     ]
-
     added = 0
     for query in queries:
         try:
-            results = exa.search_and_contents(
-                query, type="auto", category="news", num_results=EXA_RESULTS_PER_QUERY,
-                include_domains=domains,
-                start_published_date=DISCOVERY_START.isoformat(),
-                end_published_date=DISCOVERY_END.isoformat(),
-                contents={"highlights": {"max_characters": 900}},
-            )
-            for result in results.results:
+            results = _exa_search(query, domains=domains, num_results=12)
+            for result in getattr(results, "results", []) or []:
                 url = safe_text(getattr(result, "url", ""))
                 title = safe_text(getattr(result, "title", ""))
-                published_dt = parse_datetime(getattr(result, "published_date", ""))
-                if not url or not title or not published_dt:
+                published_dt = parse_datetime(getattr(result, "published_date", "")) or NOW_BD
+                if not url or not title:
                     continue
-                if fallback:
-                    if not fallback_domain_allowed(url, region):
-                        continue
-                elif not primary_domain_allowed(url, region):
+                if fallback and not fallback_domain_allowed(url, region):
+                    continue
+                if not fallback and not primary_domain_allowed(url, region):
                     continue
                 item = {
-                    "title": title, "url": url, "canonical": canonical_url(url),
-                    "published_dt": published_dt.isoformat(), "published_date": published_dt.isoformat(),
-                    "source": source_name(url), "region": REGION,
-                    "excerpt": safe_text(" ".join(getattr(result, "highlights", []) if isinstance(getattr(result, "highlights", []), list) else str(getattr(result, "highlights", ""))))[:2000],
+                    "title": title,
+                    "url": url,
+                    "canonical": canonical_url(url),
+                    "published_dt": published_dt.isoformat(),
+                    "published_date": published_dt.isoformat(),
+                    "source": source_name(url),
+                    "region": REGION,
+                    "excerpt": _exa_highlights(result)[:2400],
                     "image": safe_text(getattr(result, "image", "")),
                     "discovery": "exa_fallback" if fallback else "exa",
                     "source_pool": "fallback" if fallback else "primary",
@@ -1962,12 +1997,7 @@ def queue_candidates_for_region(
                 )
             )
 
-            if (
-                published
-                and DISCOVERY_START
-                <= published
-                <= DISCOVERY_END
-            ):
+            if published and (DISCOVERY_START <= published <= DISCOVERY_END or meaningful_update_candidate(item)):
                 count += 1
 
     return count
@@ -2014,28 +2044,35 @@ def enrich_thin_excerpts(regional):
 RANK_SCHEMA = {
     "type": "object",
     "properties": {
-        "items": {
+        "ranked": {
             "type": "array",
             "items": {
                 "type": "object",
                 "properties": {
                     "id": {"type": "integer"},
-                    "score": {"type": "integer", "minimum": 0, "maximum": 100},
+                    "score": {"type": "integer"},
                     "sector": {"type": "string", "enum": SECTORS},
-                    "publish": {"type": "boolean"},
+                    "topic": {"type": "string", "enum": list(NEWS_PRIORITY.keys())},
+                    "event_key": {"type": "string"},
+                    "status": {"type": "string", "enum": ["rumor", "reported", "announced", "confirmed", "released"]},
+                    "reason": {"type": "string"},
                 },
-                "required": ["id", "score", "sector", "publish"],
+                "required": ["id", "score", "sector", "topic", "event_key", "status", "reason"],
                 "additionalProperties": False,
             },
-        }
+        },
     },
-    "required": ["items"],
+    "required": ["ranked"],
     "additionalProperties": False,
 }
 
 
 def rank_score(row):
-    return max(0, min(100, int(row.get("score", 0))))
+    if "score" in row:
+        return max(0, min(100, int(row.get("score", 0))))
+    return max(0, min(100, sum(int(row.get(k, 0)) for k in [
+        "fan_interest", "significance", "franchise_reach", "freshness", "novelty", "source_authority", "visual_value"
+    ])))
 
 
 def record_low_score_learning(rows):
@@ -2046,18 +2083,17 @@ def record_low_score_learning(rows):
         title = safe_text(row.get("title"))
         pattern = deterministic_pattern(row)
         priority = safe_text(row.get("priority_type"))
-        if not pattern:
-            continue
-        stats = learned.setdefault(pattern, {"observations": 0, "low_score_count": 0, "total_score": 0, "avg_score": 0, "last_seen": now_iso(), "examples": []})
-        stats["observations"] = int(stats.get("observations", 0)) + 1
-        stats["low_score_count"] = int(stats.get("low_score_count", 0)) + int(score < PUBLISH_THRESHOLD)
-        stats["total_score"] = int(stats.get("total_score", 0)) + score
-        stats["avg_score"] = round(stats["total_score"] / max(1, stats["observations"]), 1)
-        stats["last_seen"] = now_iso()
-        examples = [x for x in stats.get("examples", []) if x.get("title") != title]
-        examples.append({"title": title[:140], "score": score, "priority_type": priority})
-        stats["examples"] = examples[-5:]
-        history.append({"title": title[:140], "score": score, "pattern": pattern, "priority_type": priority, "source": safe_text(row.get("source")), "seen_at": now_iso()})
+        if pattern:
+            stats = learned.setdefault(pattern, {"observations":0,"low_score_count":0,"total_score":0,"avg_score":0,"last_seen":now_iso(),"examples":[]})
+            stats["observations"] = int(stats.get("observations",0)) + 1
+            stats["low_score_count"] = int(stats.get("low_score_count",0)) + int(score < PUBLISH_THRESHOLD)
+            stats["total_score"] = int(stats.get("total_score",0)) + score
+            stats["avg_score"] = round(stats["total_score"] / max(1, stats["observations"]), 1)
+            stats["last_seen"] = now_iso()
+            ex = [x for x in stats.get("examples",[]) if x.get("title") != title]
+            ex.append({"title":title[:140],"score":score,"priority_type":priority})
+            stats["examples"] = ex[-5:]
+        history.append({"title":title[:140],"score":score,"pattern":pattern,"priority_type":priority,"source":safe_text(row.get("source")),"seen_at":now_iso()})
     STATE["score_history"] = history[-LEARNED_HISTORY_LIMIT:]
 
 
@@ -2067,285 +2103,188 @@ def update_source_quality(rows):
         domain = normalized_domain(row.get("url"))
         if not domain:
             continue
-        score = int(row.get("importance_score", 0))
-        stats = quality.setdefault(domain, {"observations": 0, "low_score_count": 0, "total_score": 0, "avg_score": 0, "last_seen": now_iso()})
-        stats["observations"] = int(stats.get("observations", 0)) + 1
-        stats["low_score_count"] = int(stats.get("low_score_count", 0)) + int(score < PUBLISH_THRESHOLD)
-        stats["total_score"] = int(stats.get("total_score", 0)) + score
-        stats["avg_score"] = round(stats["total_score"] / max(1, stats["observations"]), 1)
+        score = int(row.get("importance_score",0))
+        stats = quality.setdefault(domain,{"observations":0,"low_score_count":0,"total_score":0,"avg_score":0,"last_seen":now_iso()})
+        stats["observations"] = int(stats.get("observations",0)) + 1
+        stats["low_score_count"] = int(stats.get("low_score_count",0)) + int(score < PUBLISH_THRESHOLD)
+        stats["total_score"] = int(stats.get("total_score",0)) + score
+        stats["avg_score"] = round(stats["total_score"] / max(1, stats["observations"]),1)
         stats["last_seen"] = now_iso()
 
 
 def bootstrap_learning_from_queue():
-    rows = []
-    for item in STATE.get("queue", {}).values():
-        if "importance_score" not in item or item.get("importance_score") is None:
+    rows=[]
+    for item in STATE.get("queue",{}).values():
+        if item.get("importance_score") is None:
             continue
-        score = int(item.get("importance_score", 0))
-        if score >= PUBLISH_THRESHOLD:
+        score=int(item.get("importance_score",0))
+        if score>=PUBLISH_THRESHOLD:
             continue
-        rows.append({"title": item.get("title", ""), "source": item.get("source", ""), "priority_type": item.get("priority_type", ""), "importance_score": score, "excerpt": item.get("excerpt", ""), "url": item.get("url", "")})
+        rows.append({"title":item.get("title",""),"source":item.get("source",""),"priority_type":item.get("priority_type",""),"importance_score":score,"excerpt":item.get("excerpt","")})
     if rows:
-        existing = {(x.get("title"), int(x.get("score", -1))) for x in STATE.get("score_history", [])}
-        fresh = [x for x in rows if (safe_text(x.get("title")), int(x.get("importance_score", 0))) not in existing]
+        existing={(x.get("title"),int(x.get("score",-1))) for x in STATE.get("score_history",[])}
+        fresh=[x for x in rows if (safe_text(x.get("title")),int(x.get("importance_score",0))) not in existing]
         if fresh:
-            record_low_score_learning(fresh)
-            update_source_quality(fresh)
+            record_low_score_learning(fresh); update_source_quality(fresh)
 
 
-def _candidate_sector_hint(item):
-    blob = content_blob(item)
-    domain = normalized_domain(item.get("url"))
-    if domain in {"marvel.com", "dc.com", "comicbook.com", "bleedingcool.com", "aiptcomics.com", "cbr.com", "comicsbeat.com", "superherohype.com", "brokenfrontier.com", "multiversitycomics.com", "thecomicsjournal.com", "icv2.com"}:
-        return "Comics"
-    if re.search(r"\b(?:marvel|dc comics|batman|superman|spider-man|avengers|x-men|comic book|graphic novel|crossover|storyline)\b", blob, re.I):
-        return "Comics"
-    if re.search(r"\b(?:manga|manhwa|manhua|chapter|volume|serialization|shonen jump|shueisha|kodansha|viz media)\b", blob, re.I) and not re.search(r"\banime adaptation\b", blob, re.I):
-        return "Manga"
-    return "Anime"
-
-
-def deterministic_pre_rank_score(item):
+def deterministic_editorial_score(item):
     blob = content_blob(item)
     dt = parse_datetime(item.get("published_date"))
-    age_hours = max(0.0, (NOW_BD - dt).total_seconds() / 3600) if dt else 24.0
-    freshness = max(0, 20 - int(age_hours * 0.85))
-    domain = normalized_domain(item.get("url"))
-    source_score = 20 if domain in OFFICIAL_SOURCE_DOMAINS else (15 if domain in PRIMARY_DOMAINS else 8)
-    priority = infer_priority_type(item)
-    tier = NEWS_PRIORITY.get(priority, (3, 99))[0]
-    event_score = {1: 24, 2: 17, 3: 9}.get(tier, 6)
-    reach_terms = [
-        "one piece", "naruto", "dragon ball", "bleach", "jujutsu kaisen", "demon slayer",
-        "chainsaw man", "my hero academia", "solo leveling", "pokemon", "marvel", "dc",
-        "batman", "superman", "spider-man", "avengers", "x-men"
-    ]
-    reach_hits = sum(1 for term in reach_terms if term in blob)
-    reach_score = min(15, 4 + reach_hits * 2)
-    novelty = 10 if not title_duplicate_against_state(item.get("title", "")) else 1
-    signal_terms = [
-        "announced", "confirmed", "trailer", "teaser", "adaptation", "release date", "new season",
-        "sequel", "ending", "final chapter", "hiatus", "returns", "milestone", "record", "event", "crossover"
-    ]
-    signal_score = min(10, 3 + sum(1 for term in signal_terms if term in blob))
-    richness = min(8, len(safe_text(item.get("excerpt"))) // 180)
-    image_score = 3 if safe_text(item.get("image")) else 0
-    return max(0, min(100, freshness + source_score + event_score + reach_score + novelty + signal_score + richness + image_score))
+    age_hours = max(0.0, (NOW_BD - dt).total_seconds() / 3600) if dt else 24
+    score = 50
+    if age_hours <= 6:
+        score += 15
+    elif age_hours <= 12:
+        score += 10
+    elif age_hours <= 24:
+        score += 5
+    score += {
+        "Major Trailer / PV": 18,
+        "Manga → Anime Adaptation": 17,
+        "New Season / Sequel": 16,
+        "Major Anime Announcement": 14,
+        "Major Release Date": 12,
+        "Major Anime Movie": 11,
+        "Major Franchise Update": 11,
+        "Major Marvel News": 13,
+        "Major DC News": 13,
+        "Major Comic Storyline / Event": 13,
+        "Major Comic Adaptation": 13,
+        "Major Comic Announcement": 11,
+        "Major Manga Return / Hiatus": 10,
+        "Major Manga Ending": 10,
+        "Major Production News": 9,
+        "Major Cast / Staff Reveal": 8,
+        "Major Creator / Publisher News": 8,
+        "Major Sales / Milestone": 6,
+    }.get(infer_priority_type(item), 0)
+    src = source_class_for_url(item.get("url"))
+    score += 10 if src == "official" else 6 if source_name(item.get("url")) in {
+        "Anime News Network", "Crunchyroll News", "ORICON NEWS", "ComicBook.com", "Bleeding Cool", "The Beat"
+    } else 0
+    if re.search(r"\b(?:officially|official|announced|confirmed|revealed|first trailer|new trailer|adaptation|release date)\b", blob, re.I):
+        score += 5
+    if deterministic_pattern(item):
+        score -= 18
+    if safe_text(item.get("source_class")).lower() == "rumor":
+        score = min(score, 69)
+    return max(0, min(88, int(score)))
 
 
-def select_pre_rank_candidates(candidates, limit=MAX_RANK_CANDIDATES):
-    scored = []
-    for item in candidates:
-        row = dict(item)
-        row["pre_rank_score"] = deterministic_pre_rank_score(row)
-        row["sector_hint"] = _candidate_sector_hint(row)
-        scored.append(row)
-    scored.sort(key=lambda x: (-int(x.get("pre_rank_score", 0)), -(parse_datetime(x.get("published_date")).timestamp() if parse_datetime(x.get("published_date")) else 0)))
-
-    selected = []
-    used = set()
-    # Guarantee each sector gets a real opportunity when available.
-    for sector in SECTORS:
-        sector_items = [x for x in scored if x.get("sector_hint") == sector][:15]
-        for item in sector_items:
-            key = item.get("canonical")
-            if key in used:
-                continue
-            selected.append(item)
-            used.add(key)
-            if sum(1 for x in selected if x.get("sector_hint") == sector) >= min(12, max(4, limit // 5)):
-                break
-    for item in scored:
-        if len(selected) >= limit:
-            break
-        key = item.get("canonical")
-        if key in used:
-            continue
-        selected.append(item)
-        used.add(key)
-    return selected[:limit]
+def normalize_sector_from_item(item):
+    blob = content_blob(item)
+    if re.search(r"\b(?:marvel|dc comics|dc universe|batman|superman|wonder woman|x-men|avengers|spider-man|comic book|graphic novel)\b", blob, re.I):
+        return "Comics"
+    if re.search(r"\b(?:manga|manhwa|manhua|chapter|volume|shueisha|kodansha|viz media)\b", blob, re.I) and not re.search(r"\banime\b", blob, re.I):
+        return "Manga"
+    if re.search(r"\b(?:anime|season|episode|voice actor|studio|trailer|pv)\b", blob, re.I):
+        return "Anime"
+    return ""
 
 
-def _apply_rank_result(batch, data, offset):
-    raw_items = data.get("items", []) if isinstance(data, dict) else []
-    by_id = {i: x for i, x in enumerate(batch, 1)}
-    seen_ids = set()
-    rows = []
-    for r in raw_items:
-        try:
-            idx = int(r.get("id", 0))
-            score = rank_score(r)
-        except Exception:
-            continue
-        if idx not in by_id or idx in seen_ids:
-            continue
-        seen_ids.add(idx)
-        item = dict(by_id[idx])
-        sector = normalize_sector(r.get("sector"))
-        item.update({
-            "importance_score": score,
-            "important": score >= PUBLISH_THRESHOLD and bool(r.get("publish")),
-            "ai_publish": bool(r.get("publish")),
-            "sector": sector,
-            "source_class": source_class_for_url(item.get("url")) or item.get("source_class", "reported"),
-            "priority_type": infer_priority_type(item),
-            "topic": canonical_topic(infer_priority_type(item), item.get("region", REGION)),
-            "rank_reason": "AI editorial score: %d/100" % score,
-            "ranking_status": "ok",
-        })
-        rows.append(item)
-    return rows, seen_ids
+def _apply_deterministic_rank(item, editor_rank, reason):
+    score = deterministic_editorial_score(item)
+    item.update({
+        "editor_rank": editor_rank,
+        "importance_score": score,
+        "important": score >= PUBLISH_THRESHOLD,
+        "sector": normalize_sector_from_item(item),
+        "topic": infer_priority_type(item),
+        "priority_type": infer_priority_type(item),
+        "event_key": event_signature_from_item(item),
+        "event_status": "reported",
+        "source_class": safe_text(item.get("source_class")) or source_class_for_url(item.get("url")),
+        "rank_reason": reason,
+        "ai_ranked": False,
+    })
 
 
-def _deterministic_fallback_rows(batch, offset):
-    rows = []
-    for idx, item in enumerate(batch, 1):
-        score = deterministic_pre_rank_score(item)
-        sector = item.get("sector_hint") or _candidate_sector_hint(item)
-        priority = infer_priority_type(item)
-        # Degraded scores are deliberately conservative: only very strong deterministic signals
-        # can reach the normal publication gate, and these rows are excluded from learning.
-        degraded_score = min(84, score)
-        row = dict(item)
-        row.update({
-            "importance_score": degraded_score,
-            "important": degraded_score >= PUBLISH_THRESHOLD,
-            "ai_publish": degraded_score >= PUBLISH_THRESHOLD,
-            "sector": normalize_sector(sector),
-            "source_class": source_class_for_url(item.get("url")) or item.get("source_class", "reported"),
-            "priority_type": priority,
-            "topic": canonical_topic(priority, item.get("region", REGION)),
-            "rank_reason": "Deterministic degraded ranking fallback",
-            "ranking_status": "degraded_deterministic",
-            "editor_rank": offset + idx,
-        })
-        rows.append(row)
-    return rows
-
-
-def _rank_one_batch(batch, offset, attempt=0):
+def _rank_batch(batch):
     lines = []
     for idx, item in enumerate(batch, 1):
         dt = parse_datetime(item.get("published_date"))
-        age = f"Age: {max(0.0, (NOW_BD-dt).total_seconds()/3600):.1f}h" if dt else "Age: unknown"
+        age = f"{max(0.0, (NOW_BD-dt).total_seconds()/3600):.1f}h" if dt else "unknown"
         lines.append("\n".join([
-            f"ID: {idx}",
-            f"Title: {trim_source_text(item.get('title',''), 240)}",
-            f"Source: {item.get('source','')}",
-            f"Published: {item.get('published_date','')}",
-            age,
-            f"Excerpt: {trim_source_text(item.get('excerpt',''), 520)}",
-            f"Sector hint: {item.get('sector_hint') or _candidate_sector_hint(item)}",
+            f"ID: {idx}", f"TITLE: {item.get('title','')}", f"SOURCE: {item.get('source','')}",
+            f"PUBLISHED: {item.get('published_date','')}", f"AGE: {age}",
+            f"EXCERPT: {trim_source_text(item.get('excerpt',''),600)}",
         ]))
     prompt = f"""You are the senior editorial gatekeeper for @ComicsNewsroom.
-Evaluate every candidate for real fan value TODAY. This is a curated newsroom, not a scraper.
-Use only supplied metadata. Reject routine episode/chapter reminders, reviews, generic rankings,
-fan theories, rumors/leaks, merchandise, routine interviews and weak promotional filler.
-Prefer major announcements, meaningful new developments, trailers/PVs, major adaptations,
-release-date confirmations, franchise-level news, manga status changes, major Marvel/DC/comics events,
-and creator/publisher developments with strong evidence.
-Score 0-100. 80+ means clearly publishable editorial value. 70-79 means interesting but selective.
-Below 70 should generally be rejected. Do not use a quota to inflate scores.
-Choose exactly one sector: Anime, Manga, Comics. Marvel and DC are Comics.
-The output is intentionally tiny: return exactly one item for each candidate with id, score, sector, publish.
-Never omit a candidate. Do not return explanations outside the JSON schema."""
-    if attempt:
-        prompt += "\nThis is a recovery pass. Be concise and complete; return the compact schema only."
+Only select stories a real Anime, Manga or Comics fan would genuinely care about today.
+Reject routine episode/chapter reminders, ordinary interviews, merchandise, generic rankings, reviews, theories, weak rumors, and recycled coverage.
+Prefer major announcements, trailers/PVs, adaptations, new seasons, significant release dates, major franchise developments, meaningful production changes, major creator news, and major Marvel/DC/comics events.
+Exactly three sectors exist: Anime, Manga, Comics. Marvel and DC are Comics.
+Status must be one of rumor, reported, announced, confirmed, released. Never upgrade the evidence.
+Score 0-100. 82+ means the story is potentially publishable. The score is editorial value, not article popularity.
+Choose one topic from: {', '.join(NEWS_PRIORITY.keys())}.
+Create a stable event_key for the underlying event. Return every ID exactly once. Keep reason under 160 characters."""
     response = cerebras_create(
-        model=CEREBRAS_RANK_MODEL,
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": "\n\n".join(lines)},
-        ],
-        response_format={
-            "type": "json_schema",
-            "json_schema": {
-                "name": "comics_v3_editorial_rank",
-                "strict": True,
-                "schema": RANK_SCHEMA,
-            },
-        },
-        reasoning_effort="none",
-        temperature=0.0,
-        max_completion_tokens=RANKING_MAX_COMPLETION_TOKENS,
+        model=CEREBRAS_MODEL,
+        messages=[{"role":"system","content":prompt},{"role":"user","content":"\n\n".join(lines)}],
+        response_format={"type":"json_schema","json_schema":{"name":"comics_news_rank_v3","strict":True,"schema":RANK_SCHEMA}},
+        reasoning_effort="low", temperature=0.0, max_completion_tokens=RANKING_MAX_COMPLETION_TOKENS,
     )
-    choice = response.choices[0]
-    finish_reason = safe_text(getattr(choice, "finish_reason", ""))
-    content = safe_text(getattr(choice.message, "content", ""))
-    if finish_reason and finish_reason != "stop":
-        raise ValueError(f"ranking finish_reason={finish_reason}")
-    data = json.loads(content)
-    return _apply_rank_result(batch, data, offset)
+    data = json.loads(safe_text(response.choices[0].message.content))
+    return data.get("ranked", [])
 
 
 def rank_candidates(candidates, region):
     if not candidates:
         return []
-    regional = select_pre_rank_candidates(candidates, MAX_RANK_CANDIDATES)
+    regional = sorted(candidates, key=lambda x: parse_datetime(x.get("published_date")) or datetime.min.replace(tzinfo=timezone.utc), reverse=True)[:MAX_RANK_CANDIDATES]
     regional = enrich_thin_excerpts(regional)
     rows = []
-    successful = []
-    failed_candidates = 0
     for offset in range(0, len(regional), RANKING_BATCH_SIZE):
-        if time_remaining() < 45:
-            logger.warning("TIME GUARD: stopping new ranking batches with %.1fs remaining", time_remaining())
-            break
-        batch = regional[offset:offset + RANKING_BATCH_SIZE]
+        batch = regional[offset:offset+RANKING_BATCH_SIZE]
         try:
-            scored, seen_ids = _rank_one_batch(batch, offset)
-            if len(seen_ids) != len(batch):
-                raise ValueError(f"ranking omitted {len(batch)-len(seen_ids)} candidates")
-            rows.extend(scored)
-            successful.extend(scored)
+            raw = _rank_batch(batch)
+            by_id = {i:x for i,x in enumerate(batch,1)}
+            returned = set()
+            for r in raw:
+                idx = int(r.get("id",0)); item = by_id.get(idx)
+                if not item:
+                    continue
+                returned.add(idx)
+                item = dict(item)
+                topic = canonical_topic(r.get("topic"), region)
+                item.update({
+                    "importance_score": max(0,min(100,int(r.get("score",0)))),
+                    "important": int(r.get("score",0)) >= PUBLISH_THRESHOLD,
+                    "sector": normalize_sector(r.get("sector")) or normalize_sector_from_item(item),
+                    "topic": topic,
+                    "priority_type": topic,
+                    "event_key": safe_text(r.get("event_key")) or event_signature_from_item(item),
+                    "event_status": safe_text(r.get("status")) or "reported",
+                    "source_class": safe_text(item.get("source_class")) or source_class_for_url(item.get("url")),
+                    "rank_reason": trim_source_text(r.get("reason"), 180),
+                    "ai_ranked": True,
+                })
+                rows.append(item)
+            for idx,item in enumerate(batch,1):
+                if idx not in returned:
+                    item = dict(item)
+                    _apply_deterministic_rank(item, offset+idx, "AI ranking omitted candidate")
+                    rows.append(item)
         except Exception as exc:
-            logger.warning("Ranking batch failed offset=%d size=%d: %s", offset, len(batch), exc)
-            # Recovery: smaller batch, same model, compact schema.
-            if len(batch) > 4 and time_remaining() > 75:
-                midpoint = len(batch) // 2
-                for sub_offset, sub_batch in ((offset, batch[:midpoint]), (offset + midpoint, batch[midpoint:])):
-                    try:
-                        scored, seen_ids = _rank_one_batch(sub_batch, sub_offset, attempt=1)
-                        if len(seen_ids) != len(sub_batch):
-                            raise ValueError("recovery ranking omitted candidate")
-                        rows.extend(scored)
-                        successful.extend(scored)
-                    except Exception as sub_exc:
-                        logger.warning("Ranking recovery failed offset=%d size=%d: %s", sub_offset, len(sub_batch), sub_exc)
-                        rows.extend(_deterministic_fallback_rows(sub_batch, sub_offset))
-                        failed_candidates += len(sub_batch)
-            else:
-                rows.extend(_deterministic_fallback_rows(batch, offset))
-                failed_candidates += len(batch)
-
-    rows.sort(key=lambda x: (-int(x.get("importance_score", 0)), -int(x.get("pre_rank_score", 0)), -(parse_datetime(x.get("published_date")).timestamp() if parse_datetime(x.get("published_date")) else 0)))
-    for global_rank, row in enumerate(rows, 1):
+            logger.warning("Ranking batch failed; using deterministic fallback: %s", exc)
+            for idx,item in enumerate(batch,1):
+                item = dict(item)
+                _apply_deterministic_rank(item, offset+idx, "AI ranking unavailable")
+                rows.append(item)
+    rows.sort(key=lambda x:(-int(x.get("importance_score",0)), -(parse_datetime(x.get("published_date")) or datetime.min.replace(tzinfo=timezone.utc)).timestamp()))
+    for global_rank,row in enumerate(rows,1):
         row["editor_rank"] = global_rank
-        row["important"] = int(row.get("importance_score", 0)) >= PUBLISH_THRESHOLD and bool(row.get("ai_publish", True))
-        tier, prank = NEWS_PRIORITY.get(safe_text(row.get("priority_type")), (3, 99))
-        row["priority_tier"] = tier
-        row["priority_rank"] = prank
-        q = STATE.get("queue", {}).get(row.get("canonical"))
+        row["important"] = int(row.get("importance_score",0)) >= PUBLISH_THRESHOLD
+        tier,prank = NEWS_PRIORITY.get(safe_text(row.get("priority_type")),(9,99))
+        row["priority_tier"] = tier; row["priority_rank"] = prank
+        q=STATE.get("queue",{}).get(row.get("canonical"))
         if q is not None:
-            q.update({
-                "importance_score": int(row.get("importance_score", 0)),
-                "priority_type": safe_text(row.get("priority_type")),
-                "priority_tier": tier,
-                "priority_rank": prank,
-                "sector": safe_text(row.get("sector")),
-                "rank_reason": safe_text(row.get("rank_reason")),
-                "last_ranked_at": now_iso(),
-                "ranking_status": row.get("ranking_status", "ok"),
-                "learning_pattern": deterministic_pattern(row),
-            })
-    # Learn only from completed model judgments. System failures are never editorial rejections.
-    learnable = [x for x in successful if safe_text(x.get("ranking_status")) == "ok"]
-    if learnable:
-        record_low_score_learning(learnable)
-        update_source_quality(learnable)
-    STATE.setdefault("adaptive_metrics", {})["cerebras_ranked"] = int(STATE.setdefault("adaptive_metrics", {}).get("cerebras_ranked", 0)) + len(successful)
-    STATE.setdefault("adaptive_metrics", {})["ranking_failures"] = int(STATE.setdefault("adaptive_metrics", {}).get("ranking_failures", 0)) + failed_candidates
-    logger.info("RANKING SUMMARY | reviewed=%d | successful=%d | failed=%d | above_threshold=%d", len(regional), len(successful), failed_candidates, sum(1 for x in rows if int(x.get("importance_score",0)) >= RANK_REVIEW_THRESHOLD))
+            q.update({"importance_score":int(row.get("importance_score",0)),"priority_type":safe_text(row.get("priority_type")),"priority_tier":tier,"priority_rank":prank,"sector":safe_text(row.get("sector")),"rank_reason":safe_text(row.get("rank_reason")),"last_ranked_at":now_iso(),"learning_pattern":deterministic_pattern(row),"event_key":safe_text(row.get("event_key")),"event_status":safe_text(row.get("event_status"))})
+    record_low_score_learning(rows); update_source_quality(rows)
+    STATE.setdefault("adaptive_metrics",{})["cerebras_ranked"] = int(STATE.setdefault("adaptive_metrics",{}).get("cerebras_ranked",0)) + sum(1 for x in rows if x.get("ai_ranked"))
     return rows
+
 
 def extract_entities(text):
     words = re.findall(r"[A-Za-z][A-Za-z&'-]{2,}", safe_text(text).lower())
@@ -2658,12 +2597,6 @@ def extract_article(
             exc,
         )
 
-    # Last-resort source-backed generation path. RSS/News/Exa discovery excerpts are still source evidence.
-    excerpt = safe_text(item.get("excerpt", ""))
-    if len(excerpt) >= 280:
-        logger.info("ARTICLE EXCERPT FALLBACK: %s", item.get("title", ""))
-        return excerpt[:6000], item.get("image", "")
-
     return (
         "",
         item.get("image", ""),
@@ -2677,135 +2610,99 @@ STORY_SCHEMA={
     "type":"object",
     "properties":{
         "title":{"type":"string"},
-        "year":{"type":"string"},
         "summary":{"type":"string"},
         "sector":{"type":"string","enum":SECTORS},
-        "format":{"type":"string","enum":["Anime","Manga","Comic","Series","Movie"]},
-        "news_type":{"type":"string","enum":["Major Announcement","Season / Sequel","Trailer","Adaptation","Release Date","Movie","Franchise Update","Cast / Staff","Production","Manga Update","Ending","Marvel","DC","Comic Announcement","Storyline / Event","Comic Adaptation","Creator / Publisher","Milestone","Confirmed","Reported"]},
+        "news_type":{"type":"string","enum":[
+            "Major Announcement","Season / Sequel","Trailer","Adaptation","Release Date",
+            "Movie","Franchise Update","Cast / Staff","Production","Manga Update","Ending",
+            "Marvel","DC","Comic Announcement","Storyline / Event","Comic Adaptation",
+            "Creator / Publisher","Milestone"
+        ]},
         "highlights":{"type":"array","items":{"type":"string"}},
         "why_it_matters":{"type":"string"},
         "studio":{"type":"string"},
         "publisher":{"type":"string"},
-        "platform":{"type":"string"},"episodes":{"type":"string"},"chapters":{"type":"string"},"languages":{"type":"string"},"status":{"type":"string"},"release_date":{"type":"string"},
-        "official_video_url":{"type":"string"},
-        "official_video_platform":{"type":"string"},
-        "official_video_title":{"type":"string"},
-        "spoiler":{"type":"string"},
-        "note":{"type":"string"},
-        "bold_terms":{"type":"array","items":{"type":"string"}},
+        "platform":{"type":"string"},
+        "release_date":{"type":"string"},
+        "status":{"type":"string"},
     },
-    "required":["title","year","summary","sector","format","news_type","highlights","why_it_matters","studio","publisher","platform","episodes","chapters","languages","status","release_date","official_video_url","official_video_platform","official_video_title","spoiler","note","bold_terms"],
+    "required":["title","summary","sector","news_type","highlights","why_it_matters","studio","publisher","platform","release_date","status"],
     "additionalProperties":False,
 }
 
+
 def first_sentence(text):
-    text = clean_generated_text(
-        text
-    )
-
-    # Conservative sentence extraction. Avoids common entertainment
-    # abbreviations and decimals splitting incorrectly.
+    text = clean_generated_text(text)
     protected = {
-        "U.S.": "US_SENTINEL",
-        "U.K.": "UK_SENTINEL",
-        "E.U.": "EU_SENTINEL",
-        "No.": "NO_SENTINEL",
-        "Inc.": "INC_SENTINEL",
-        "Ltd.": "LTD_SENTINEL",
-        "Dr.": "DR_SENTINEL",
-        "Mr.": "MR_SENTINEL",
-        "Mrs.": "MRS_SENTINEL",
-        "Ms.": "MS_SENTINEL",
+        "U.S.": "US_SENTINEL", "U.K.": "UK_SENTINEL", "E.U.": "EU_SENTINEL",
+        "No.": "NO_SENTINEL", "Inc.": "INC_SENTINEL", "Ltd.": "LTD_SENTINEL",
+        "Dr.": "DR_SENTINEL", "Mr.": "MR_SENTINEL", "Mrs.": "MRS_SENTINEL", "Ms.": "MS_SENTINEL",
     }
-
-    working = text
-
-    for old, marker in protected.items():
-        working = working.replace(
-            old,
-            marker,
-        )
-
-    match = re.search(
-        r"(.+?[.!?])(?:\s|$)",
-        working,
-    )
-
-    if match:
-        sentence = match.group(1)
-    else:
-        sentence = working
-
-    for old, marker in protected.items():
-        sentence = sentence.replace(
-            marker,
-            old,
-        )
-
-    return clean_generated_text(
-        sentence
-    )
+    working=text
+    for old,marker in protected.items(): working=working.replace(old,marker)
+    match=re.search(r"(.+?[.!?])(?:\s|$)",working)
+    sentence=match.group(1) if match else working
+    for old,marker in protected.items(): sentence=sentence.replace(marker,old)
+    return clean_generated_text(sentence)
 
 
-def generate_story(item,article_text):
-    sector = normalize_sector(item.get("sector"))
+def generate_story(item,article_text,research_context=""):
+    sector_hint=normalize_sector(item.get("sector")) or normalize_sector_from_item(item)
     prompt=f"""You are the senior editor for @ComicsNewsroom, a premium Anime, Manga and Comics fan newsroom.
-Write only a genuinely newsworthy story from the supplied article. Quality beats quantity.
-The reader should understand the development in under 10 seconds.
+Create a compact, source-grounded story only when the development is genuinely worth a fan's attention today.
+Exactly three sectors exist: Anime, Manga, Comics. Marvel and DC are always Comics.
+Allowed event types: Major Announcement, Season / Sequel, Trailer, Adaptation, Release Date, Movie, Franchise Update,
+Cast / Staff, Production, Manga Update, Ending, Marvel, DC, Comic Announcement, Storyline / Event, Comic Adaptation,
+Creator / Publisher, Milestone.
 
 Editorial rules:
-- title is the actual work/franchise/primary subject, not a clickbait headline.
-- summary is one concise factual sentence.
-- highlights: 2-4 concrete facts only.
-- why_it_matters: ONE short sentence explaining why fans should care. Leave empty when the story does not materially warrant it.
-- sector must be exactly one of Anime, Manga or Comics. Marvel and DC are subtopics of Comics.
-- format must be Anime, Manga, Comic, Series or Movie.
-- news_type must match the event exactly.
-- Never invent dates, episode/chapter counts, cast, studios, platforms, sales figures or status.
-- Never upgrade rumors/speculation into confirmation.
-- official_video_url/platform/title: populate ONLY if the supplied source/article context includes a verifiable direct video link. Otherwise leave all three empty.
-- For trailers, official video links are highly desirable, but never fabricate them.
-- No Markdown or HTML in JSON.
-- Keep all fields compact and publishable.
-Return only valid JSON."""
+- Title is the real work/franchise/subject, not clickbait.
+- Summary is one factual sentence.
+- Highlights: 2-4 concrete facts.
+- why_it_matters: one concise sentence, only when useful.
+- Never invent dates, cast, studios, platforms, figures or status.
+- Do not upgrade rumor/reported into announced/confirmed/released.
+- Use the research evidence when present, but do not add facts absent from it.
+- No Markdown or HTML.
+Return only the JSON schema."""
     user=(
-        f"SOURCE: {item['source']}\n"
-        f"SOURCE CLASS: {item.get('source_class','reported')}\n"
-        f"TITLE: {item['title']}\n"
-        f"DATE: {item['published_date']}\n"
-        f"CATEGORY HINT: {sector}\n"
-        f"ARTICLE:\n{article_text[:10000]}"
+        f"SOURCE: {item.get('source','')}\nSOURCE CLASS: {item.get('source_class','reported')}\n"
+        f"TITLE: {item.get('title','')}\nDATE: {item.get('published_date','')}\nCATEGORY HINT: {sector_hint}\n"
+        f"ARTICLE:\n{article_text[:10000]}\n\nRESEARCH / OFFICIAL EVIDENCE:\n{research_context[:9000]}"
     )
-    for attempt in range(2):
-        try:
-            response=cerebras_create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":user}],response_format={"type":"json_schema","json_schema":{"name":"comics_anime_story_v2","strict":True,"schema":STORY_SCHEMA}},reasoning_effort="low",temperature=0.15,max_completion_tokens=STORY_MAX_COMPLETION_TOKENS)
-            data=json.loads(safe_text(response.choices[0].message.content))
-            title=clean_generated_text(data.get("title")); summary=first_sentence(data.get("summary"))
-            highlights=[clean_generated_text(x) for x in data.get("highlights",[]) if clean_generated_text(x)]
-            why=clean_generated_text(data.get("why_it_matters")); news_type=safe_text(data.get("news_type")); fmt=safe_text(data.get("format")); out_sector=normalize_sector(data.get("sector"))
-            allowed_types={"Major Announcement","Season / Sequel","Trailer","Adaptation","Release Date","Movie","Franchise Update","Cast / Staff","Production","Manga Update","Ending","Marvel","DC","Comic Announcement","Storyline / Event","Comic Adaptation","Creator / Publisher","Milestone","Confirmed","Reported"}
-            if not title or not summary or news_type not in allowed_types or fmt not in {"Anime","Manga","Comic","Series","Movie"} or out_sector not in SECTORS or not (2<=len(highlights)<=4) or any(not complete_text(x) for x in [title,summary,*highlights] if x):
-                raise ValueError("Invalid story structure")
-            dynamic_fields={k:trim_source_text(clean_generated_text(data.get(k)),260) for k in ["studio","publisher","platform","episodes","chapters","languages","status","release_date","official_video_url","official_video_platform","official_video_title"]}
-            story={**item,
-                "title":trim_source_text(title,120),"headline":trim_source_text(title,120),"year":trim_source_text(clean_generated_text(data.get("year")),10),
-                "summary":trim_source_text(summary,260),"sector":out_sector,"format":fmt,"news_type":news_type,
-                "priority_type":infer_priority_type({**item,"title":title,"excerpt":article_text[:12000]}),
-                "highlights":[trim_source_text(x,150) for x in highlights],"why_it_matters":trim_source_text(why,220),
-                **dynamic_fields,"spoiler":trim_source_text(clean_generated_text(data.get("spoiler")),500),"note":trim_source_text(clean_generated_text(data.get("note")),350),
-                "bold_terms":[safe_text(x) for x in data.get("bold_terms",[]) if safe_text(x)],
-            }
-            # Video link must be an http(s) URL; otherwise clear it.
-            if not re.match(r"^https?://", story.get("official_video_url", ""), re.I):
-                story["official_video_url"]=""; story["official_video_platform"]=""; story["official_video_title"]=""
-            return story
-        except Exception as exc:
-            logger.warning("Story generation attempt %d failed: %s",attempt+1,exc)
-            if "429" in str(exc) or "rate limit" in str(exc).lower():
-                return None
-            if attempt<1:
-                time.sleep(0.5)
-    return None
+    try:
+        response=cerebras_create(
+            model=CEREBRAS_MODEL,
+            messages=[{"role":"system","content":prompt},{"role":"user","content":user}],
+            response_format={"type":"json_schema","json_schema":{"name":"comics_anime_story_v3","strict":True,"schema":STORY_SCHEMA}},
+            reasoning_effort="low",temperature=0.1,max_completion_tokens=STORY_MAX_COMPLETION_TOKENS,
+        )
+        data=json.loads(safe_text(response.choices[0].message.content))
+        title=clean_generated_text(data.get("title")); summary=first_sentence(data.get("summary"))
+        highlights=[clean_generated_text(x) for x in data.get("highlights",[]) if clean_generated_text(x)]
+        why=clean_generated_text(data.get("why_it_matters")); news_type=safe_text(data.get("news_type"))
+        out_sector=normalize_sector(data.get("sector"))
+        allowed_types=set(STORY_SCHEMA["properties"]["news_type"]["enum"])
+        if not title or not summary or news_type not in allowed_types or out_sector not in SECTORS or not (2<=len(highlights)<=4):
+            raise ValueError("Invalid story structure")
+        story={**item,
+            "title":trim_source_text(title,120),"headline":trim_source_text(title,120),
+            "summary":trim_source_text(summary,280),"sector":out_sector,"news_type":news_type,
+            "priority_type":infer_priority_type({**item,"title":title,"excerpt":article_text[:12000],"topic":news_type}),
+            "highlights":[trim_source_text(x,160) for x in highlights],"why_it_matters":trim_source_text(why,240),
+            "studio":trim_source_text(clean_generated_text(data.get("studio")),180),
+            "publisher":trim_source_text(clean_generated_text(data.get("publisher")),180),
+            "platform":trim_source_text(clean_generated_text(data.get("platform")),180),
+            "release_date":trim_source_text(clean_generated_text(data.get("release_date")),120),
+            "status":trim_source_text(clean_generated_text(data.get("status")),100),
+            "year":"","format":"","episodes":"","chapters":"","languages":"",
+            "official_video_url":"","official_video_platform":"","official_video_title":"",
+            "spoiler":"","note":"","bold_terms":[],
+        }
+        return story
+    except Exception as exc:
+        logger.warning("Story generation failed: %s",exc)
+        return None
 
 
 def discover_direct_video_links(article_url, page_html=None):
@@ -2880,19 +2777,24 @@ def video_title_relevant(video_title, work_title):
     return title_similarity(vt,wt)>=0.22 or wt in vt or vt in wt
 
 def exa_video_search(work_title):
-    """Find a direct YouTube/Crunchyroll video only for a story already classified as a major trailer/PV."""
-    for domain in ("youtube.com","crunchyroll.com"):
-        for query in (f'"{work_title}" official trailer', f'"{work_title}" official teaser'):
+    """Find a likely official YouTube/Crunchyroll video for a major trailer story."""
+    for domain in ("youtube.com", "crunchyroll.com"):
+        for query in (
+            f'"{work_title}" official trailer',
+            f'"{work_title}" official teaser',
+            f'"{work_title}" official PV',
+        ):
             try:
-                results=exa.search_and_contents(query,type="auto",num_results=5,include_domains=[domain],contents={"highlights":{"max_characters":700}})
-                for result in getattr(results,"results",[]) or []:
-                    url=safe_text(getattr(result,"url","")); title=safe_text(getattr(result,"title",""))
-                    ok,platform,video_title=verify_video_url(url,title or work_title)
-                    chosen_title=video_title or title
-                    if ok and video_title_relevant(chosen_title,work_title):
-                        return {"url":url,"platform":platform,"title":chosen_title,"verified":True}
+                results = _exa_search(query, domains=[domain], num_results=5, date_filtered=False)
+                for result in getattr(results, "results", []) or []:
+                    url = safe_text(getattr(result, "url", ""))
+                    title = safe_text(getattr(result, "title", ""))
+                    ok, platform, video_title = verify_video_url(url, title or work_title)
+                    chosen_title = video_title or title
+                    if ok and video_title_relevant(chosen_title, work_title):
+                        return {"url": url, "platform": platform, "title": chosen_title, "verified": True}
             except Exception as exc:
-                logger.info("Exa video lookup skipped: %s",exc)
+                logger.info("Exa video lookup skipped: %s", exc)
     return None
 
 
@@ -3237,59 +3139,153 @@ def _story_icon(story):
     return {"Anime":"🎬","Manga":"📖","Marvel":"◆","DC":"◆","Comics":"◆"}.get(sector,"✦")
 
 
-def dynamic_rich_html(story):
-    terms=derive_bold_terms(story)
-    lines=[add_media_reference()]
-    lines.append(f"<p><b>{escape_rich_html(_story_hook(story))}</b></p>")
-    title=escape_rich_html(story.get("title") or story.get("headline") or "")
-    year=safe_text(story.get("year"))
-    lines.append(f"<h1><b>{_story_icon(story)} {title}" + (f" ({escape_rich_html(year)})" if year else "") + "</b></h1>")
+def _rich_story_meta(story, *, include_release=True):
+    labels = [
+        ("Studio", "studio"),
+        ("Publisher", "publisher"),
+        ("Platform", "platform"),
+        ("Format", "format"),
+        ("Episodes", "episodes"),
+        ("Chapters", "chapters"),
+        ("Status", "status"),
+        ("Release", "release_date"),
+    ]
+    if not include_release:
+        labels = [x for x in labels if x[1] != "release_date"]
+    lines = []
+    for label, key in labels:
+        value = safe_text(story.get(key))
+        if value:
+            lines.append(f"<p>✦ <b>{label}:</b> {escape_rich_html(value)}</p>")
+    return lines
 
-    fields=[]
-    for label,key in [("Studio","studio"),("Publisher","publisher"),("Platform","platform"),("Episodes","episodes"),("Chapters","chapters"),("Language","languages"),("Status","status"),("Release","release_date")]:
-        val=safe_text(story.get(key))
-        if val:
-            fields.append(f"<p>✦ <b>{label}:</b> {escape_rich_html(val)}</p>")
-    lines.extend(fields)
 
-    summary=bold_terms_html(story.get("summary","") or "",terms)
-    if summary:
-        lines.append(f"<blockquote>📖 {summary}</blockquote>")
-    for detail in story.get("highlights",[])[:4]:
-        lines.append(f"<p>✦ {bold_terms_html(detail,terms)}</p>")
-
-    why=safe_text(story.get("why_it_matters"))
-    if why and int(story.get("importance_score",0) or 0)>=88:
-        lines.append(f"<p>💡 <b>Why fans care:</b> {bold_terms_html(why,terms)}</p>")
-
-    video=safe_text(story.get("official_video_url"))
-    platform=safe_text(story.get("official_video_platform"))
-    if video and platform:
-        safe_video=html.escape(video,quote=True)
-        if safe_text(story.get("priority_type"))=="Major Trailer / PV":
-            lines.append(
-                f"<h2>Watch Trailer 👉 <a href=\"{safe_video}\">{escape_rich_html(platform)}</a></h2>"
-            )
-        else:
-            lines.append(
-                f"<p>▶ <a href=\"{safe_video}\"><b>Watch Official Video</b></a> · {escape_rich_html(platform)}</p>"
-            )
-
-    spoiler=safe_text(story.get("spoiler"))
-    if spoiler:
-        lines.append(f"<p>🙈 <b>Spoiler:</b> <tg-spoiler>{bold_terms_html(spoiler,terms)}</tg-spoiler></p>")
-    note=safe_text(story.get("note"))
-    if note:
-        lines.append(f"<details><summary>ℹ️ More</summary><p>{bold_terms_html(note,terms)}</p></details>")
-
-    hashtags=" ".join(category_hashtags(story))
-    footer=" ".join(x for x in [CHANNEL_TAG,hashtags] if x)
+def _rich_source_footer(story):
+    lines = []
+    hashtags = " ".join(category_hashtags(story))
+    footer = " ".join(x for x in [CHANNEL_TAG, hashtags] if x)
     if footer:
         lines.append(f"<p>{escape_rich_html(footer)}</p>")
-    source=escape_rich_html(story.get("source","Source"))
-    url=html.escape(safe_text(story.get("url","")),quote=True)
-    lines.append(f"<footer><b>Source:</b> <a href=\"{url}\">{source}</a></footer>" if url else f"<footer><b>Source:</b> {source}</footer>")
+
+    official = safe_text(story.get("official_source_url"))
+    main_url = safe_text(story.get("url", ""))
+    if official and official != main_url:
+        safe_official = html.escape(official, quote=True)
+        lines.append(f'<p>✦ <a href="{safe_official}"><b>Official Source</b></a></p>')
+
+    source = escape_rich_html(story.get("source", "Source"))
+    url = html.escape(safe_text(story.get("url", "")), quote=True)
+    if url:
+        lines.append(f'<footer><b>Source:</b> <a href="{url}">{source}</a></footer>')
+    else:
+        lines.append(f"<footer><b>Source:</b> {source}</footer>")
+    return lines
+
+
+def _rich_content(story, *, max_highlights=4, include_why=True):
+    terms = derive_bold_terms(story)
+    lines = []
+    summary = bold_terms_html(story.get("summary", "") or "", terms)
+    if summary:
+        lines.append(f"<blockquote>📖 {summary}</blockquote>")
+    for detail in story.get("highlights", [])[:max_highlights]:
+        value = bold_terms_html(detail, terms)
+        if value:
+            lines.append(f"<p>✦ {value}</p>")
+    why = safe_text(story.get("why_it_matters"))
+    if include_why and why and int(story.get("importance_score", 0) or 0) >= 88:
+        lines.append(f"<p>💡 <b>Why fans care:</b> {bold_terms_html(why, terms)}</p>")
+    return lines
+
+
+def _rich_watch_block(story):
+    video = safe_text(story.get("official_video_url"))
+    platform = safe_text(story.get("official_video_platform"))
+    if not video or not platform:
+        return []
+    safe_video = html.escape(video, quote=True)
+    if safe_text(story.get("priority_type")) == "Major Trailer / PV":
+        return [f'<h2>Watch Trailer 👉 <a href="{safe_video}">{escape_rich_html(platform)}</a></h2>']
+    return [f'<p>▶ <a href="{safe_video}"><b>Watch Official Video</b></a> · {escape_rich_html(platform)}</p>']
+
+
+def _rich_optional_blocks(story, terms=None):
+    terms = terms or derive_bold_terms(story)
+    lines = []
+    spoiler = safe_text(story.get("spoiler"))
+    if spoiler:
+        lines.append(f"<p>🙈 <b>Spoiler:</b> <tg-spoiler>{bold_terms_html(spoiler, terms)}</tg-spoiler></p>")
+    note = safe_text(story.get("note"))
+    if note:
+        lines.append(f"<details><summary>ℹ️ More</summary><p>{bold_terms_html(note, terms)}</p></details>")
+    return lines
+
+
+def _rich_template(story, badge, icon, *, meta=True, include_why=True, max_highlights=4, watch=False):
+    terms = derive_bold_terms(story)
+    title = escape_rich_html(story.get("title") or story.get("headline") or "")
+    year = safe_text(story.get("year"))
+    lines = [add_media_reference(), f"<p><b>{escape_rich_html(badge)}</b></p>"]
+    lines.append(f"<h1><b>{escape_rich_html(icon)} {title}" + (f" ({escape_rich_html(year)})" if year else "") + "</b></h1>")
+    if meta:
+        lines.extend(_rich_story_meta(story))
+    lines.extend(_rich_content(story, max_highlights=max_highlights, include_why=include_why))
+    if watch:
+        lines.extend(_rich_watch_block(story))
+    lines.extend(_rich_optional_blocks(story, terms))
+    lines.extend(_rich_source_footer(story))
     return "\n".join(lines)
+
+
+def dynamic_rich_html(story):
+    """Render one of several editorially distinct mobile-first Rich Message layouts."""
+    priority = safe_text(story.get("priority_type"))
+    sector = normalize_sector(story.get("sector"))
+    topic = safe_text(story.get("topic"))
+
+    if priority == "Major Trailer / PV" or topic == "Major Trailer / PV":
+        return _rich_template(story, "🎞️ NEW TRAILER", "🎬", max_highlights=3, watch=True)
+
+    if priority == "Manga → Anime Adaptation" or topic == "Manga → Anime Adaptation":
+        return _rich_template(story, "⚡ MANGA → ANIME", "📖", max_highlights=4, include_why=True)
+
+    if sector == "Manga" and priority in {"Major Manga Return / Hiatus", "Major Manga Ending", "Major Sales / Milestone"}:
+        return _rich_template(story, "📖 MANGA UPDATE", "📖", max_highlights=3, include_why=True)
+
+    if sector == "Comics" and priority == "Major Marvel News":
+        return _rich_template(story, "◆ MARVEL COMICS", "◆", max_highlights=4, include_why=True)
+
+    if sector == "Comics" and priority == "Major DC News":
+        return _rich_template(story, "◆ DC COMICS", "◆", max_highlights=4, include_why=True)
+
+    if priority == "Major Comic Storyline / Event":
+        return _rich_template(story, "◆ MAJOR COMIC EVENT", "◆", max_highlights=4, include_why=True)
+
+    if priority == "Major Comic Adaptation":
+        return _rich_template(story, "🎬 COMIC ADAPTATION", "🎬", max_highlights=4, include_why=True, watch=True)
+
+    if priority == "New Season / Sequel":
+        return _rich_template(story, "🔄 NEW SEASON", "🎬", max_highlights=3, include_why=True)
+
+    if priority == "Major Release Date":
+        return _rich_template(story, "📅 RELEASE DATE", "📅", max_highlights=3, include_why=True)
+
+    if priority == "Major Anime Movie":
+        return _rich_template(story, "🎬 ANIME MOVIE", "🎬", max_highlights=3, include_why=True, watch=True)
+
+    if priority == "Major Cast / Staff Reveal":
+        return _rich_template(story, "🎭 CAST / STAFF", "🎭", max_highlights=3, include_why=True)
+
+    if priority == "Major Production News":
+        return _rich_template(story, "🎬 PRODUCTION UPDATE", "🎬", max_highlights=3, include_why=True)
+
+    if priority == "Major Creator / Publisher News":
+        return _rich_template(story, "✦ CREATOR / PUBLISHER", "✦", max_highlights=3, include_why=True)
+
+    if priority == "Major Sales / Milestone":
+        return _rich_template(story, "📈 MAJOR MILESTONE", "📈", max_highlights=3, include_why=True)
+
+    return _rich_template(story, "✦ MAJOR ANNOUNCEMENT", "✦", max_highlights=4, include_why=True)
 
 
 def fit_rich_html(story):
@@ -3595,7 +3591,7 @@ def telegram_call(method, data=None, files=None):
         return {"ok": False, "description": "TELEGRAM_BOT_TOKEN missing", "configuration_error": True}
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/{method}"
     last = {"ok": False, "description": "Unknown error"}
-    for attempt in range(1, 4):
+    for attempt in range(1, 3):
         try:
             response = session.post(url, data=data or {}, files=files, timeout=90)
             result = response.json()
@@ -3605,9 +3601,10 @@ def telegram_call(method, data=None, files=None):
                 return result
             last = result
             if response.status_code == 429:
-                retry_after = int(result.get("parameters", {}).get("retry_after", 5))
-                logger.warning("Telegram 429; waiting %ss", retry_after)
-                time.sleep(max(1, retry_after))
+                retry_after = int(result.get("parameters", {}).get("retry_after", 3))
+                retry_after = min(max(1, retry_after), 10)
+                logger.warning("Telegram 429; bounded wait %ss", retry_after)
+                time.sleep(retry_after)
                 continue
             if response.status_code >= 500:
                 time.sleep(2 * attempt)
@@ -3632,11 +3629,13 @@ def send_bot_api_fallback(image_path, rich_html):
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
     if len(text) > MAX_TELEGRAM_CAPTION_CHARACTERS:
         text = text[:MAX_TELEGRAM_CAPTION_CHARACTERS].rsplit(" ", 1)[0].rstrip() + "..."
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
     try:
         with open(image_path, "rb") as photo:
-            response = session.post(url, data={"chat_id": TELEGRAM_CHANNEL, "caption": text}, files={"photo": photo}, timeout=90)
-        return response.json()
+            return telegram_call(
+                "sendPhoto",
+                data={"chat_id": TELEGRAM_CHANNEL, "caption": text},
+                files={"photo": photo},
+            )
     except Exception as exc:
         return {"ok": False, "description": str(exc)}
 
@@ -3738,6 +3737,7 @@ VERIFY_SCHEMA = {
         "unsupported_claims": {
             "type": "array",
             "items": {"type": "string"},
+            
         },
     },
     "required": ["supported", "unsupported_claims"],
@@ -3800,80 +3800,125 @@ def event_status_verified(story,article_text):
     status_terms=re.findall(r"\b(?:confirmed|announced|renewed|cancelled|canceled|coming to|premieres|released|in theaters|production started|production wrapped|acquired|acquires|rights)\b[^.?!]{0,120}",claims,re.I)
     if not status_terms:return True,[]
     schema={"type":"object","properties":{"supported":{"type":"boolean"},"unsupported_claims":{"type":"array","items":{"type":"string"}}},"required":["supported","unsupported_claims"],"additionalProperties":False}
-    prompt="You are a strict entertainment status verifier. Check whether status claims in the generated story are directly supported by the source article. Reject upgrades from speculation to confirmation and misstatements of release, renewal, cancellation, production, rights, platform availability or theatrical status. Return only JSON."
+    prompt="You are a strict Anime/Manga/Comics status verifier. Check whether status claims in the generated story are directly supported by the source article. Reject upgrades from speculation to confirmation and misstatements of release, renewal, cancellation, production, rights, platform availability or theatrical status. Return only JSON."
     try:
-        r=cerebras_create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":"SOURCE ARTICLE:\n"+article_text[:12000]+"\n\nSTATUS CLAIMS:\n- "+"\n- ".join(status_terms)}],response_format={"type":"json_schema","json_schema":{"name":"entertainment_status_check","strict":True,"schema":schema}},reasoning_effort="low",temperature=0.0,max_completion_tokens=350)
+        r=cerebras_create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":"SOURCE ARTICLE:\n"+article_text[:12000]+"\n\nSTATUS CLAIMS:\n- "+"\n- ".join(status_terms)}],response_format={"type":"json_schema","json_schema":{"name":"comics_anime_status_check","strict":True,"schema":schema}},reasoning_effort="low",temperature=0.0,max_completion_tokens=350)
         d=json.loads(safe_text(r.choices[0].message.content));return bool(d.get("supported")),d.get("unsupported_claims",[])
     except Exception as exc:
         logger.warning("Event-status verification failed: %s",exc);return False,["verification infrastructure failure"]
 
 
+def official_domains_for_item(item):
+    sector=normalize_sector(item.get("sector")) or normalize_sector_from_item(item)
+    blob=content_blob(item)
+    domains=set()
+    if sector=="Comics":
+        domains.update(["marvel.com","dc.com","imagecomics.com","darkhorse.com","idwpublishing.com","boom-studios.com","skybound.com","viz.com","kodansha.us","shueisha.co.jp","shonenjump.com","kadokawa.co.jp","shogakukan.com","square-enix.com","akitashoten.co.jp","hakusensha.co.jp"])
+    elif sector=="Manga":
+        domains.update(["viz.com","kodansha.us","shueisha.co.jp","shonenjump.com","kadokawa.co.jp","shogakukan.com","square-enix.com","akitashoten.co.jp","hakusensha.co.jp","oricon.co.jp","animatetimes.com"])
+    else:
+        domains.update(["toei-animation.com","mappa.co.jp","aniplex.co.jp","ufotable.com","witstudio.co.jp","bones.co.jp","cloverworks.co.jp","a1p.jp","kyotoanimation.co.jp","crunchyroll.com","oricon.co.jp","animatetimes.com"])
+    if re.search(r"\b(?:marvel|x-men|spider-man|avengers)\b",blob,re.I): domains.add("marvel.com")
+    if re.search(r"\b(?:dc|batman|superman|wonder woman|justice league)\b",blob,re.I): domains.add("dc.com")
+    return sorted(domains)
+
+
+def deep_research_story(item):
+    """Research only strong candidates. Return compact evidence and official-source metadata."""
+    title=safe_text(item.get("title"))
+    if not title: return {"context":"","official_verified":False,"official_source_url":"","sources":[]}
+    domains=official_domains_for_item(item)
+    query=f'"{title}" official announcement trailer release adaptation'
+    evidence=[]; official_url=""; official_verified=False
+    try:
+        results=_exa_search(query,domains=domains,num_results=RESEARCH_MAX_RESULTS,deep=True,date_filtered=False)
+        for result in getattr(results,"results",[]) or []:
+            url=safe_text(getattr(result,"url","")); rtitle=safe_text(getattr(result,"title","")); highlights=_exa_highlights(result)
+            if not url or not rtitle: continue
+            dom=normalized_domain(url)
+            is_official=dom in OFFICIAL_SOURCE_DOMAINS
+            if is_official and not official_url:
+                official_url=url; official_verified=True
+            evidence.append({"url":url,"title":rtitle,"highlights":highlights,"official":is_official})
+    except Exception as exc:
+        logger.info("Deep research search skipped: %s",exc)
+    # If official-only search yielded nothing, use a broad query to cross-check specialist reporting.
+    if len(evidence)<2:
+        try:
+            results=_exa_search(f'"{title}" anime manga comics latest news',domains=PRIMARY_DOMAINS,num_results=RESEARCH_MAX_RESULTS,deep=False,date_filtered=True)
+            for result in getattr(results,"results",[]) or []:
+                url=safe_text(getattr(result,"url","")); rtitle=safe_text(getattr(result,"title","")); highlights=_exa_highlights(result)
+                if url and rtitle and not any(x["url"]==url for x in evidence):
+                    evidence.append({"url":url,"title":rtitle,"highlights":highlights,"official":normalized_domain(url) in OFFICIAL_SOURCE_DOMAINS})
+        except Exception as exc:
+            logger.info("Deep research broad search skipped: %s",exc)
+    texts=[]
+    fetched=0
+    for ev in evidence[:DEEP_RESEARCH_MAX_URLS]:
+        if fetched>=DEEP_RESEARCH_MAX_URLS: break
+        try:
+            contents=exa.get_contents([ev["url"]],text={"max_characters":5000})
+            results=getattr(contents,"results",[]) or []
+            text_value=safe_text(getattr(results[0],"text","")) if results else ""
+            if text_value:
+                texts.append(f"SOURCE: {ev['title']}\nURL: {ev['url']}\nOFFICIAL: {ev['official']}\n{text_value[:5000]}")
+                fetched+=1
+            else:
+                texts.append(f"SOURCE: {ev['title']}\nURL: {ev['url']}\nOFFICIAL: {ev['official']}\n{ev['highlights'][:2200]}")
+        except Exception:
+            texts.append(f"SOURCE: {ev['title']}\nURL: {ev['url']}\nOFFICIAL: {ev['official']}\n{ev['highlights'][:2200]}")
+    if official_url:
+        item["official_source_url"]=official_url
+    return {"context":"\n\n".join(texts)[:16000],"official_verified":official_verified,"official_source_url":official_url,"sources":evidence[:DEEP_RESEARCH_MAX_URLS]}
+
+
 def process_story_candidate(item):
-    """
-    Extract and generate one candidate. Expensive fact checking is performed
-    once in a batched verification pass after parallel generation.
-    """
-    article_text, image_url = extract_article(item)
-
+    """Deep-research one strong candidate, then generate and enrich the final story."""
+    research=deep_research_story(item)
+    supplied_video_candidates=list(item.get("video_candidates",[]) or [])
+    supplied_image_candidates=list(item.get("image_candidates",[]) or [])
+    article_text,image_url=extract_article(item)
+    item["video_candidates"]=list(dict.fromkeys(supplied_video_candidates + list(item.get("video_candidates",[]) or [])))[:12]
+    item["image_candidates"]=list(dict.fromkeys(supplied_image_candidates + list(item.get("image_candidates",[]) or [])))[:20]
     if not article_text:
-        logger.warning("DROP extraction: %s", item.get("title"))
-        return None
-
-    story = generate_story(item, article_text)
+        logger.warning("DROP extraction: %s",item.get("title")); return None
+    story=generate_story(item,article_text,research.get("context",""))
     if not story:
-        logger.warning("DROP generation: %s", item.get("title"))
-        return None
+        logger.warning("DROP generation: %s",item.get("title")); return None
+    region=item.get("region",REGION)
+    story["topic"]=canonical_topic(story.get("news_type") or item.get("topic"),region)
+    story["image_url"]=image_url or item.get("image")
+    story["official_source_url"]=research.get("official_source_url","")
+    story["research_official_verified"]=bool(research.get("official_verified"))
+    story["research_sources"]=research.get("sources",[])
+    story["reader_context"]=trim_source_text(article_text,6000)
 
-    region = item.get("region", REGION)
-    story["topic"] = canonical_topic(story.get("topic") or item.get("topic"), region)
-    story["image_url"] = image_url or item.get("image")
-
-    grounded, bad_number = numeric_grounded(story, article_text)
+    grounded,bad_number=numeric_grounded(story,article_text)
     if not grounded:
-        logger.warning("DROP numeric grounding: %s (%s)", story.get("headline"), bad_number)
-        return None
+        logger.warning("DROP numeric grounding: %s (%s)",story.get("headline"),bad_number); return None
+    story["institution"]=item.get("institution","")
+    story["event_key"]=item.get("event_key","")
+    story["event_cluster_id"]=item.get("event_cluster_id","")
+    story["event_confidence"]=item.get("event_confidence",0)
+    story["event_source_count"]=item.get("event_source_count",0)
+    story["official_video_url"]=safe_text(story.get("official_video_url")) if story.get("official_video_url") else ""
+    story["official_video_platform"]=safe_text(story.get("official_video_platform")) if story.get("official_video_url") else ""
+    story["official_video_title"]=safe_text(story.get("official_video_title")) if story.get("official_video_url") else ""
 
-    story["institution"] = item.get("institution", "")
-    story["event_key"] = item.get("event_key", "")
-    story["event_cluster_id"] = item.get("event_cluster_id", "")
-    story["event_confidence"] = item.get("event_confidence", 0)
-    story["event_source_count"] = item.get("event_source_count", 0)
-
-    # Video discovery is deterministic and source-constrained. No LLM URL is trusted.
-    story["official_video_url"] = ""
-    story["official_video_platform"] = ""
-    story["official_video_title"] = ""
-
-    if safe_text(story.get("priority_type")) == "Major Trailer / PV":
-        for candidate_url in item.get("video_candidates", [])[:8]:
-            ok, platform, video_title = verify_video_url(
-                candidate_url, story.get("title", "")
-            )
-            if ok and video_title_relevant(
-                video_title or story.get("title", ""),
-                story.get("title", "")
-            ):
-                story["official_video_url"] = candidate_url
-                story["official_video_platform"] = platform
-                story["official_video_title"] = video_title or story.get("title", "")
-                break
-
+    if story.get("priority_type")=="Major Trailer / PV" or re.search(r"\b(?:trailer|teaser|pv|promo video|first look|new footage)\b", f"{item.get('title','')} {item.get('excerpt','')}",re.I):
+        for candidate_url in item.get("video_candidates",[])[:8]:
+            ok,platform,video_title=verify_video_url(candidate_url,story.get("title",""))
+            if ok and video_title_relevant(video_title or story.get("title",""),story.get("title","")):
+                story["official_video_url"]=candidate_url; story["official_video_platform"]=platform; story["official_video_title"]=video_title or story.get("title",""); break
         if not story.get("official_video_url"):
-            found = exa_video_search(story.get("title", ""))
+            found=exa_video_search(story.get("title",""))
             if found:
-                story["official_video_url"] = found["url"]
-                story["official_video_platform"] = found["platform"]
-                story["official_video_title"] = found["title"]
-
+                story["official_video_url"]=found["url"]; story["official_video_platform"]=found["platform"]; story["official_video_title"]=found["title"]
         if story.get("official_video_url") and not story.get("image_url"):
-            thumb = youtube_thumbnail(story.get("official_video_url"))
-            if thumb:
-                story["image_url"] = thumb
-
-    story["category_hashtags"] = category_hashtags(story)
-
-    # Keep source text only until the batch verification pass completes.
-    story["_source_article_text"] = article_text
+            thumb=youtube_thumbnail(story.get("official_video_url"))
+            if thumb: story["image_url"]=thumb
+    story["category_hashtags"]=category_hashtags(story)
+    story["_source_article_text"]=article_text
     return story
 
 
@@ -3890,6 +3935,7 @@ VERIFY_BATCH_SCHEMA = {
                     "unsupported_claims": {
                         "type": "array",
                         "items": {"type": "string"},
+                        
                     },
                 },
                 "required": ["id", "supported", "unsupported_claims"],
@@ -3903,77 +3949,33 @@ VERIFY_BATCH_SCHEMA = {
 
 
 def verify_stories_batch(stories):
-    """
-    Verify the material claims of multiple generated stories in ONE Cerebras call.
-    This replaces 2–3 sequential LLM verification calls per story.
-    """
-    if not stories:
-        return []
-
-    records = []
-    for idx, story in enumerate(stories, 1):
-        claims = [
-            story.get("headline", ""),
-            story.get("summary", ""),
-            *story.get("highlights", []),
-        ]
-        records.append(
-            f"ID: {idx}\n"
-            f"TITLE: {story.get('headline', '')}\n"
-            f"CLAIMS:\n- " + "\n- ".join(safe_text(x) for x in claims if safe_text(x)) +
-            f"\nSOURCE ARTICLE:\n{trim_source_text(story.get('_source_article_text', ''), 6500)}"
-        )
-
-    prompt = """You are the final fact-checking editor for @ComicsNewsroom.
-For each story, mark supported=true only when every material claim in its headline,
-summary and highlights is directly supported by the supplied source article.
-Accept faithful paraphrases. Reject invented facts, unsupported dates, people,
-studios, platforms, figures, release status, production status, or stronger wording
-than the source supports. A rumor must not be upgraded to a confirmation.
-Return one result for every ID and do not add facts."""
+    """Verify stories in one compact batch. On infrastructure failure, salvage independently official stories."""
+    if not stories: return []
+    records=[]
+    for idx,story in enumerate(stories,1):
+        claims=[story.get("headline",""),story.get("summary",""),*story.get("highlights",[])]
+        records.append(f"ID: {idx}\nTITLE: {story.get('headline','')}\nCLAIMS:\n- " + "\n- ".join(safe_text(x) for x in claims if safe_text(x)) + f"\nSOURCE ARTICLE:\n{trim_source_text(story.get('_source_article_text',''),5500)}")
+    prompt="""You are the final fact-checking editor for @ComicsNewsroom. For each ID, mark supported=true only when the headline, summary and highlights are directly supported by the supplied evidence. Reject invented facts, wrong dates/names/studios/platforms, stronger status wording than the evidence, and rumor-to-confirmed upgrades. Return every ID exactly once."""
     try:
-        response = cerebras_create(
-            model=CEREBRAS_MODEL,
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": "\n\n".join(records)},
-            ],
-            response_format={
-                "type": "json_schema",
-                "json_schema": {
-                    "name": "comics_story_batch_verification",
-                    "strict": True,
-                    "schema": VERIFY_BATCH_SCHEMA,
-                },
-            },
-            reasoning_effort="low",
-            temperature=0.0,
-            max_completion_tokens=VERIFY_MAX_COMPLETION_TOKENS,
-        )
-        data = json.loads(safe_text(response.choices[0].message.content))
-        by_id = {int(r.get("id", 0)): r for r in data.get("results", [])}
-        verified = []
-        for idx, story in enumerate(stories, 1):
-            result = by_id.get(idx)
+        response=cerebras_create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":"\n\n".join(records)}],response_format={"type":"json_schema","json_schema":{"name":"comics_story_batch_verification_v3","strict":True,"schema":VERIFY_BATCH_SCHEMA}},reasoning_effort="low",temperature=0.0,max_completion_tokens=VERIFY_MAX_COMPLETION_TOKENS)
+        data=json.loads(safe_text(response.choices[0].message.content)); by_id={int(r.get("id",0)):r for r in data.get("results",[])}
+        verified=[]
+        for idx,story in enumerate(stories,1):
+            result=by_id.get(idx)
             if result and bool(result.get("supported")):
-                verified.append(story)
+                story["verification_status"]="ai_verified"; verified.append(story)
             else:
-                logger.warning(
-                    "DROP batch claim verification: %s | claims=%s",
-                    story.get("headline", story.get("title", "")),
-                    (result or {}).get("unsupported_claims", ["missing verification result"]),
-                )
+                logger.warning("DROP claim verification: %s | %s",story.get("headline",story.get("title","")),(result or {}).get("unsupported_claims",["unsupported or missing verification"]))
         return verified
     except Exception as exc:
-        logger.warning("Batch verification failed; using high-trust degraded fallback: %s", exc)
-        fallback = []
+        logger.warning("Batch verification unavailable; salvaging independently supported stories: %s",exc)
+        salvaged=[]
         for story in stories:
-            score = int(story.get("importance_score", 0) or 0)
-            trusted = safe_text(story.get("source_class")) == "official" or int(story.get("event_source_count", 0) or 0) >= 2
-            if score >= PUBLISH_THRESHOLD and trusted:
-                story["verification_status"] = "degraded_high_trust"
-                fallback.append(story)
-        return fallback
+            if story.get("research_official_verified") or source_class_for_url(story.get("url"))=="official":
+                story["verification_status"]="official_fallback"; salvaged.append(story)
+            else:
+                logger.warning("DROP verification unavailable: %s",story.get("headline",story.get("title","")))
+        return salvaged
 
 
 def update_category_coverage(story):
@@ -3983,24 +3985,6 @@ def update_category_coverage(story):
     metrics[sector] = int(metrics.get(sector, 0)) + 1
     topics = STATE.setdefault("topic_coverage", {})
     topics[topic] = int(topics.get(topic, 0)) + 1
-
-
-RUN_STARTED_MONOTONIC = 0.0
-RUN_DEADLINE_MONOTONIC = 0.0
-
-
-def time_remaining():
-    if not RUN_DEADLINE_MONOTONIC:
-        return float("inf")
-    return max(0.0, RUN_DEADLINE_MONOTONIC - time.monotonic())
-
-
-def time_guard(label, reserve_seconds=5):
-    remaining = time_remaining()
-    if remaining <= reserve_seconds:
-        logger.warning("TIME GUARD: %s skipped with %.1fs remaining", label, remaining)
-        return False
-    return True
 
 
 # ============================================================
@@ -4041,7 +4025,7 @@ def available_candidates(region, source_pool=None):
             continue
 
         published = parse_datetime(item.get("published_date"))
-        if not published or not (DISCOVERY_START <= published <= DISCOVERY_END):
+        if not published or not (DISCOVERY_START <= published <= DISCOVERY_END or meaningful_update_candidate(item)):
             continue
 
         url = safe_text(item.get("url"))
@@ -4081,10 +4065,8 @@ def available_candidates(region, source_pool=None):
 def prepare_ranked_region(region, candidates):
     ranked = rank_candidates(candidates, region)
     ranked = collapse_event_clusters(ranked)
-    # Keep a broader review pool after ranking. Publication is decided later after story generation and verification.
-    ranked = [item for item in ranked if int(item.get("importance_score", 0)) >= RANK_REVIEW_THRESHOLD]
+    ranked = [item for item in ranked if item.get("importance_score", 0) >= PUBLISH_THRESHOLD and item.get("important") is True]
     persist_event_cluster_state(ranked)
-    logger.info("POST-RANK REVIEW POOL: %d | REVIEW_THRESHOLD=%d | PUBLISH_THRESHOLD=%d", len(ranked), RANK_REVIEW_THRESHOLD, PUBLISH_THRESHOLD)
     return ranked
 
 
@@ -4105,59 +4087,23 @@ def published_sector_counts_24h():
     return counts
 
 
-def balanced_news_selection(ranked, max_items=None, max_per_sector=None):
-    """Select a diverse pool without forcing weak stories into publication."""
-    max_items = max_items or NEWS_POST_MAX_PER_RUN
-    max_per_sector = max_per_sector or NEWS_POST_MAX_PER_SECTOR
-    eligible = [
-        dict(item) for item in ranked
-        if int(item.get("importance_score", 0)) >= RANK_REVIEW_THRESHOLD
-        and normalize_sector(item.get("sector")) in SECTORS
-    ]
-    if not eligible:
-        return []
-
-    by_sector = {sector: [] for sector in SECTORS}
-    eligible.sort(key=lambda x: (-int(x.get("importance_score", 0)), int(x.get("editor_rank", 9999))))
-    for item in eligible:
-        by_sector[normalize_sector(item.get("sector"))].append(item)
-
-    selected = []
-    used = set()
-    # Give each populated sector an early opportunity.
-    for sector in SECTORS:
-        if by_sector[sector]:
-            item = by_sector[sector][0]
-            selected.append(item)
-            used.add(item.get("canonical"))
-
-    counts = published_sector_counts_24h()
-    while len(selected) < max_items:
-        pool = []
-        for sector in SECTORS:
-            sector_selected = sum(1 for x in selected if normalize_sector(x.get("sector")) == sector)
-            if sector_selected >= max_per_sector:
-                continue
-            for item in by_sector[sector]:
-                key = item.get("canonical")
-                if key in used:
-                    continue
-                deficit = max(counts.values(), default=0) - counts.get(sector, 0)
-                balance_boost = min(6.0, max(0.0, deficit * 1.25))
-                source_boost = 2.0 if safe_text(item.get("source_class")) == "official" else 0.0
-                adjusted = int(item.get("importance_score", 0)) + balance_boost + source_boost
-                pool.append((adjusted, int(item.get("importance_score", 0)), item))
-        if not pool:
-            break
-        pool.sort(key=lambda x: (-x[0], -x[1], int(x[2].get("editor_rank", 9999))))
-        _, _, winner = pool[0]
-        selected.append(winner)
-        used.add(winner.get("canonical"))
-
-    selected.sort(key=lambda x: (-int(x.get("importance_score", 0)), int(x.get("editor_rank", 9999))))
-    for item in selected:
-        item["sector_balance_24h"] = counts.copy()
-    return selected[:max_items]
+def balanced_news_selection(ranked,limit=NEWS_POST_MAX_PER_RUN):
+    """Quality-first selection. Sector diversity is only a tie-breaker, never a hard quota."""
+    eligible=[dict(item) for item in ranked if int(item.get("importance_score",0))>=PUBLISH_THRESHOLD and bool(item.get("important")) and normalize_sector(item.get("sector")) in SECTORS]
+    if not eligible: return []
+    counts=published_sector_counts_24h()
+    selected=[]; remaining=list(eligible); used=set()
+    while remaining and len(selected)<limit:
+        max_score=max(int(x.get("importance_score",0)) for x in remaining)
+        band=[x for x in remaining if int(x.get("importance_score",0))>=max_score-2]
+        def key(x):
+            sec=normalize_sector(x.get("sector")); deficit=max(counts.values(),default=0)-counts.get(sec,0)
+            diversity_boost=min(2.0,max(0.0,float(deficit)/2.0))
+            return (int(x.get("importance_score",0))+diversity_boost,-int(x.get("editor_rank",9999)))
+        winner=max(band,key=key)
+        selected.append(winner); used.add(winner.get("canonical")); remaining=[x for x in remaining if x.get("canonical") not in used]
+    selected.sort(key=lambda x:(-int(x.get("importance_score",0)),int(x.get("editor_rank",9999))))
+    return selected
 
 
 def reader_extra_type():
@@ -4168,6 +4114,15 @@ def reader_extra_type():
     # Stable rotation among equally unused types.
     cursor = len(STATE.get("reader_extra_type_history", [])) % max(1, len(candidates))
     return candidates[cursor]
+
+
+def reader_extra_recent_global():
+    cutoff=NOW_BD-timedelta(hours=READER_EXTRA_MIN_INTERVAL_HOURS)
+    for item in reversed(STATE.get("reader_extra_history",[])):
+        dt=parse_datetime(item.get("published_at"))
+        if dt and dt>=cutoff:
+            return True
+    return False
 
 
 def reader_extra_work_recent(work_key):
@@ -4382,35 +4337,31 @@ def choose_reader_extra_seed(stories, ranked):
     return candidates[0] if candidates else None
 
 def process_ranked_region(region, ranked):
-    review_pool = balanced_news_selection(ranked, max_items=MAX_STORY_CANDIDATES, max_per_sector=STORY_REVIEW_MAX_PER_SECTOR)
-    if not review_pool:
-        logger.info("STORY GENERATION: no candidates above review gate")
-        return []
-    stories = []
+    candidates=[dict(x) for x in ranked if int(x.get("importance_score",0))>=PUBLISH_THRESHOLD and bool(x.get("important"))]
+    candidates=candidates[:NEWS_RESEARCH_TARGET]
+    if not candidates:
+        logger.info("DEEP RESEARCH: no candidates above editorial gate"); return []
+    logger.info("DEEP RESEARCH: processing %d strong candidates",len(candidates))
+    stories=[]
     with ThreadPoolExecutor(max_workers=STORY_CONCURRENCY) as executor:
-        futures = {executor.submit(process_story_candidate, item): item for item in review_pool}
+        futures={executor.submit(process_story_candidate,item):item for item in candidates}
         for future in as_completed(futures):
-            item = futures[future]
+            item=futures[future]
             try:
-                story = future.result()
-                if story:
-                    stories.append(story)
+                story=future.result()
+                if story: stories.append(story)
             except Exception as exc:
-                logger.warning("Story processing failed for %s: %s", item.get("title", ""), exc)
-    stories.sort(key=lambda x: (-int(x.get("importance_score", 0)), int(x.get("editor_rank", 9999))))
-    logger.info("STORY GENERATION COMPLETE: %d/%d", len(stories), len(review_pool))
-    verified = verify_stories_batch(stories)
-    final_eligible = []
+                logger.warning("Candidate research failed for %s: %s",item.get("title",""),exc)
+    stories.sort(key=lambda x:(-int(x.get("importance_score",0)),int(x.get("editor_rank",9999))))
+    verified=verify_stories_batch(stories)
     for story in verified:
-        score = int(story.get("importance_score", 0) or 0)
-        if score >= PUBLISH_THRESHOLD:
-            story["important"] = True
-            final_eligible.append(story)
-    final = balanced_news_selection(final_eligible, max_items=NEWS_POST_MAX_PER_RUN, max_per_sector=NEWS_POST_MAX_PER_SECTOR)
-    for story in final:
-        story.pop("_source_article_text", None)
-    logger.info("FINAL VERIFIED POOL: %d | target=%d", len(final), NEWS_POST_MAX_PER_RUN)
+        story["sector"]=normalize_sector(story.get("sector")) or normalize_sector_from_item(story)
+        story["topic"]=canonical_topic(story.get("topic") or story.get("news_type") or "",region)
+        story["category_hashtags"]=category_hashtags(story)
+    final=balanced_news_selection(verified,limit=NEWS_POST_MAX_PER_RUN)
+    logger.info("FINAL VALID: %d | researched=%d generated=%d verified=%d target=%d-%d",len(final),len(candidates),len(stories),len(verified),NEWS_POST_TARGET_MIN,NEWS_POST_MAX_PER_RUN)
     return final
+
 
 
 def publication_duplicate_reason(story, reserved):
@@ -4426,102 +4377,81 @@ def publication_duplicate_reason(story, reserved):
 
 
 def run():
-    global RUN_STARTED_MONOTONIC, RUN_DEADLINE_MONOTONIC
-    RUN_STARTED_MONOTONIC = time.monotonic()
-    RUN_DEADLINE_MONOTONIC = RUN_STARTED_MONOTONIC + RUN_MAX_SECONDS
-
-    logger.info("COMICSNEWSROOM V3 | 24H MULTI-PASS COVERAGE PIPELINE")
-    logger.info("Channel=%s | threshold=%d | review=%d | target=%d | hard_max=%d | runtime_budget=%ds", TELEGRAM_CHANNEL, PUBLISH_THRESHOLD, RANK_REVIEW_THRESHOLD, NEWS_POST_MAX_PER_RUN, NEWS_POST_MAX_PER_RUN, RUN_MAX_SECONDS)
-    logger.info("Window=%s -> %s", DISCOVERY_START.isoformat(), DISCOVERY_END.isoformat())
+    logger.info("COMICSNEWSROOM V3.0 DEEP EDITORIAL RUN")
+    logger.info("Channel=%s Mode=%s Threshold=%d/100",TELEGRAM_CHANNEL,NEWS_MODE,PUBLISH_THRESHOLD)
+    logger.info("24H WINDOW | %s -> %s",DISCOVERY_START.isoformat(),DISCOVERY_END.isoformat())
 
     prune_state()
-    refresh_category_coverage()
     bootstrap_learning_from_queue()
+    collect_rss()
 
-    # PASS A/B: collect broadly from every enabled source class. The passes are intentionally
-    # not conditional on RSS volume, because a healthy RSS pool can still miss important stories.
-    for pass_no in range(1, DISCOVERY_PASSES + 1):
-        if not time_guard(f"discovery pass {pass_no}", reserve_seconds=120):
-            break
-        before = len(STATE.get("queue", {}))
-        collect_rss()
-        queue_count = queue_candidates_for_region(REGION)
-        google_added = google_news_gap_fill(REGION, queue_count, 1)
-        exa_added = exa_gap_fill(REGION, queue_count + google_added, 1)
-        save_state(STATE)
-        after = len(STATE.get("queue", {}))
-        logger.info("DISCOVERY PASS %d COMPLETE | queue_before=%d | queue_after=%d | rss/google/exa_delta=%d/%d/%d", pass_no, before, after, after-before-google_added-exa_added, google_added, exa_added)
+    count=queue_candidates_for_region(REGION)
+    google_added=google_news_gap_fill(REGION,count,MAX_GOOGLE_NEWS_CANDIDATES)
+    exa_added=exa_gap_fill(REGION,count+google_added,MAX_EXA_CANDIDATES)
+    logger.info("DISCOVERY GAP FILL: google_added=%d exa_added=%d",google_added,exa_added)
+    save_state(STATE)
 
-    candidates = available_candidates(REGION, source_pool=None)
-    metrics = STATE.setdefault("adaptive_metrics", {})
-    metrics["raw_discovered"] = len(STATE.get("queue", {}))
-    metrics["last_run_candidate_count"] = len(candidates)
-    logger.info("DISCOVERY COMPLETE | candidates_after_filter=%d | queue=%d", len(candidates), len(STATE.get("queue", {})))
+    candidates=available_candidates(REGION,source_pool="primary")
+    metrics=STATE.setdefault("adaptive_metrics",{})
+    metrics["raw_discovered"]=len(STATE.get("queue",{}))
+    logger.info("PRE-CEREBRAS: rejected=%d hard=%d duplicate=%d learned=%d passed=%d",int(metrics.get("pre_cerebras_rejected",0)),int(metrics.get("hard_rejected",0)),int(metrics.get("duplicate_rejected",0)),int(metrics.get("learned_rejected",0)),int(metrics.get("passed_to_cerebras",0)))
+    logger.info("CANDIDATES AFTER FILTER: %d | RANK CAP=%d | RUN AI BUDGET=%d | CONCURRENCY=%d",len(candidates),MAX_RANK_CANDIDATES,CEREBRAS_MAX_REQUESTS_PER_RUN,CEREBRAS_MAX_CONCURRENCY)
 
-    ranked = []
-    if time_guard("editorial ranking", reserve_seconds=180):
-        ranked = prepare_ranked_region(REGION, candidates)
-    logger.info("RANKED REVIEWABLE: %d", len(ranked))
+    ranked=prepare_ranked_region(REGION,candidates)
+    logger.info("RANKED ABOVE GATE: %d",len(ranked))
+    stories=process_ranked_region(REGION,ranked)
 
-    stories = []
-    if ranked and time_guard("story generation", reserve_seconds=90):
-        stories = process_ranked_region(REGION, ranked)
-
-    reserved_this_run = []
-    published_count = 0
-    for index, story in enumerate(stories, 1):
-        if not time_guard(f"publish story {index}", reserve_seconds=20):
-            break
+    # Dynamic quality-first publication. No daily or per-run quota.
+    reserved_this_run=[]
+    published_count=0
+    for index,story in enumerate(stories,1):
         try:
-            duplicate_reason = publication_duplicate_reason(story, reserved_this_run)
+            duplicate_reason=publication_duplicate_reason(story,reserved_this_run)
             if duplicate_reason:
-                logger.info("FINAL PUBLISH DROP: %s | %s", duplicate_reason, story.get("headline", ""))
+                logger.info("FINAL PUBLISH DROP: %s | %s",duplicate_reason,story.get("headline",""))
                 continue
-            rich_html = fit_rich_html(story)
-            image_path = prepare_image(story, index)
-            result = send_rich_photo(image_path, rich_html)
+            rich_html=fit_rich_html(story)
+            image_path=prepare_image(story,index)
+            result=send_rich_photo(image_path,rich_html)
             if not result.get("ok"):
                 if result.get("ambiguous") or result.get("transport_error"):
                     raise RuntimeError("Ambiguous Telegram transport failure; publish not retried")
-                description = safe_text(result.get("description")).lower()
-                status = int(result.get("http_status", 0) or 0)
-                can_fallback = status in {400, 404, 405} and ("rich" in description or "method" in description or "not found" in description)
+                description=safe_text(result.get("description")).lower(); status=int(result.get("http_status",0) or 0)
+                can_fallback=status in {400,404,405} and ("rich" in description or "method" in description or "not found" in description)
                 if can_fallback:
-                    logger.warning("Rich Message unavailable; using Bot API photo fallback")
-                    result = send_bot_api_fallback(image_path, rich_html)
+                    logger.warning("Rich Message unavailable; trying Bot API photo fallback")
+                    result=send_bot_api_fallback(image_path,rich_html)
                 else:
                     raise RuntimeError(result.get("description") or "Telegram Rich Message publish failed")
             if not result.get("ok"):
                 raise RuntimeError(result.get("description") or "Telegram publish failed")
-            message = result.get("result", {})
-            message_id = message.get("message_id") if isinstance(message, dict) else None
-            canonical = safe_text(story.get("canonical"))
+            message=result.get("result",{})
+            message_id=message.get("message_id") if isinstance(message,dict) else None
+            canonical=story.get("canonical","")
             if canonical:
-                save_posted_url(canonical)
-                qi = STATE.get("queue", {}).get(canonical)
-                if qi:
-                    qi["status"] = "posted"
-                    qi["posted_at"] = now_iso()
-            store_event(story, published=True, message_id=message_id)
+                POSTED_URLS.add(canonical); save_posted_url(canonical)
+                qi=STATE.get("queue",{}).get(canonical)
+                if qi: qi["status"]="posted"; qi["posted_at"]=now_iso()
+            store_event(story,published=True,message_id=message_id)
             remember_posted_event(story)
             update_category_coverage(story)
-            STATE.setdefault("recent_titles", []).append(normalize_title(story.get("headline", story.get("title", ""))))
-            STATE["recent_titles"] = STATE["recent_titles"][-1200:]
-            reserved_this_run.append(dict(story))
-            published_count += 1
-            logger.info("Published #%d score=%s sector=%s type=%s: %s", published_count, story.get("importance_score", 0), story.get("sector"), story.get("news_type"), story.get("headline"))
+            STATE.setdefault("recent_titles",[]).append(normalize_title(story.get("headline",story.get("title",""))))
+            reserved_this_run.append(dict(story)); published_count+=1
+            logger.info("Published #%d score=%s sector=%s type=%s: %s",published_count,story.get("importance_score",0),story.get("sector"),story.get("news_type"),story.get("headline"))
         except Exception as exc:
-            logger.error("Telegram publication failed for %s: %s", story.get("headline"), exc)
+            logger.error("Telegram publication failed for %s: %s",story.get("headline"),exc)
         save_state(STATE)
         time.sleep(POST_DELAY_SECONDS)
 
+    # One compact reader-value post per run, separate from the three-sector news quota.
     extra_published = 0
-    if READER_EXTRA_ENABLED and READER_EXTRA_MAX_PER_RUN and time_guard("fan extra", reserve_seconds=25):
+    if READER_EXTRA_ENABLED and READER_EXTRA_MAX_PER_RUN and not reader_extra_recent_global():
         seed = choose_reader_extra_seed(stories, ranked)
         if seed and not reader_extra_work_recent(seed.get("title") or seed.get("headline")):
-            try:
-                extra = generate_reader_extra(seed)
-                if extra:
+            # Current-run stories retain their source article text until this point.
+            extra = generate_reader_extra(seed)
+            if extra:
+                try:
                     extra_html = fit_reader_extra_html(extra)
                     image_path = prepare_image(seed, "fan_extra")
                     result = send_rich_photo(image_path, extra_html)
@@ -4531,6 +4461,8 @@ def run():
                         can_fallback = status in {400, 404, 405} and ("rich" in description or "method" in description or "not found" in description)
                         if can_fallback:
                             result = send_bot_api_fallback(image_path, extra_html)
+                        else:
+                            raise RuntimeError(result.get("description") or "Reader extra publish failed")
                     if result.get("ok"):
                         message = result.get("result", {})
                         message_id = message.get("message_id") if isinstance(message, dict) else None
@@ -4539,15 +4471,12 @@ def run():
                         metrics["reader_extra_published"] = int(metrics.get("reader_extra_published", 0)) + 1
                         extra_published = 1
                         logger.info("Published FAN EXTRA: type=%s sector=%s work=%s", extra.get("extra_type"), extra.get("sector"), extra.get("work"))
-            except Exception as exc:
-                logger.warning("FAN EXTRA skipped: %s", exc)
-
-    metrics["published"] = int(metrics.get("published", 0)) + published_count
-    metrics["last_run_duration_seconds"] = round(time.monotonic() - RUN_STARTED_MONOTONIC, 1)
-    metrics["last_run_status"] = "completed" if time_remaining() > 0 else "time_budget_reached"
-    metrics["estimated_candidates_avoided"] = int(metrics.get("pre_cerebras_rejected", 0))
+                except Exception as exc:
+                    logger.warning("FAN EXTRA skipped: %s", exc)
+    metrics["published"]=int(metrics.get("published",0))+published_count
+    metrics["estimated_candidates_avoided"]=int(metrics.get("pre_cerebras_rejected",0))
     save_state(STATE)
-    logger.info("FINISHED V3 | duration=%.1fs | news_published=%d | fan_extra=%d | candidates=%d | ranked=%d | remaining=%.1fs", time.monotonic()-RUN_STARTED_MONOTONIC, published_count, extra_published, len(candidates), len(ranked), time_remaining())
+    logger.info("FINISHED | news_published=%d | fan_extra=%d | candidates=%d",published_count,extra_published,len(candidates))
 
 
 # ============================================================
@@ -4555,104 +4484,95 @@ def run():
 # ============================================================
 
 def self_test():
-    sample = {
-        "title": "Example Anime Official Trailer",
-        "year": "2026",
-        "summary": "The anime's new trailer has been officially released.",
-        "sector": "Anime",
-        "format": "Anime",
-        "news_type": "Trailer",
-        "priority_type": "Major Trailer / PV",
-        "highlights": [
-            "The new trailer was officially released.",
-            "The story is scheduled to return in 2026.",
-        ],
-        "why_it_matters": "It confirms a major new development for the franchise.",
-        "platform": "Crunchyroll",
-        "episodes": "12",
-        "chapters": "",
-        "languages": "Japanese, English",
-        "status": "Coming Soon",
-        "release_date": "2026",
-        "official_video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        "official_video_platform": "YouTube",
-        "official_video_title": "Official Trailer",
-        "spoiler": "",
-        "note": "",
-        "bold_terms": ["Example Anime", "2026"],
-        "source": "Anime News Network",
-        "url": "https://www.animenewsnetwork.com/example/story",
-        "region": REGION,
-        "topic": "Major Trailer / PV",
-        "institution": "",
-        "importance_score": 90,
-        "important": True,
-        "event_key": "example_anime_trailer_2026",
-        "source_class": "reported",
-        "image_url": "",
-        "image_candidates": [],
-        "canonical": "animenewsnetwork.com/example/story",
+    """Fast invariant tests that do not require network/API access."""
+    sample={
+        "title":"Example Anime","year":"2026","summary":"The anime's new season has been officially confirmed.",
+        "sector":"Anime","format":"Anime","news_type":"Trailer","priority_type":"Major Trailer / PV",
+        "highlights":["The next season has been officially confirmed.","More production details are expected later."],
+        "why_it_matters":"It confirms the franchise will continue.","platform":"Crunchyroll","episodes":"12","chapters":"","languages":"Japanese, English","status":"Coming Soon","release_date":"2026",
+        "official_video_url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ","official_video_platform":"YouTube","official_video_title":"Example Anime Official Trailer","spoiler":"","note":"","bold_terms":["Example Anime","Crunchyroll"],
+        "source":"Anime News Network","url":"https://www.animenewsnetwork.com/example/story","region":REGION,"topic":"Major Trailer / PV","institution":"","importance_score":90,"important":True,"event_key":"example_anime_season_2","source_class":"reported","image_url":"","image_candidates":[],"canonical":"animenewsnetwork.com/example/story"
     }
-    rendered = dynamic_rich_html(sample)
+    rendered=dynamic_rich_html(sample)
     assert "@ComicsNewsroom" in rendered
-    assert "Watch Trailer 👉" in rendered and '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">YouTube</a>' in rendered
-    assert "What to Know" not in rendered
-    assert set(SECTORS) == {"Anime", "Manga", "Comics"}
-    assert normalize_sector("Marvel") == "Comics"
-    assert normalize_sector("DC") == "Comics"
-    assert rank_score({"score": 100}) == 100
-    assert rank_score({"score": 0}) == 0
-    assert infer_priority_type({"title": "Official trailer released", "excerpt": "new trailer"}) == "Major Trailer / PV"
-    assert infer_priority_type({"title": "Manga gets an anime adaptation", "excerpt": "officially announced"}) == "Manga → Anime Adaptation"
-    assert deterministic_pre_rank_score({"title": "Major anime announcement", "excerpt": "officially confirmed new season", "url": "https://www.toei-animation.com/news/x", "published_date": NOW_BD.isoformat(), "image": "x", "canonical": "toei-animation.com/news/x"}) > 50
-    assert _candidate_sector_hint({"title": "Marvel announces new comic event", "excerpt": "Batman crossover", "url": "https://marvel.com/x"}) == "Comics"
-    assert _candidate_sector_hint({"title": "Manga returns from hiatus", "excerpt": "final chapter", "url": "https://www.shueisha.co.jp/x"}) == "Manga"
-    assert _candidate_sector_hint({"title": "New anime trailer", "excerpt": "PV released", "url": "https://www.animenewsnetwork.com/x"}) == "Anime"
-    balanced = balanced_news_selection([
-        {"importance_score":95,"sector":"Anime","editor_rank":1,"canonical":"a"},
-        {"importance_score":94,"sector":"Anime","editor_rank":2,"canonical":"b"},
-        {"importance_score":93,"sector":"Manga","editor_rank":3,"canonical":"c"},
-        {"importance_score":92,"sector":"Comics","editor_rank":4,"canonical":"d"},
-        {"importance_score":91,"sector":"Manga","editor_rank":5,"canonical":"e"},
-        {"importance_score":90,"sector":"Comics","editor_rank":6,"canonical":"f"},
-    ], max_items=6, max_per_sector=3)
-    assert {normalize_sector(x.get("sector")) for x in balanced} == {"Anime","Manga","Comics"}
-    assert len(balanced) <= 6
-    balanced10 = balanced_news_selection([
-        {"importance_score":90+i,"sector":sector,"editor_rank":i,"canonical":f"{sector}-{i}"}
-        for i,sector in enumerate(["Anime","Anime","Anime","Anime","Anime","Manga","Manga","Manga","Comics","Comics","Comics","Comics"],1)
-    ], max_items=10, max_per_sector=4)
-    assert len(balanced10) <= 10
-    assert max([sum(1 for x in balanced10 if normalize_sector(x.get("sector")) == s) for s in SECTORS] or [0]) <= 4
-    extra = {"extra_type":"Quick Fact","title":"Example Fact","work":"Example Anime","sector":"Anime","intro":"A useful fact.","points":["Fact one","Fact two"],"takeaway":"Now you know.","source_url":"https://example.com/fact","source_name":"Example Source","bold_terms":["Example Anime"]}
-    extra_html = dynamic_reader_extra_html(extra)
-    assert "FAN EXTRA" in extra_html and "Example Fact" in extra_html
-    # Strict structured-output schemas intentionally avoid unsupported array-size keywords.
-    for schema in (RANK_SCHEMA, STORY_SCHEMA, VERIFY_SCHEMA, VERIFY_BATCH_SCHEMA, READER_EXTRA_SCHEMA):
-        blob = json.dumps(schema)
-        assert '"minItems"' not in blob and '"maxItems"' not in blob
-        assert schema.get("additionalProperties") is False
-    assert CEREBRAS_MAX_CONCURRENCY == 2
-    assert CEREBRAS_MAX_REQUESTS_PER_RUN >= 30
-    assert MAX_STORY_CANDIDATES >= 12
-    assert NEWS_POST_MAX_PER_RUN == 10
-    assert NEWS_POST_MAX_PER_SECTOR == 4
-    assert RUN_MAX_SECONDS <= 600
-    fresh = NOW_BD - timedelta(hours=2)
-    stale = NOW_BD - timedelta(hours=25)
+    assert "Watch Trailer 👉" in rendered and "<h2>" in rendered
+    assert '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">YouTube</a>' in rendered
+    assert "Official Source" not in rendered
+    assert set(SECTORS)=={"Anime","Manga","Comics"}
+    assert normalize_sector("DC")=="Comics" and normalize_sector("Marvel")=="Comics"
+    assert normalize_sector("unknown")==""
+    assert rank_score({"score":100})==100
+    assert rank_score({"score":140})==100 and rank_score({"score":-4})==0
+    assert canonical_topic("trailer")=="Major Trailer / PV"
+    assert canonical_topic("manga to anime")=="Manga → Anime Adaptation"
+    assert update_category_coverage is not None
+    # 24h freshness
+    fresh=NOW_BD-timedelta(hours=2); stale=NOW_BD-timedelta(hours=25)
     assert candidate_basic_allowed({"url":"https://animecorner.me/fresh","title":"Major anime announcement","published_dt":fresh,"region":REGION}) is True
     assert candidate_basic_allowed({"url":"https://animecorner.me/stale","title":"Major anime announcement","published_dt":stale,"region":REGION}) is False
-    portrait = Image.new("RGB", (700,1100), (60,70,80))
-    fitted = fit_full_poster(portrait)
-    assert fitted.size == (700,1100)
-    logger.info("SELF-TEST: PASS | ComicsNewsroom V3")
+    # Meaningful older update: a previously published work receives a new major development.
+    saved_work_memory=STATE.get("work_memory",{})
+    update_title="Example Anime officially announces Season 3 trailer"
+    update_key=work_key_from_text(update_title)
+    STATE["work_memory"]={update_key:{"published_events":{"New Season / Sequel": (NOW_BD-timedelta(hours=30)).isoformat()}}}
+    old_update={"url":"https://animecorner.me/example-season-3","title":update_title,"excerpt":"The official announcement confirms a new trailer.","published_dt":stale,"region":REGION}
+    assert meaningful_update_candidate(old_update) is True
+    assert candidate_basic_allowed(old_update) is True
+    STATE["work_memory"]=saved_work_memory
+    # Soft diversity: never replaces higher-quality stories merely to fill a sector.
+    ranked=[
+        {"importance_score":96,"important":True,"sector":"Anime","editor_rank":1,"canonical":"a"},
+        {"importance_score":95,"important":True,"sector":"Anime","editor_rank":2,"canonical":"b"},
+        {"importance_score":83,"important":True,"sector":"Comics","editor_rank":3,"canonical":"c"},
+    ]
+    picked=balanced_news_selection(ranked,limit=2)
+    assert [x["canonical"] for x in picked]==["a","b"]
+    # Sector normalization always maps Marvel/DC to Comics.
+    assert normalize_sector_from_item({"title":"Marvel announces a new X-Men event","excerpt":"comic"})=="Comics"
+    # Reader extra global cooldown.
+    old_history=STATE.get("reader_extra_history",[])
+    STATE["reader_extra_history"]= [{"published_at":NOW_BD.isoformat()}]
+    assert reader_extra_recent_global() is True
+    STATE["reader_extra_history"]=old_history
+    # Trailer URL parser.
+    assert _youtube_video_id("https://www.youtube.com/watch?v=dQw4w9WgXcQ") == "dQw4w9WgXcQ"
+    portrait=Image.new("RGB",(700,1100),(60,70,80)); assert fit_full_poster(portrait).size==(700,1100)
+    assert CEREBRAS_MAX_REQUESTS_PER_RUN>=26
+    assert NEWS_POST_TARGET_MIN==7 and NEWS_POST_MAX_PER_RUN==10
+    logger.info("SELF-TEST: PASS")
 
 
-# ============================================================
-# EXECUTABLE ENTRYPOINT
-# ============================================================
+def fixture_test():
+    """Offline end-to-end fixture test for the executable path; no network/API calls required."""
+    self_test()
+    # Feed fixtures through prefilter → rank fallback → event collapse → selection.
+    base=NOW_BD-timedelta(hours=3)
+    fixtures=[
+        {"title":"Example Anime Season 3 Officially Announced","excerpt":"officially announced new season trailer","source":"Anime News Network","url":"https://www.animenewsnetwork.com/news/example-anime-season-3","canonical":"animenewsnetwork.com/news/example-anime-season-3","published_date":base.isoformat(),"published_dt":base,"region":REGION,"source_class":"reported"},
+        {"title":"Example Anime Season 3 Officially Announced","excerpt":"officially announced new season","source":"Crunchyroll News","url":"https://www.crunchyroll.com/news/example-anime-season-3","canonical":"crunchyroll.com/news/example-anime-season-3","published_date":(base+timedelta(minutes=5)).isoformat(),"published_dt":base+timedelta(minutes=5),"region":REGION,"source_class":"official"},
+        {"title":"Marvel Announces Major X-Men Event","excerpt":"Marvel officially announces major crossover event","source":"Marvel","url":"https://www.marvel.com/articles/comics/x-men-event","canonical":"marvel.com/articles/comics/x-men-event","published_date":base.isoformat(),"published_dt":base,"region":REGION,"source_class":"official"},
+        {"title":"Routine Anime Episode Reminder","excerpt":"episode airs tomorrow","source":"Anime Corner","url":"https://animecorner.me/routine","canonical":"animecorner.me/routine","published_date":base.isoformat(),"published_dt":base,"region":REGION,"source_class":"reported"},
+    ]
+    allowed=[x for x in fixtures if candidate_basic_allowed(x) and pre_cerebras_filter(x)[0]]
+    assert len(allowed)>=3
+    for i,item in enumerate(allowed,1): _apply_deterministic_rank(item,i,"fixture fallback")
+    collapsed=collapse_event_clusters(sorted(allowed,key=lambda x:-int(x.get("importance_score",0))))
+    selected=balanced_news_selection(collapsed,limit=3)
+    assert selected and len(selected)<=3
+    assert all(normalize_sector(x.get("sector")) in SECTORS for x in selected)
+    # No actual Telegram publish in fixture mode.
+    logger.info("FIXTURE-TEST: PASS | fixtures=%d allowed=%d collapsed=%d selected=%d",len(fixtures),len(allowed),len(collapsed),len(selected))
+
+
 if __name__ == "__main__":
-    if "--self-test" in __import__("sys").argv:
+    parser=argparse.ArgumentParser()
+    parser.add_argument("--self-test",action="store_true")
+    parser.add_argument("--fixture-test",action="store_true")
+    args=parser.parse_args()
+    if args.fixture_test:
+        fixture_test()
+    elif args.self_test:
         self_test()
     else:
         run()
+

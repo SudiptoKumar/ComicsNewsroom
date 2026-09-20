@@ -1,5 +1,4 @@
 {
-  "schema_version": 3,
   "feeds": {},
   "queue": {},
   "events": {},
@@ -19,13 +18,9 @@
     "learned_rejected": 0,
     "passed_to_cerebras": 0,
     "cerebras_ranked": 0,
-    "ranking_failures": 0,
     "published": 0,
     "estimated_candidates_avoided": 0,
-    "reader_extra_published": 0,
-    "last_run_candidate_count": 0,
-    "last_run_duration_seconds": 0,
-    "last_run_status": "never"
+    "reader_extra_published": 0
   },
   "source_quality": {},
   "category_coverage": {},

@@ -1,205 +1,120 @@
-# ComicsNewsroom V3 Telegram Templates
+# ComicsNewsroom V3 Post Templates
 
-Channel: **@ComicsNewsroom**
-
-The renderer is dynamic. A story is matched to the event type instead of forcing every story into one template.
-
-## Global sequence
-
-```text
-MEDIA
- ↓
-EVENT LABEL
- ↓
-STRONG TITLE
- ↓
-ONE-SENTENCE SUMMARY
- ↓
-2–4 HIGH-VALUE FACTS
- ↓
-OPTIONAL WHY IT MATTERS
- ↓
-OPTIONAL VERIFIED TRAILER LINK
- ↓
-CHANNEL + HASHTAGS
- ↓
-CLICKABLE SOURCE
-```
+The renderer chooses a template dynamically. The channel should feel like one editorial brand without forcing every story into the same shape.
 
 ## Major Announcement
 
 ```text
-📢 MAJOR ANIME / MANGA / COMICS NEWS
+✦ MAJOR ANNOUNCEMENT
 
-[Title]
+[headline]
 
-[One-sentence factual summary]
+[one-sentence summary]
 
-✦ [Fact]
-✦ [Fact]
-✦ [Fact]
+✦ [key fact]
+✦ [key fact]
+✦ [key fact]
 
-💡 Why fans care: [Only when useful]
+💡 Why fans care: [optional]
 
-@ComicsNewsroom #...
-
-Source: [clickable source]
+Source: [source]
 ```
 
 ## Trailer / PV
 
 ```text
-🎞️ NEW TRAILER
+🎬 NEW TRAILER
 
-[Title]
+[headline]
 
-[What was released]
+[one-sentence summary]
 
-✦ [Production / studio]
-✦ [Release information]
-✦ [Important reveal]
-
-<h2>Watch Trailer 👉 <a href="[verified URL]">YouTube</a></h2>
-
-@ComicsNewsroom #Anime #Trailer
-
-Source: [clickable source]
+▶ Watch Trailer 👉 YouTube
 ```
 
-## New Season / Sequel
+When a second official platform is verified:
 
 ```text
-🔄 NEW SEASON
-
-[Title]
-
-[Official continuation update]
-
-✦ [Confirmation]
-✦ [Studio / staff]
-✦ [Release timing]
-
-@ComicsNewsroom #Anime #NewSeason
-
-Source: [clickable source]
+▶ YouTube · Crunchyroll
 ```
 
 ## Manga → Anime
 
 ```text
-⚡ MANGA → ANIME
+◆ MANGA → ANIME
 
-[Title]
+[headline]
 
-[Adaptation announcement]
+[summary]
 
-✦ Studio: [value]
-✦ Format: [value]
-✦ Release: [value]
+✦ Studio: ...
+✦ Format: ...
+✦ Release: ...
 
-@ComicsNewsroom #Manga #Anime
-
-Source: [clickable source]
+Source: ...
 ```
 
-## Manga Update / Ending
+## Manga Update
 
 ```text
 📖 MANGA UPDATE
 
-[Title]
+[headline]
 
-[What changed]
+[summary]
 
-✦ Status: [value]
-✦ Chapter / volume: [value]
-✦ Next step: [value]
+✦ Status: ...
+✦ Next update: ...
 
-@ComicsNewsroom #Manga
-
-Source: [clickable source]
+Source: ...
 ```
 
-## Marvel
+## Marvel / DC
+
+Marvel and DC use the same Comics sector while receiving their own story label.
 
 ```text
-◆ MARVEL COMICS
+◆ MARVEL
 
-[Title]
+[headline]
 
-[Major development]
+[summary]
 
-✦ [Creator / release]
-✦ [Storyline / event]
-✦ [Next step]
+✦ [key fact]
+✦ [key fact]
 
-@ComicsNewsroom #Marvel #Comics
-
-Source: [clickable source]
+Source: ...
 ```
 
-## DC
+## Franchise Update
 
 ```text
-◆ DC COMICS
+⚡ FRANCHISE UPDATE
 
-[Title]
+[headline]
 
-[Major development]
+[summary]
 
-✦ [Creator / release]
-✦ [Storyline / event]
-✦ [Next step]
+WHAT FANS NEED TO KNOW
+✦ ...
+✦ ...
 
-@ComicsNewsroom #DC #Comics
-
-Source: [clickable source]
-```
-
-## Major Comic Event
-
-```text
-◆ MAJOR COMIC EVENT
-
-[Title]
-
-[Concise explanation]
-
-✦ [What changed]
-✦ [Who is involved]
-✦ [Release / next step]
-
-@ComicsNewsroom #Comics #Event
-
-Source: [clickable source]
+Source: ...
 ```
 
 ## FAN EXTRA
 
+FAN EXTRA is intentionally occasional, source-grounded and never used to fill a weak news cycle.
+
+Supported types include:
+
 ```text
-💎 FAN EXTRA · [Format]
-
-✦ [Curiosity-driven factual title]
-
-[Short setup]
-
-✦ [Interesting fact]
-✦ [Interesting fact]
-✦ [Interesting fact]
-
-💡 Takeaway: [Compact reader-friendly thought]
-
-@ComicsNewsroom #Fans #...
-
-Source: [clickable source]
+Quick Fact
+Hidden Detail
+Franchise Timeline
+Creator Spotlight
+Fan Guide
+Origin Story
+Why It Matters
+Did You Know
 ```
-
-## Formatting rules
-
-- Mobile-first.
-- No giant hero banner inside the message.
-- Keep the first screen useful.
-- Use only source-backed facts.
-- Hidden direct video links are preferred for verified trailers.
-- Never publish an invented date, cast member, studio, platform, sales figure or status.
-- Marvel and DC remain subtopics of the **Comics** sector, not separate top-level sectors.
