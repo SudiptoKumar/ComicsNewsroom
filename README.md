@@ -1,407 +1,262 @@
-# ComicsNewsroom V2.2
+# ComicsNewsroom V3
 
-A quality-first automated Anime, Manga and Comics newsroom for **@ComicsNewsroom**.
-
-The bot is based on the previous Entertainment Newsroom execution framework, keeping the same dependency stack, Cerebras model, Exa discovery, persistent state, Telegram Rich Message transport, image handling, adaptive learning, and GitHub Actions deployment pattern. The editorial AI pipeline is optimized for low-latency parallel processing.
-
-## Editorial goal
-
-This is **not** a volume scraper.
-
-The bot primarily considers stories published in the rolling **previous 24 hours** and publishes only stories that pass the editorial quality gate. There is **no fixed post quota**. A run may publish zero stories when nothing is important enough.
-
-Core rule:
+A production-oriented Telegram newsroom for **@ComicsNewsroom**, covering three equal top-level sectors:
 
 ```text
-FRESH + IMPORTANT + FAN-RELEVANT + VERIFIED + NEW EVENT = PUBLISH
+ANIME
+MANGA
+COMICS
+  ├─ Marvel
+  └─ DC
 ```
 
-## Coverage
+V3 restores the broad-discovery behavior that worked well in the previous entertainment pipeline while fixing the main failure found in V2.2: oversized AI ranking responses that could fail after a successful HTTP 200 response.
 
-### Anime
+## Core editorial objective
 
-- Major anime announcements
-- New seasons and sequels
-- Major trailers / PVs
-- Manga → anime adaptations
-- Major release-date announcements
-- Major anime movies
-- Major franchise updates
-- Major cast / staff reveals
-- Major production news
+**Coverage first, quality second, verification before publication.**
 
-### Manga
-
-- Major manga announcements
-- Major returns / hiatuses
-- Major series endings
-- Major creator / publisher news
-- Major sales / milestones
-
-### Comics
-
-- Major Marvel news
-- Major DC news
-- Major comic announcements
-- Major comic storylines / events
-- Major comic adaptations
-
-Routine chapter or episode reminders, merchandise, generic rankings, reviews, fan theories, rumors/leaks, routine interviews, and low-impact promotional content are intentionally filtered.
-
-## 24-hour window
-
-Normal candidate eligibility:
+The bot normally targets **7–10 genuinely useful posts per 3-hour run**, but never pads the feed with weak stories.
 
 ```text
-NOW - 24 HOURS  →  NOW + 10 MINUTES
+150–300+ raw discoveries
+        ↓
+24h freshness + broad relevance filter
+        ↓
+70–120 usable candidates
+        ↓
+event/title deduplication
+        ↓
+30–60 deterministic pre-ranked candidates
+        ↓
+compact AI editorial ranking
+        ↓
+12–20 reviewable candidates
+        ↓
+selective article extraction + story generation
+        ↓
+batched fact verification
+        ↓
+final sector-balanced selection
+        ↓
+0–10 news posts
+        ↓
+optional 1 FAN EXTRA
 ```
 
-A story older than 24 hours is not normally eligible unless a materially new development has occurred.
+## Discovery
 
-## Execution schedule
+The bot does not wait for a weak RSS count before using gap-fill discovery. Every run can use:
 
-GitHub Actions runs every **3 hours**, using UTC cron that maps to every 3 hours in Asia/Dhaka:
+- Specialist RSS feeds
+- Google News RSS queries
+- Exa news discovery
+- Official-domain discovery through the allowed source registry
+- Official trailer/video lookup for qualifying trailer stories
+
+The discovery window is a rolling **24 hours**, with a small future tolerance for feed clock skew. A story older than 24 hours is normally excluded unless a fresh qualifying development creates a new event.
+
+## Candidate strategy
+
+V3 deliberately keeps the early filter broad enough to reduce false negatives. The Python layer removes obvious off-topic, duplicate, review/listicle, rumor and low-value material, then performs deterministic pre-ranking.
+
+The deterministic pre-ranker uses source authority, event type, freshness, franchise reach, novelty, evidence-rich excerpts and image availability. It is a routing layer, not the final editorial decision.
+
+## AI ranking fix
+
+V2.2 asked the model to return many fields for every candidate. That created oversized responses and caused ranking JSON parse failures.
+
+V3 uses a compact structured-output contract:
+
+```json
+{
+  "items": [
+    {"id": 1, "score": 91, "sector": "Anime", "publish": true}
+  ]
+}
+```
+
+The model is no longer responsible for generating `event_key`, `rank_reason`, `institution`, topic taxonomy, source class or other metadata that Python can derive.
+
+Cerebras Structured Outputs remain enabled with `strict: true`. The production schemas intentionally avoid unsupported strict-mode array-size keywords. Cerebras documents strict structured output as the recommended production path and notes that `max_completion_tokens` includes reasoning tokens. 
+
+## Cerebras runtime protection
+
+V3 uses:
 
 ```text
-06:00
-09:00
-12:00
-15:00
-18:00
-21:00
-00:00
-03:00
+Ranking model:      qwen-3.8-27b
+Story model:        gpt-oss-120b
+Ranking reasoning:  none
+Story reasoning:    low
+SDK retries:        0
+Concurrency:        2
+Per-model pacing:   configurable, default 12 seconds
+Per-run request cap: 36
 ```
 
-The workflow never uses a fixed daily or per-run publication quota.
+The request wrapper logs model, duration, finish reason and token usage. Failed infrastructure requests are never converted into editorial score `0`, and failed requests are not fed into adaptive learning.
 
-## Discovery architecture
+The documented Free Trial limits currently list 5 RPM and 30K uncached TPM for both `gpt-oss-120b` and `qwen-3.8-27b`; Developer tier limits are substantially higher. The workflow therefore paces requests by default instead of relying on burst concurrency. urlCerebras rate limitshttps://inference-docs.cerebras.ai/support/rate-limits
+
+## Story generation
+
+Only the strongest reviewable candidates reach article extraction and generation.
+
+V3 can process up to **15 review candidates** with a small worker pool. This creates enough headroom for extraction/generation failures while still allowing the final feed to reach the desired 7–10 posts.
+
+Final news publication:
 
 ```text
-RSS specialist sources
-        ↓
-Google News gap fill
-        ↓
-Exa gap fill
-        ↓
-24-hour freshness gate
-        ↓
-URL + title deduplication
-        ↓
-Event clustering
-        ↓
-Deterministic low-value filter
-        ↓
-Cerebras editorial ranking
-        ↓
-82/100 publication gate
-        ↓
-Up to 6 selected by the three-sector balance engine
-        ↓
-Parallel article extraction + story generation
-        ↓
-One batched fact-verification pass
-        ↓
-Trailer / official-video discovery
-        ↓
-Image selection
-        ↓
-Dynamic Rich Message
-        ↓
-Telegram @ComicsNewsroom
-        ↓
-Persistent event memory
+TARGET: 7–10
+HARD MAX: 10
+MAX PER SECTOR: 4
 ```
 
-## Editorial ranking
+The sector rule is an opportunity rule, not a quota. The system never invents a weak post just to maintain equal counts.
 
-The internal 100-point model is:
+## Event deduplication
 
-| Factor | Points |
-|---|---:|
-| Fan interest | 25 |
-| Significance | 20 |
-| Franchise reach | 15 |
-| Freshness | 15 |
-| Novelty | 10 |
-| Source authority | 10 |
-| Visual value | 5 |
-| **Total** | **100** |
-
-The publication threshold is **82**. Rumor/speculation is capped below the publication gate.
-
-Python performs the final numeric calculation. The model does not write the score itself.
-
-## Event-based deduplication
-
-Different sites covering the same event are clustered together.
-
-Example:
+Multiple articles about one event are clustered before final selection.
 
 ```text
-Anime News Network ┐
-Crunchyroll         ├── same event ──→ one Telegram post
-Anime Corner        ┤
-ORICON              ┘
+Source A ┐
+Source B ├─ same event → one post
+Source C ┘
 ```
 
-A later meaningful development remains publishable. For example:
+Meaningful later developments remain separate events when appropriate:
 
 ```text
-Season announced → Trailer released → Release date confirmed
+Season announced
+      ↓
+Trailer released
+      ↓
+Release date confirmed
 ```
 
-These are separate editorial events.
+## Verification
 
-## Official video feature
+Each generated story must pass local numeric grounding. The surviving stories are then fact-checked in one compact batch call.
 
-For trailer/PV stories, the bot first checks the source article for direct video links. If none is available, it performs a constrained Exa lookup for:
+If the verification service fails, the bot does not pretend that the stories were verified. It may publish only high-trust candidates with strong official or multi-source evidence under the degraded fallback rules in `main.py`.
 
-- YouTube
-- Crunchyroll
+## Trailer intelligence
 
-YouTube links are validated through YouTube oEmbed. The bot never trusts an LLM-generated URL and never intentionally links a generic re-upload when a matching direct video can be verified.
+Trailer/PV stories receive a deterministic video lookup. The bot prefers a verified direct official video, especially YouTube or an official platform. LLM-generated URLs are never trusted.
 
-When a valid trailer is found, the title is followed immediately by a Rich HTML H2 action:
+When verified, the Rich Message contains:
+
+```html
+<h2>Watch Trailer 👉 <a href="OFFICIAL_URL">YouTube</a></h2>
+```
+
+## FAN EXTRA
+
+V3 keeps one separate optional non-news reader-value post per run. Formats rotate across:
 
 ```text
-<h2>Watch Trailer 👉 <a href="OFFICIAL_VIDEO_URL">YouTube</a></h2>
+Quick Fact
+Hidden Detail
+Franchise Timeline
+Creator Spotlight
+Fan Guide
+Origin Story
+Why It Matters
+Did You Know
 ```
 
-The URL is hidden behind the clickable `YouTube` text. Crunchyroll is used the same way when that is the verified official video platform.
+The extra is source-grounded and is skipped when reliable evidence is insufficient.
 
-For YouTube videos, the video thumbnail can also become the story image when the source article has no usable image.
+## Runtime budget
 
-## Cerebras latency design
+The application has a hard internal budget of **590 seconds** and the GitHub Actions job has a slightly larger external timeout so state cleanup can complete.
 
-The real-time pipeline is deliberately kept under the normal Free-tier `gpt-oss-120b` request/token envelope.
+The bot should finish earlier when work is exhausted. Ten minutes is a safety ceiling, not a requirement to wait.
+
+## State
+
+`news_state.json` is the only durable runtime state file.
+
+It stores feed health, queued candidates, event clusters, publication fingerprints, posted event memory, adaptive metrics, sector coverage, reader-extra history and source/score learning.
+
+There is no `posted_urls.txt` file in V3.
+
+## GitHub Actions
+
+The workflow runs every three hours:
 
 ```text
-40 candidates
-   ↓
-2 ranking requests
-   ↓
-top 6
-   ↓
-6 story-generation requests in parallel
-   ↓
-1 batched fact-verification request
-   ↓
-≈ 9 normal Cerebras requests/run
+00:00 UTC
+03:00 UTC
+06:00 UTC
+09:00 UTC
+12:00 UTC
+15:00 UTC
+18:00 UTC
+21:00 UTC
 ```
 
-The SDK client disables its default automatic retries because the previous production log showed repeated 429 responses followed by 57–59 second SDK sleeps. A small concurrency semaphore prevents an uncontrolled request burst, while the pipeline avoids serial verification calls.
+It also supports manual runs.
 
-Cerebras documents that real-time limits are measured by requests/minute and tokens/minute, using continuously replenished token buckets. It does not publish one universal real-time concurrency number, so the bot controls concurrency conservatively instead of assuming unlimited parallel requests.
-
-## Dynamic Rich Message templates
-
-The renderer selects a presentation based on the event type.
-
-Supported visual modes include:
-
-- Major / breaking announcement
-- New season / sequel
-- Trailer / PV
-- Manga → anime adaptation
-- Anime movie
-- Manga update / ending
-- Marvel
-- DC
-- Comic event / storyline
-- Comic adaptation
-
-The model produces structured JSON only. Python deterministically renders Rich HTML.
-
-### Example trailer structure
-
-```text
-[media]
-
-🎞️ NEW TRAILER
-
-🎬 Title
-
-One-sentence explanation.
-
-✦ Studio: ...
-✦ Release: ...
-✦ Key reveal: ...
-
-<h2>Watch Trailer 👉 <a href="OFFICIAL_VIDEO_URL">YouTube</a></h2>
-
-@ComicsNewsroom #Anime #Trailer
-
-Source: Anime News Network
-```
-
-### Example adaptation structure
-
-```text
-[media]
-
-⚡ MANGA → ANIME
-
-🎬 Title
-
-The manga has officially received an anime adaptation.
-
-✦ Studio: ...
-✦ Format: ...
-✦ Release: ...
-
-@ComicsNewsroom #Manga #Anime
-
-Source: ...
-```
-
-Only supported fields are rendered. Empty fields disappear.
-
-## Image pipeline
-
-Priority:
-
-```text
-Official key visual / artwork
-        ↓
-Official promotional image
-        ↓
-Article image
-        ↓
-Verified YouTube thumbnail for trailer stories
-        ↓
-Source logo
-        ↓
-Source-name fallback
-```
-
-Portrait artwork preserves its aspect ratio. Posters/covers are not forced into 16:9.
-
-Normal editorial images may receive a small `@ComicsNewsroom` branding chip. Full posters/covers do not.
-
-## Sources
-
-### RSS-first sources
-
-- Anime News Network
-- Anime Corner
-- MyAnimeList News
-- Anime Hunch
-- Anime UK News
-- Otaku USA
-- ComicBook.com
-- Bleeding Cool
-- The Beat
-- AIPT
-- CBR
-- SuperHeroHype
-- Toei Animation
-
-### Gap-fill / verification domains
-
-The source allow-list also covers specialist and official domains such as Crunchyroll, Tokyo Otaku Mode, ORICON, Animate Times, VIZ Media, Kodansha USA, Shueisha, Shonen Jump, Marvel, DC, Image Comics, Dark Horse, IDW, BOOM! Studios, Skybound, MAPPA, Aniplex, ufotable, WIT Studio, Bones, CloverWorks, A-1 Pictures and Kyoto Animation. Marvel and DC are consumed through gap-fill discovery rather than the broken RSS endpoints shown in the previous production log.
-
-## Required GitHub Secrets
+Required repository secrets:
 
 ```text
 EXA_API_KEY
 CEREBRAS_API_KEY
 TELEGRAM_BOT_TOKEN
+TELEGRAM_ADMIN_CHAT_ID   (optional)
 ```
 
-Optional:
+The workflow supplies:
 
 ```text
-TELEGRAM_ADMIN_CHAT_ID
+TELEGRAM_CHANNEL=@ComicsNewsroom
+CEREBRAS_MODEL=gpt-oss-120b
+CEREBRAS_RANK_MODEL=qwen-3.8-27b
+CEREBRAS_MIN_INTERVAL_SECONDS=12
 ```
 
-The public channel is hard-configured by the workflow as:
+## Production structure
 
 ```text
-@ComicsNewsroom
+ComicsNewsroom/
+├── .github/
+│   └── workflows/
+│       └── newbot.yml
+├── README.md
+├── Template.md
+├── main.py
+├── requirements.txt
+└── news_state.json
 ```
 
-The AI model remains:
+No `.gitignore`, `CHANGELOG.md`, test directory, import workflow, ZIP archive or `posted_urls.txt` is required in the production repository.
 
-```text
-gpt-oss-120b
-```
-
-## Dependencies
-
-The project intentionally keeps the previous stack:
-
-```text
-cerebras_cloud_sdk
-exa-py
-requests
-urllib3
-beautifulsoup4
-Pillow
-feedparser
-trafilatura
-```
-
-## Local validation
-
-With project dependencies installed:
+## Local checks
 
 ```bash
 python -m py_compile main.py
+```
+
+```bash
+EXA_API_KEY=dummy \
+CEREBRAS_API_KEY=dummy \
+TELEGRAM_BOT_TOKEN=dummy \
 python main.py --self-test
 ```
 
-The self-test covers taxonomy, ranking arithmetic, low-value filtering, 24-hour window behavior, video-link rendering, and poster aspect-ratio preservation.
+## Definition of Done
 
-## Repository tree
+A production run should:
 
-```text
-.
-├── .github/
-│   └── workflows/
-│       ├── newbot.yml
-│       └── import-zip.yml
-├── main.py
-├── Template.md
-├── README.md
-├── requirements.txt
-├── news_state.json
-└── posted_urls.txt
-```
-
-## Three-sector balance
-
-The newsroom has exactly three top-level sectors:
-
-```text
-Anime | Manga | Comics
-```
-
-Marvel and DC are treated as high-value subtopics within Comics. News selection is sector-balanced:
-
-1. Give every populated sector a first-pass opportunity.
-2. Never force a weak story merely to fill a sector.
-3. Limit a sector to two news posts per run.
-4. Fill remaining slots by editorial score with a small 24-hour under-coverage adjustment.
-5. Use the previous 24 hours of published sector counts to prevent one sector from dominating repeatedly.
-
-This is equal opportunity, not forced equal output.
-
-## Fan Extra: one value post per run
-
-Every scheduled run can publish **one separate FAN EXTRA** in addition to the news selection. The extra is designed to make the channel useful even when the reader is not looking for breaking news.
-
-The value formats rotate to avoid repetition:
-
-- Quick Fact
-- Hidden Detail
-- Franchise Timeline
-- Creator Spotlight
-- Fan Guide
-- Origin Story
-- Why It Matters
-- Did You Know
-
-The extra is generated only from source-backed context from a strong current or recent story. It remembers recently used formats and works so the same franchise/format does not repeat too often. It uses the same Cerebras model, the same Rich Message transport, and the existing image pipeline.
-
-The extra is stored separately from news-event history and does not consume a news-sector slot. It is limited to one per scheduled run.
+1. Discover broadly across all enabled source classes.
+2. Keep the candidate funnel large enough to avoid missing good stories.
+3. Use compact, structured AI ranking that cannot be accidentally inflated by a fixed post quota.
+4. Separate service failures from editorial rejections.
+5. Preserve event-based deduplication and three-sector coverage.
+6. Generate and verify only the strongest candidates.
+7. Publish roughly 7–10 posts when that many strong events exist.
+8. Continue safely when individual feeds, pages, video lookups or AI requests fail.
+9. Persist only `news_state.json` as runtime state.
+10. Stay within the 10-minute internal run budget.

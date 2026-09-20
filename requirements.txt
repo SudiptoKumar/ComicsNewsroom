@@ -1,4 +1,4 @@
-cerebras_cloud_sdk
+cerebras_cloud_sdk>=1.91.0,<2
 exa-py
 requests
 urllib3

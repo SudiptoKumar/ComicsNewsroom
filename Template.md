@@ -1,202 +1,167 @@
-# ComicsNewsroom Telegram Dynamic Template System V2.2
+# ComicsNewsroom V3 Telegram Templates
 
 Channel: **@ComicsNewsroom**
 
-The post renderer is dynamic. Do not force every story into one layout.
+The renderer is dynamic. A story is matched to the event type instead of forcing every story into one template.
 
-## Global design principles
+## Global sequence
 
 ```text
-ONE STORY
-    ↓
-ONE CLEAR HOOK
-    ↓
-ONE STRONG TITLE
-    ↓
+MEDIA
+ ↓
+EVENT LABEL
+ ↓
+STRONG TITLE
+ ↓
+ONE-SENTENCE SUMMARY
+ ↓
 2–4 HIGH-VALUE FACTS
-    ↓
-OPTIONAL WHY-FANS-CARE
-    ↓
-OPTIONAL DIRECT VIDEO
-    ↓
-SOURCE
+ ↓
+OPTIONAL WHY IT MATTERS
+ ↓
+OPTIONAL VERIFIED TRAILER LINK
+ ↓
+CHANNEL + HASHTAGS
+ ↓
+CLICKABLE SOURCE
 ```
 
-The reader should understand the important development quickly. Routine background is omitted.
-
-## Template 1: Major / Breaking
+## Major Announcement
 
 ```text
-[PHOTO]
+📢 MAJOR ANIME / MANGA / COMICS NEWS
 
-🚨 BREAKING
+[Title]
 
-[WORK / FRANCHISE]
+[One-sentence factual summary]
 
-[One concise factual sentence]
+✦ [Fact]
+✦ [Fact]
+✦ [Fact]
 
-✦ [Important fact]
-✦ [Important fact]
-✦ [What's next]
-
-💡 Why fans care: [only when genuinely useful]
+💡 Why fans care: [Only when useful]
 
 @ComicsNewsroom #...
 
-Source: [clickable publication]
+Source: [clickable source]
 ```
 
-## Template 2: Trailer / PV
+## Trailer / PV
 
 ```text
-[TRAILER THUMBNAIL]
-
 🎞️ NEW TRAILER
 
-[WORK TITLE]
+[Title]
 
 [What was released]
 
-✦ [Studio / production detail]
+✦ [Production / studio]
 ✦ [Release information]
 ✦ [Important reveal]
 
-<h2>Watch Trailer 👉 <a href="[verified video URL]">[YouTube / Crunchyroll]</a></h2>
+<h2>Watch Trailer 👉 <a href="[verified URL]">YouTube</a></h2>
 
 @ComicsNewsroom #Anime #Trailer
 
-Source: [clickable publication]
+Source: [clickable source]
 ```
 
-The direct video link is inserted only after URL discovery and verification.
-
-## Template 3: New Season / Sequel
+## New Season / Sequel
 
 ```text
-[PHOTO]
-
 🔄 NEW SEASON
 
-[WORK TITLE]
+[Title]
 
-[Season continuation announcement]
+[Official continuation update]
 
-✦ [Official confirmation]
+✦ [Confirmation]
 ✦ [Studio / staff]
 ✦ [Release timing]
 
 @ComicsNewsroom #Anime #NewSeason
 
-Source: [clickable publication]
+Source: [clickable source]
 ```
 
-## Template 4: Manga → Anime
+## Manga → Anime
 
 ```text
-[KEY VISUAL]
-
 ⚡ MANGA → ANIME
 
-[WORK TITLE]
+[Title]
 
 [Adaptation announcement]
 
-✦ Studio: ...
-✦ Format: ...
-✦ Release: ...
+✦ Studio: [value]
+✦ Format: [value]
+✦ Release: [value]
 
 @ComicsNewsroom #Manga #Anime
 
-Source: [clickable publication]
+Source: [clickable source]
 ```
 
-## Template 5: Major Manga Update
+## Manga Update / Ending
 
 ```text
-[MANGA ART]
-
 📖 MANGA UPDATE
 
-[WORK TITLE]
+[Title]
 
 [What changed]
 
-✦ Status: ...
-✦ Next update: ...
-✦ Important detail: ...
+✦ Status: [value]
+✦ Chapter / volume: [value]
+✦ Next step: [value]
 
-@ComicsNewsroom #Manga #MangaUpdate
+@ComicsNewsroom #Manga
 
-Source: [clickable publication]
+Source: [clickable source]
 ```
 
-## Template 6: Manga Finale / Ending
+## Marvel
 
 ```text
-[MANGA ART]
-
-📖 MANGA FINALE
-
-[WORK TITLE]
-
-[Ending announcement]
-
-✦ Final chapter: ...
-✦ Publication status: ...
-
-@ComicsNewsroom #Manga #FinalChapter
-
-Source: [clickable publication]
-```
-
-## Template 7: Marvel
-
-```text
-[COMIC ART]
-
 ◆ MARVEL COMICS
 
-[WORK / CHARACTER / EVENT]
-
-[Major development]
-
-✦ [Writer / artist / release]
-✦ [Storyline / event detail]
-✦ [Important next step]
-
-@ComicsNewsroom #Marvel #Comics
-
-Source: [clickable publication]
-```
-
-## Template 8: DC
-
-```text
-[COMIC ART]
-
-◆ DC COMICS
-
-[WORK / CHARACTER / EVENT]
+[Title]
 
 [Major development]
 
 ✦ [Creator / release]
-✦ [Storyline / event detail]
-✦ [Important next step]
+✦ [Storyline / event]
+✦ [Next step]
+
+@ComicsNewsroom #Marvel #Comics
+
+Source: [clickable source]
+```
+
+## DC
+
+```text
+◆ DC COMICS
+
+[Title]
+
+[Major development]
+
+✦ [Creator / release]
+✦ [Storyline / event]
+✦ [Next step]
 
 @ComicsNewsroom #DC #Comics
 
-Source: [clickable publication]
+Source: [clickable source]
 ```
 
-## Template 9: Major Comic Event / Storyline
+## Major Comic Event
 
 ```text
-[COMIC ART]
-
 ◆ MAJOR COMIC EVENT
 
-[WORK / EVENT]
+[Title]
 
 [Concise explanation]
 
@@ -206,99 +171,35 @@ Source: [clickable publication]
 
 @ComicsNewsroom #Comics #Event
 
-Source: [clickable publication]
+Source: [clickable source]
 ```
 
-## Template 10: Comic Adaptation
+## FAN EXTRA
 
 ```text
-[ART / FIRST LOOK]
-
-🎬 COMIC ADAPTATION
-
-[WORK TITLE]
-
-[Adaptation announcement]
-
-✦ Format: ...
-✦ Studio / platform: ...
-✦ Release: ...
-
-@ComicsNewsroom #Comics #Adaptation
-
-Source: [clickable publication]
-```
-
-## Rendering rules
-
-- Rich HTML is generated deterministically by Python.
-- The model never emits HTML or Markdown.
-- `✦` is the detail marker.
-- The source publication name is clickable.
-- No raw URLs are displayed.
-- Direct video links are clickable and appear only when verified.
-- The channel tag is `@ComicsNewsroom`.
-- Hashtags are limited to a small relevant set.
-- Empty or unsupported fields are removed.
-- Posters and comic covers preserve their original aspect ratio.
-
-
-## Trailer action rule
-
-For a verified trailer/PV, place the H2 action **immediately under the title**:
-
-```html
-<h2>Watch Trailer 👉 <a href="https://www.youtube.com/watch?v=...">YouTube</a></h2>
-```
-
-Never expose the raw URL. Never use a third-party re-upload when an official YouTube or Crunchyroll upload can be verified.
-
-## Template 11: FAN EXTRA
-
-Every scheduled run may include **one** compact reader-value post separate from breaking news.
-
-The renderer rotates among:
-
-```text
-Quick Fact
-Hidden Detail
-Franchise Timeline
-Creator Spotlight
-Fan Guide
-Origin Story
-Why It Matters
-Did You Know
-```
-
-Example:
-
-```text
-[ART / KEY VISUAL]
-
-💎 FAN EXTRA · QUICK FACT
+💎 FAN EXTRA · [Format]
 
 ✦ [Curiosity-driven factual title]
 
-[One short setup sentence]
+[Short setup]
 
 ✦ [Interesting fact]
 ✦ [Interesting fact]
-✦ [Useful context]
+✦ [Interesting fact]
 
-💡 Takeaway: [one short closing thought]
+💡 Takeaway: [Compact reader-friendly thought]
 
-@ComicsNewsroom #Fans #Anime
+@ComicsNewsroom #Fans #...
 
 Source: [clickable source]
 ```
 
-### FAN EXTRA rules
+## Formatting rules
 
-- It is not a duplicate news report.
-- It must use source-supported facts only.
-- No invented trivia or unsupported biography.
-- One extra maximum per run.
-- Avoid the same work for 14 days where possible.
-- Avoid repeating the same extra format in the recent rotation.
-- The extra does not count toward the Anime/Manga/Comics news balance.
-- The source URL is hidden behind the clickable source name.
+- Mobile-first.
+- No giant hero banner inside the message.
+- Keep the first screen useful.
+- Use only source-backed facts.
+- Hidden direct video links are preferred for verified trailers.
+- Never publish an invented date, cast member, studio, platform, sales figure or status.
+- Marvel and DC remain subtopics of the **Comics** sector, not separate top-level sectors.
