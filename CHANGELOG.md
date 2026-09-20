@@ -1,3 +1,20 @@
+# CHANGELOG
+
+## V4.1 Production Reliability Release
+
+- Replaced six-way story concurrency with serial expensive processing, matching the stable reference newsroom pattern.
+- Added one global Cerebras request clock with configurable RPM, logical-call budget, attempt budget, Retry-After handling, exponential backoff and jitter.
+- Added Exa pacing and bounded retry handling.
+- Reduced ranking cap and research depth so the bot spends AI capacity on fewer, stronger events.
+- Made 429/AI failures retryable in persistent queue state rather than permanently seen.
+- Added retry caps for deterministic/content failures.
+- Moved story processing to extract first, then research only when necessary, then generate.
+- Official-source candidates no longer spend Exa calls merely to confirm their own source.
+- Added Japanese/Korean relevance signals and major-event overrides for episode/preview headlines.
+- Added hard protection against unrelated gaming and generic `News | DC` pages.
+- Fixed the rolling 24-hour upper bound to the actual run clock.
+- Made numeric grounding use both digit and number-word equivalents to reduce false rejection.
+- Added 429 integration test to the CI workflow.
 # Changelog
 
 ## V3.0 - Deep Editorial Intelligence

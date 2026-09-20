@@ -1,4 +1,4 @@
-# ComicsNewsroom V3.0
+# ComicsNewsroom V4.0 Production
 
 Automated editorial newsroom for **@ComicsNewsroom** covering only high-value Anime, Manga and Comics developments.
 
@@ -9,7 +9,7 @@ Automated editorial newsroom for **@ComicsNewsroom** covering only high-value An
 - Normal discovery window: rolling **24 hours**.
 - Meaningful fresh developments can update an older event; a bounded 72-hour exception is allowed when concrete new development signals are present.
 - The bot runs every **3 hours**.
-- Typical output target: **7-10 strong stories per run** when enough quality news exists.
+- Typical output target: **7-10 strong stories per run** when enough quality news exists. The bot never manufactures filler to hit the target.
 - There is no forced quota. The bot may publish fewer or zero stories.
 - Duplicate reporting is clustered into one event.
 - Deep research is reserved for strong candidates.
@@ -37,6 +37,10 @@ RSS + Google News + Exa + Official Sources + Video Discovery
         -> persistent state + learning
 ```
 
+## Production-load model
+
+The expensive stages deliberately follow the proven working newsroom architecture: Cerebras calls are globally paced and sequential, story candidates are processed one at a time, Exa calls share a rate-limited clock, and one candidate failure does not cancel successful candidates. The run stops gracefully when the AI budget or rate limit is exhausted, leaving failed events retryable for a later run.
+
 ## AI / search stack
 
 - Cerebras `gpt-oss-120b`
@@ -46,7 +50,7 @@ RSS + Google News + Exa + Official Sources + Video Discovery
 - `beautifulsoup4`, `feedparser`, `trafilatura`
 - `Pillow`
 
-The V3 code uses the current Exa `search()` / `get_contents()` SDK flow and compact Cerebras strict JSON schemas.
+The bot uses the current Exa `search()` / `get_contents()` SDK flow and compact Cerebras strict JSON schemas.
 
 ## Telegram publishing
 
@@ -98,3 +102,14 @@ The repository also includes an offline executable-path harness under `tests/` t
 ## Important limitation during offline validation
 
 The build environment used for this release could not reach PyPI or the external APIs, so live Cerebras, Exa, RSS, YouTube/Crunchyroll and Telegram publishing could not be executed here. The offline executable path, schema contract, orchestration and fault-injection tests were run instead.
+
+
+## Reliability tests
+
+```bash
+python main.py --self-test
+python main.py --fixture-test
+python main.py --rate-limit-test
+```
+
+The rate-limit test simulates 429 responses and proves that retries happen through one centralized Cerebras gate rather than through concurrent worker bursts.

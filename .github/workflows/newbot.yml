@@ -1,4 +1,4 @@
-name: ComicsNewsroom V3
+name: ComicsNewsroom V4
 
 on:
   workflow_dispatch:
@@ -35,6 +35,12 @@ jobs:
           CEREBRAS_API_KEY: dummy
           TELEGRAM_BOT_TOKEN: dummy
         run: python main.py --fixture-test
+      - name: Rate-limit integration test
+        env:
+          EXA_API_KEY: dummy
+          CEREBRAS_API_KEY: dummy
+          TELEGRAM_BOT_TOKEN: dummy
+        run: python main.py --rate-limit-test
       - name: Publish
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
@@ -44,13 +50,18 @@ jobs:
           TELEGRAM_CHANNEL: "@ComicsNewsroom"
           NEWS_MODE: "update"
           CEREBRAS_MODEL: "gpt-oss-120b"
+          CEREBRAS_REQUESTS_PER_MINUTE: "6"
+          CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN: "17"
+          CEREBRAS_MAX_ATTEMPTS_PER_RUN: "26"
+          EXA_REQUESTS_PER_SECOND: "1.5"
         run: python main.py
       - name: Persist state
         run: |
           if [ -n "$(git status --porcelain news_state.json posted_urls.txt)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add news_state.json posted_urls.txt
+            git add news_state.json
+            if [ -f posted_urls.txt ]; then git add posted_urls.txt; fi
             git commit -m "chore: update comics newsroom state"
             git pull --rebase origin "${GITHUB_REF_NAME}"
             git push

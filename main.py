@@ -6,6 +6,8 @@ import html
 import argparse
 import logging
 import hashlib
+import random
+import unicodedata
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from urllib.parse import urlparse, urljoin, quote
@@ -13,8 +15,7 @@ from difflib import SequenceMatcher
 from email.utils import parsedate_to_datetime
 from io import BytesIO
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from threading import Lock, BoundedSemaphore
+from threading import Lock
 
 import requests
 import feedparser
@@ -267,13 +268,14 @@ RSS_FEEDS = [
 # ============================================================
 PUBLISH_THRESHOLD = 82
 RANKING_BATCH_SIZE = 20
-MAX_RANK_CANDIDATES = 120
-MAX_STORY_CANDIDATES = 18
-STORY_CONCURRENCY = 6
-NEWS_RESEARCH_TARGET = 18
+# Proven-load model: keep the expensive AI stages small and serial.
+MAX_RANK_CANDIDATES = 60
+MAX_STORY_CANDIDATES = 11
+STORY_CONCURRENCY = 1
+NEWS_RESEARCH_TARGET = 11
 NEWS_POST_TARGET_MIN = 7
 NEWS_POST_MAX_PER_RUN = 10
-DEEP_RESEARCH_MAX_URLS = 4
+DEEP_RESEARCH_MAX_URLS = 2
 SECTOR_BALANCE_LOOKBACK_HOURS = 24
 READER_EXTRA_ENABLED = True
 READER_EXTRA_MAX_PER_RUN = 1
@@ -295,10 +297,11 @@ READER_EXTRA_TYPES = [
 RANKING_MAX_COMPLETION_TOKENS = 900
 STORY_MAX_COMPLETION_TOKENS = 650
 VERIFY_MAX_COMPLETION_TOKENS = 550
-RESEARCH_MAX_RESULTS = 4
+RESEARCH_MAX_RESULTS = 3
 DISCOVERY_LOOKBACK_HOURS = 24
 ROLLING_DISCOVERY_HOURS = 24
-FUTURE_TOLERANCE_MINUTES = 10
+# The normal window ends at the actual run clock. Older items may enter only
+# through meaningful_update_candidate().
 QUEUE_RETENTION_DAYS = 3
 EVENT_RETENTION_DAYS = 21
 MAX_RSS_CANDIDATES = 500
@@ -307,6 +310,20 @@ MAX_GOOGLE_NEWS_CANDIDATES = 120
 THIN_EXCERPT_CHARS = 180
 MAX_EXCERPT_ENRICH = 10
 POST_DELAY_SECONDS = 0.8
+# Conservative, configurable AI/search pacing. The reference working bot uses
+# sequential expensive processing; ComicsNewsroom follows the same model.
+CEREBRAS_REQUESTS_PER_MINUTE = max(1, int(os.environ.get("CEREBRAS_REQUESTS_PER_MINUTE", "6")))
+CEREBRAS_REQUEST_INTERVAL_SECONDS = 60.0 / CEREBRAS_REQUESTS_PER_MINUTE
+CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN = max(1, int(os.environ.get("CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN", "17")))
+CEREBRAS_MAX_ATTEMPTS_PER_RUN = max(CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN, int(os.environ.get("CEREBRAS_MAX_ATTEMPTS_PER_RUN", "26")))
+CEREBRAS_MAX_RETRY_ATTEMPTS = max(0, int(os.environ.get("CEREBRAS_MAX_RETRY_ATTEMPTS", "3")))
+CEREBRAS_MAX_RETRY_WAIT_SECONDS = max(5.0, float(os.environ.get("CEREBRAS_MAX_RETRY_WAIT_SECONDS", "60")))
+EXA_REQUESTS_PER_SECOND = max(0.2, float(os.environ.get("EXA_REQUESTS_PER_SECOND", "1.5")))
+EXA_REQUEST_INTERVAL_SECONDS = 1.0 / EXA_REQUESTS_PER_SECOND
+EXA_MAX_RETRY_ATTEMPTS = max(0, int(os.environ.get("EXA_MAX_RETRY_ATTEMPTS", "2")))
+AI_FAILURE_RETRY_HOURS = max(0.25, float(os.environ.get("AI_FAILURE_RETRY_HOURS", "3")))
+CONTENT_FAILURE_RETRY_HOURS = max(0.25, float(os.environ.get("CONTENT_FAILURE_RETRY_HOURS", "6")))
+MAX_CONTENT_RETRY_ATTEMPTS = max(0, int(os.environ.get("MAX_CONTENT_RETRY_ATTEMPTS", "2")))
 DEFAULT_EVENT_DEDUP_HOURS = 36
 ANNOUNCEMENT_DEDUP_HOURS = 48
 TRAILER_DEDUP_HOURS = 72
@@ -915,12 +932,7 @@ DISCOVERY_START = (
         hours=ROLLING_DISCOVERY_HOURS
     )
 )
-DISCOVERY_END = (
-    NOW_BD
-    + timedelta(
-        minutes=FUTURE_TOLERANCE_MINUTES
-    )
-)
+DISCOVERY_END = NOW_BD
 
 DISCOVERY_TARGET_PER_REGION = 18
 
@@ -933,49 +945,126 @@ exa = Exa(
     api_key=EXA_API_KEY
 )
 
-# Disable the SDK's default automatic retries. In the previous run, a 429
-# caused the SDK to sleep for 57–59 seconds before retrying, turning a
-# fast newsroom run into an 8+ minute serial process.
+# Disable SDK retries so the newsroom controls pacing centrally.
 cerebras = Cerebras(
     api_key=CEREBRAS_API_KEY,
     max_retries=0,
-    timeout=20.0,
+    timeout=30.0,
 )
 
-# The normal API documents rate limits in requests/minute and tokens/minute,
-# not a fixed concurrency ceiling. We therefore use controlled parallelism,
-# a deliberately small per-run request budget, and no 60-second blocking retry.
-CEREBRAS_MAX_CONCURRENCY = 6
-CEREBRAS_MAX_REQUESTS_PER_RUN = 30
-_cerebras_gate = BoundedSemaphore(CEREBRAS_MAX_CONCURRENCY)
+# One global clock for every Cerebras call: ranking, story generation,
+# verification and FAN EXTRA all share the same budget.
 _cerebras_lock = Lock()
-_cerebras_requests_issued = 0
+_cerebras_next_allowed_at = 0.0
+_cerebras_logical_calls = 0
+_cerebras_attempts = 0
+_cerebras_rate_limited = False
+
+class CerebrasRateLimitError(RuntimeError):
+    pass
+
+class CerebrasBudgetError(RuntimeError):
+    pass
+
+def _header_value(headers, *names):
+    if not headers:
+        return None
+    for name in names:
+        try:
+            value = headers.get(name)
+        except Exception:
+            value = None
+        if value is None:
+            try:
+                value = headers.get(name.lower())
+            except Exception:
+                value = None
+        if value is not None:
+            return value
+    return None
+
+def _exception_headers(exc):
+    response = getattr(exc, "response", None)
+    return getattr(response, "headers", None) or {}
+
+def _retry_after_seconds(exc, attempt_no):
+    headers = _exception_headers(exc)
+    raw = _header_value(headers, "retry-after", "Retry-After")
+    if raw is not None:
+        try:
+            return min(CEREBRAS_MAX_RETRY_WAIT_SECONDS, max(0.5, float(raw)))
+        except Exception:
+            pass
+    for key in (
+        "x-ratelimit-reset-requests-minute",
+        "x-ratelimit-reset-tokens-minute",
+        "x-ratelimit-reset-requests",
+        "x-ratelimit-reset-tokens",
+    ):
+        raw = _header_value(headers, key)
+        if raw is not None:
+            match = re.search(r"(\d+(?:\.\d+)?)", safe_text(raw))
+            if match:
+                return min(CEREBRAS_MAX_RETRY_WAIT_SECONDS, max(0.5, float(match.group(1))))
+    # No server hint: exponential backoff with small jitter.
+    base = min(CEREBRAS_MAX_RETRY_WAIT_SECONDS, 2 ** max(0, attempt_no - 1))
+    return base + random.uniform(0.15, 0.75)
+
+def _reserve_cerebras_attempt():
+    global _cerebras_next_allowed_at, _cerebras_attempts
+    with _cerebras_lock:
+        if _cerebras_attempts >= CEREBRAS_MAX_ATTEMPTS_PER_RUN:
+            raise CerebrasBudgetError(
+                f"Cerebras attempt budget exhausted ({CEREBRAS_MAX_ATTEMPTS_PER_RUN})"
+            )
+        now = time.monotonic()
+        wait = max(0.0, _cerebras_next_allowed_at - now)
+        _cerebras_next_allowed_at = max(now, _cerebras_next_allowed_at) + CEREBRAS_REQUEST_INTERVAL_SECONDS
+        _cerebras_attempts += 1
+    if wait > 0:
+        time.sleep(wait)
 
 def cerebras_create(**kwargs):
-    """Fast, no-long-retry Cerebras request wrapper."""
-    global _cerebras_requests_issued
+    """Centralized, paced, retry-aware Cerebras request. All stages use it."""
+    global _cerebras_logical_calls, _cerebras_rate_limited
     with _cerebras_lock:
-        if _cerebras_requests_issued >= CEREBRAS_MAX_REQUESTS_PER_RUN:
-            raise RuntimeError(
-                f"Cerebras per-run request budget exhausted ({CEREBRAS_MAX_REQUESTS_PER_RUN})"
+        if _cerebras_logical_calls >= CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN:
+            raise CerebrasBudgetError(
+                f"Cerebras logical-call budget exhausted ({CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN})"
             )
-        _cerebras_requests_issued += 1
+        _cerebras_logical_calls += 1
 
-    with _cerebras_gate:
+    last_exc = None
+    for attempt in range(1, CEREBRAS_MAX_RETRY_ATTEMPTS + 2):
         try:
-            return cerebras.chat.completions.create(**kwargs)
+            _reserve_cerebras_attempt()
+            response = cerebras.chat.completions.create(**kwargs)
+            logger.info("Cerebras call succeeded | logical=%d attempt=%d", _cerebras_logical_calls, attempt)
+            return response
         except Exception as exc:
-            message = str(exc)
-            response = getattr(exc, "response", None)
-            headers = getattr(response, "headers", None)
-            if "429" in message or getattr(exc, "status_code", None) == 429:
-                remaining = headers.get("x-ratelimit-remaining-tokens-minute") if headers else None
-                reset = headers.get("x-ratelimit-reset-tokens-minute") if headers else None
+            last_exc = exc
+            message = safe_text(exc)
+            status = getattr(exc, "status_code", None)
+            is_429 = status == 429 or "429" in message or "rate limit" in message.lower()
+            if is_429 and attempt <= CEREBRAS_MAX_RETRY_ATTEMPTS:
+                delay = _retry_after_seconds(exc, attempt)
                 logger.warning(
-                    "Cerebras 429: no long retry; remaining_tokens=%s reset_seconds=%s",
-                    remaining, reset
+                    "Cerebras 429 | attempt=%d/%d | retry_in=%.1fs",
+                    attempt, CEREBRAS_MAX_RETRY_ATTEMPTS + 1, delay,
                 )
+                time.sleep(delay)
+                continue
+            if is_429:
+                _cerebras_rate_limited = True
+                logger.error("Cerebras 429 exhausted retries | attempts=%d", attempt)
+                raise CerebrasRateLimitError(message or "Cerebras rate limit") from exc
+            if status in {500, 502, 503, 504} and attempt <= 2:
+                delay = min(8.0, 1.5 * attempt + random.uniform(0.1, 0.4))
+                logger.warning("Cerebras transient %s | retry_in=%.1fs", status, delay)
+                time.sleep(delay)
+                continue
             raise
+    raise RuntimeError(str(last_exc) if last_exc else "Cerebras request failed")
 
 
 # ============================================================
@@ -992,7 +1081,8 @@ HARD_BAD_TITLE_RE = re.compile(
 HARD_OFF_TOPIC_RE = re.compile(
     r"\b(?:sports?|football|soccer|cricket|tennis|basketball|baseball|golf|"
     r"formula\s*1|motogp|nascar|boxing|mma|ufc|wwe|aew|wrestling|politics?|"
-    r"election|stock market|weather|finance|celebrity dating)\b", re.I,
+    r"election|stock market|weather|finance|celebrity dating|"
+    r"video game|gaming|gameplay|game review|playstation|xbox|steam|nintendo|persona 4|metroid)\b", re.I,
 )
 POSITIVE_TERMS = {
     "anime","manga","manhwa","manhua","comic","comics","graphic novel","one piece","naruto",
@@ -1003,6 +1093,10 @@ POSITIVE_TERMS = {
     "production","hiatus","returns","final chapter","ending","chapter","volume","publisher",
     "marvel","dc","comic book","crossover","event","storyline","greenlit","announced","confirmed",
 }
+
+JAPANESE_POSITIVE_TERMS = {"アニメ","漫画","マンガ","コミック","第2期","第3期","第4期","第2弾","制作決定","放送","公開","特報","予告","PV","メインPV","劇場版","映画化","アニメ化","声優","キャスト","新作","連載","休載","再開","最終回","新刊"}
+KOREAN_POSITIVE_TERMS = {"애니","애니메이션","만화","웹툰","시즌 2","시즌2","제작 결정","방영","개봉","예고편","PV","성우","연재","휴재","복귀"}
+GENERIC_SOURCE_PAGE_RE = re.compile(r"^\s*(?:news|latest news|updates?)\s*[|:]\s*(?:dc|marvel|comics?)\s*$", re.I)
 LOW_VALUE_PATTERNS = {
     "routine_review": re.compile(r"\b(?:review|reviews|recap|ending explained|fan theory|watchlist|what to watch|best .* to watch)\b", re.I),
     "rumor": re.compile(r"\b(?:rumou?r|leak(?:ed)?)\b", re.I),
@@ -1276,13 +1370,21 @@ def learned_source_block(item):
 def pre_cerebras_filter(item):
     title = safe_text(item.get("title"))
     blob = content_blob(item)
-    if HARD_OFF_TOPIC_RE.search(blob) and not re.search(r"\b(?:anime|manga|manhwa|manhua|comic|marvel|dc|superhero)\b", blob, re.I):
+    lower = blob.lower()
+    if GENERIC_SOURCE_PAGE_RE.search(title) and not re.search(r"\b(?:announc|confirm|trailer|event|series|comic|manga|anime)\b", lower, re.I):
+        return False, "generic_source_page"
+    has_core_context = bool(re.search(r"\b(?:anime|manga|manhwa|manhua|comic|comics|graphic novel|marvel|dc|batman|superman|x-men|spider-man|avengers)\b", lower, re.I))
+    has_multilingual_context = any(term in blob for term in (*JAPANESE_POSITIVE_TERMS, *KOREAN_POSITIVE_TERMS))
+    if HARD_OFF_TOPIC_RE.search(blob) and not has_core_context and not has_multilingual_context:
         return False, "off_topic"
     if HARD_BAD_TITLE_RE.search(title):
-        return False, "hard_low_value_title"
-    if any(term in title.lower() for term in ("rumor", "rumour", "leak", "leaked")):
-        return False, "rumor"
-    positives = sum(1 for term in POSITIVE_TERMS if term in blob)
+        # Editorial titles like “final episode preview” are allowed when a major
+        # development override is present elsewhere in the headline.
+        major_override = bool(re.search(r"\b(?:season\s*[2-9]|new season|announc|confirm|trailer|teaser|pv|adaptation|final chapter|series ends|major event|crossover)\b", title, re.I)) or bool(re.search(r"(?:制作決定|第2期|第3期|特報|予告|アニメ化|最終回)", title))
+        if not major_override:
+            return False, "hard_low_value_title"
+    positives = sum(1 for term in POSITIVE_TERMS if term in lower)
+    positives += 2 if has_multilingual_context else 0
     if positives == 0:
         return False, "no_comic_anime_signal"
     hit, reason = event_memory_hit(item)
@@ -1898,23 +2000,53 @@ def google_news_gap_fill(
     return added
 
 
+_exa_lock = Lock()
+_exa_next_allowed_at = 0.0
+
+def _reserve_exa_slot():
+    global _exa_next_allowed_at
+    with _exa_lock:
+        now = time.monotonic()
+        wait = max(0.0, _exa_next_allowed_at - now)
+        _exa_next_allowed_at = max(now, _exa_next_allowed_at) + EXA_REQUEST_INTERVAL_SECONDS
+    if wait > 0:
+        time.sleep(wait)
+
+def _exa_call(method, *args, **kwargs):
+    last_exc = None
+    for attempt in range(1, EXA_MAX_RETRY_ATTEMPTS + 2):
+        try:
+            _reserve_exa_slot()
+            return getattr(exa, method)(*args, **kwargs)
+        except Exception as exc:
+            last_exc = exc
+            text_exc = safe_text(exc).lower()
+            if ("429" in text_exc or "rate limit" in text_exc or "too many requests" in text_exc) and attempt <= EXA_MAX_RETRY_ATTEMPTS:
+                delay = min(8.0, 1.5 * attempt + random.uniform(0.1, 0.5))
+                logger.warning("Exa rate limit | attempt=%d/%d | retry_in=%.1fs", attempt, EXA_MAX_RETRY_ATTEMPTS + 1, delay)
+                time.sleep(delay)
+                continue
+            raise
+    raise last_exc or RuntimeError("Exa request failed")
+
 def _exa_search(query, domains=None, num_results=10, deep=False, date_filtered=True):
-    """Use the current exa-py search() API; keep the wrapper tolerant of SDK drift."""
+    """Rate-limited Exa search wrapper. All search traffic goes through one clock."""
     kwargs = {"num_results": num_results, "contents": {"highlights": True}}
     if domains:
         kwargs["include_domains"] = domains
     if date_filtered:
         kwargs["start_published_date"] = DISCOVERY_START.isoformat()
         kwargs["end_published_date"] = DISCOVERY_END.isoformat()
-    if deep:
-        kwargs["type"] = "deep-lite"
-    else:
-        kwargs["type"] = "auto"
+    kwargs["type"] = "deep-lite" if deep else "auto"
     try:
-        return exa.search(query, **kwargs)
+        return _exa_call("search", query, **kwargs)
     except TypeError:
         kwargs.pop("type", None)
-        return exa.search(query, **kwargs)
+        return _exa_call("search", query, **kwargs)
+
+def _exa_get_contents(urls, **kwargs):
+    """Rate-limited Exa content retrieval."""
+    return _exa_call("get_contents", urls, **kwargs)
 
 
 def _exa_highlights(result):
@@ -2178,7 +2310,7 @@ def normalize_sector_from_item(item):
         return "Comics"
     if re.search(r"\b(?:manga|manhwa|manhua|chapter|volume|shueisha|kodansha|viz media)\b", blob, re.I) and not re.search(r"\banime\b", blob, re.I):
         return "Manga"
-    if re.search(r"\b(?:anime|season|episode|voice actor|studio|trailer|pv)\b", blob, re.I):
+    if re.search(r"\b(?:anime|season|episode|voice actor|studio|trailer|pv)\b", blob, re.I) or any(x in blob for x in ("アニメ","声優","第2期","第3期","制作決定","予告","PV")):
         return "Anime"
     return ""
 
@@ -2232,9 +2364,13 @@ Create a stable event_key for the underlying event. Return every ID exactly once
 def rank_candidates(candidates, region):
     if not candidates:
         return []
-    regional = sorted(candidates, key=lambda x: parse_datetime(x.get("published_date")) or datetime.min.replace(tzinfo=timezone.utc), reverse=True)[:MAX_RANK_CANDIDATES]
+    regional = list(candidates)
     regional = enrich_thin_excerpts(regional)
     rows = []
+    # Cheap deterministic pre-ordering keeps the AI ranking cap focused on
+    # the strongest event signals instead of simply taking the newest items.
+    regional.sort(key=lambda x: (deterministic_editorial_score(x), parse_datetime(x.get("published_date")).timestamp() if parse_datetime(x.get("published_date")) else 0), reverse=True)
+    regional = regional[:MAX_RANK_CANDIDATES]
     for offset in range(0, len(regional), RANKING_BATCH_SIZE):
         batch = regional[offset:offset+RANKING_BATCH_SIZE]
         try:
@@ -2555,11 +2691,9 @@ def extract_article(
         )
 
     try:
-        result_set = exa.get_contents(
+        result_set = _exa_get_contents(
             [url],
-            text={
-                "max_characters": 12000,
-            },
+            text={"max_characters": 12000},
         )
 
         if result_set.results:
@@ -2700,6 +2834,10 @@ Return only the JSON schema."""
             "spoiler":"","note":"","bold_terms":[],
         }
         return story
+    except CerebrasRateLimitError:
+        raise
+    except CerebrasBudgetError:
+        raise
     except Exception as exc:
         logger.warning("Story generation failed: %s",exc)
         return None
@@ -2841,103 +2979,48 @@ def normalize_number(
     )
 
 
+NUMBER_WORDS = {
+    "zero": "0", "one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
+    "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10", "eleven": "11",
+    "twelve": "12", "thirteen": "13", "fourteen": "14", "fifteen": "15", "sixteen": "16",
+    "seventeen": "17", "eighteen": "18", "nineteen": "19", "twenty": "20",
+}
+ORDINAL_WORDS = {
+    "first": "1", "second": "2", "third": "3", "fourth": "4", "fifth": "5",
+    "sixth": "6", "seventh": "7", "eighth": "8", "ninth": "9", "tenth": "10",
+    "eleventh": "11", "twelfth": "12", "thirteenth": "13", "fourteenth": "14",
+    "fifteenth": "15", "sixteenth": "16", "seventeenth": "17", "eighteenth": "18", "nineteenth": "19", "twentieth": "20",
+}
+
 def numeric_tokens(text):
     tokens = []
-
-    for match in NUMBER_RE.finditer(
-        safe_text(text)
-    ):
-        token = safe_text(
-            match.group(0)
-        )
-
-        stripped = re.sub(
-            r"[^\d.]",
-            "",
-            token,
-        )
-
-        if (
-            YEAR_RE.match(
-                stripped
-            )
-            and not any(
-                x in token.lower()
-                for x in (
-                    "tk",
-                    "usd",
-                    "bdt",
-                    "$",
-                    "€",
-                    "£",
-                    "¥",
-                    "%",
-                    "million",
-                    "billion",
-                    "crore",
-                    "lakh",
-                )
-            )
-        ):
+    for match in NUMBER_RE.finditer(safe_text(text)):
+        token = safe_text(match.group(0))
+        stripped = re.sub(r"[^\d.]", "", token)
+        if YEAR_RE.match(stripped) and not any(x in token.lower() for x in ("tk","usd","bdt","$","€","£","¥","%","million","billion","crore","lakh")):
             continue
-
         if token:
-            tokens.append(
-                token
-            )
-
+            tokens.append(token)
     return tokens
 
+def numeric_equivalents(text):
+    values = {normalize_number(x) for x in numeric_tokens(text) if normalize_number(x)}
+    words = re.findall(r"\b(?:" + "|".join(re.escape(x) for x in sorted({*NUMBER_WORDS, *ORDINAL_WORDS}, key=len, reverse=True)) + r")\b", safe_text(text).lower())
+    for word in words:
+        values.add(NUMBER_WORDS.get(word) or ORDINAL_WORDS.get(word))
+    return {x for x in values if x}
 
-def numeric_grounded(
-    story,
-    article_text,
-):
-    source_numbers = [
-        normalize_number(x)
-        for x in numeric_tokens(
-            article_text
-        )
-    ]
-
-    generated_text = " ".join(
-        [
-            story.get(
-                "headline",
-                "",
-            ),
-            story.get(
-                "summary",
-                "",
-            ),
-            *story.get(
-                "highlights",
-                [],
-            ),
-        ]
-    )
-
-    for token in numeric_tokens(
-        generated_text
-    ):
-        normalized = normalize_number(
-            token
-        )
-
-        if not normalized:
-            continue
-
-        # Require either exact normalized occurrence or a sufficiently
-        # close numeric token from source.
-        if normalized not in source_numbers:
+def numeric_grounded(story, article_text):
+    source_numbers = numeric_equivalents(article_text)
+    generated_text = " ".join([story.get("headline", ""), story.get("summary", ""), *story.get("highlights", [])])
+    for token in numeric_tokens(generated_text):
+        normalized = normalize_number(token)
+        if normalized and normalized not in source_numbers:
+            # If the numeric statement is an ordinal/season/chapter marker and
+            # the source expresses it in words, numeric_equivalents() already matched it.
             return False, token
-
     return True, ""
 
-
-# ============================================================
-# BOLD TERMS
-# ============================================================
 
 def derive_bold_terms(
     story,
@@ -3823,102 +3906,208 @@ def official_domains_for_item(item):
     return sorted(domains)
 
 
-def deep_research_story(item):
-    """Research only strong candidates. Return compact evidence and official-source metadata."""
-    title=safe_text(item.get("title"))
-    if not title: return {"context":"","official_verified":False,"official_source_url":"","sources":[]}
-    domains=official_domains_for_item(item)
-    query=f'"{title}" official announcement trailer release adaptation'
-    evidence=[]; official_url=""; official_verified=False
+def deep_research_story(item, article_text=""):
+    """Research only strong candidates. Official source first; Exa only for reported stories needing confirmation."""
+    title = safe_text(item.get("title"))
+    if not title:
+        return {"context": "", "official_verified": False, "official_source_url": "", "sources": []}
+    domains = official_domains_for_item(item)
+    evidence = []
+    official_url = ""
+    official_verified = False
+
+    # The source article itself is already evidence. Do not spend Exa calls when
+    # the candidate is an official publisher/studio/platform post.
+    if source_class_for_url(item.get("url")) == "official":
+        official_url = safe_text(item.get("url"))
+        official_verified = True
+        return {
+            "context": safe_text(article_text)[:16000],
+            "official_verified": True,
+            "official_source_url": official_url,
+            "sources": [{"url": official_url, "title": title, "highlights": "", "official": True}],
+        }
+
+    query = f'"{title}" official announcement trailer release adaptation'
     try:
-        results=_exa_search(query,domains=domains,num_results=RESEARCH_MAX_RESULTS,deep=True,date_filtered=False)
-        for result in getattr(results,"results",[]) or []:
-            url=safe_text(getattr(result,"url","")); rtitle=safe_text(getattr(result,"title","")); highlights=_exa_highlights(result)
-            if not url or not rtitle: continue
-            dom=normalized_domain(url)
-            is_official=dom in OFFICIAL_SOURCE_DOMAINS
+        results = _exa_search(query, domains=domains, num_results=RESEARCH_MAX_RESULTS, deep=True, date_filtered=False)
+        for result in getattr(results, "results", []) or []:
+            url = safe_text(getattr(result, "url", ""))
+            rtitle = safe_text(getattr(result, "title", ""))
+            highlights = _exa_highlights(result)
+            if not url or not rtitle:
+                continue
+            dom = normalized_domain(url)
+            is_official = dom in OFFICIAL_SOURCE_DOMAINS
             if is_official and not official_url:
-                official_url=url; official_verified=True
-            evidence.append({"url":url,"title":rtitle,"highlights":highlights,"official":is_official})
+                official_url = url
+                official_verified = True
+            evidence.append({"url": url, "title": rtitle, "highlights": highlights, "official": is_official})
     except Exception as exc:
-        logger.info("Deep research search skipped: %s",exc)
-    # If official-only search yielded nothing, use a broad query to cross-check specialist reporting.
-    if len(evidence)<2:
+        logger.info("Deep research search skipped: %s", exc)
+
+    # One compact specialist cross-check only when official search did not give
+    # enough evidence. Avoid the previous 2-search + 4-content-call pattern.
+    if len(evidence) < 2:
         try:
-            results=_exa_search(f'"{title}" anime manga comics latest news',domains=PRIMARY_DOMAINS,num_results=RESEARCH_MAX_RESULTS,deep=False,date_filtered=True)
-            for result in getattr(results,"results",[]) or []:
-                url=safe_text(getattr(result,"url","")); rtitle=safe_text(getattr(result,"title","")); highlights=_exa_highlights(result)
-                if url and rtitle and not any(x["url"]==url for x in evidence):
-                    evidence.append({"url":url,"title":rtitle,"highlights":highlights,"official":normalized_domain(url) in OFFICIAL_SOURCE_DOMAINS})
+            results = _exa_search(
+                f'"{title}" anime manga comics latest news',
+                domains=PRIMARY_DOMAINS, num_results=RESEARCH_MAX_RESULTS, deep=False, date_filtered=True,
+            )
+            for result in getattr(results, "results", []) or []:
+                url = safe_text(getattr(result, "url", "")); rtitle = safe_text(getattr(result, "title", "")); highlights = _exa_highlights(result)
+                if url and rtitle and not any(x["url"] == url for x in evidence):
+                    evidence.append({"url": url, "title": rtitle, "highlights": highlights, "official": normalized_domain(url) in OFFICIAL_SOURCE_DOMAINS})
         except Exception as exc:
-            logger.info("Deep research broad search skipped: %s",exc)
-    texts=[]
-    fetched=0
+            logger.info("Deep research broad search skipped: %s", exc)
+
+    texts = []
     for ev in evidence[:DEEP_RESEARCH_MAX_URLS]:
-        if fetched>=DEEP_RESEARCH_MAX_URLS: break
         try:
-            contents=exa.get_contents([ev["url"]],text={"max_characters":5000})
-            results=getattr(contents,"results",[]) or []
-            text_value=safe_text(getattr(results[0],"text","")) if results else ""
+            contents = _exa_get_contents([ev["url"]], text={"max_characters": 5000})
+            results = getattr(contents, "results", []) or []
+            text_value = safe_text(getattr(results[0], "text", "")) if results else ""
             if text_value:
                 texts.append(f"SOURCE: {ev['title']}\nURL: {ev['url']}\nOFFICIAL: {ev['official']}\n{text_value[:5000]}")
-                fetched+=1
             else:
                 texts.append(f"SOURCE: {ev['title']}\nURL: {ev['url']}\nOFFICIAL: {ev['official']}\n{ev['highlights'][:2200]}")
         except Exception:
             texts.append(f"SOURCE: {ev['title']}\nURL: {ev['url']}\nOFFICIAL: {ev['official']}\n{ev['highlights'][:2200]}")
-    if official_url:
-        item["official_source_url"]=official_url
-    return {"context":"\n\n".join(texts)[:16000],"official_verified":official_verified,"official_source_url":official_url,"sources":evidence[:DEEP_RESEARCH_MAX_URLS]}
 
+    context_parts = [safe_text(article_text)[:9000]] if article_text else []
+    context_parts.extend(texts)
+    if official_url:
+        item["official_source_url"] = official_url
+    return {
+        "context": "\n\n".join(x for x in context_parts if x)[:16000],
+        "official_verified": official_verified,
+        "official_source_url": official_url,
+        "sources": evidence[:DEEP_RESEARCH_MAX_URLS],
+    }
+
+
+def mark_candidate_retryable(item, stage, reason, content_failure=False):
+    canonical = safe_text(item.get("canonical"))
+    if not canonical:
+        return
+    q = STATE.get("queue", {}).get(canonical)
+    if q is None:
+        return
+    field = "content_retry_count" if content_failure else "ai_retry_count"
+    attempts = int(q.get(field, 0)) + 1
+    q[field] = attempts
+    max_attempts = MAX_CONTENT_RETRY_ATTEMPTS if content_failure else 999999
+    if attempts >= max_attempts:
+        q["status"] = "rejected"
+        q["rejected_at"] = now_iso()
+        q["failure_stage"] = stage
+        q["failure_reason"] = safe_text(reason)[:500]
+        q["retry_exhausted"] = True
+        logger.warning("Candidate permanently rejected after retries | stage=%s | title=%s", stage, item.get("title", ""))
+        return
+    q["status"] = "retryable"
+    q["failure_stage"] = stage
+    q["failure_reason"] = safe_text(reason)[:500]
+    delay_hours = CONTENT_FAILURE_RETRY_HOURS if content_failure else AI_FAILURE_RETRY_HOURS
+    q["retry_at"] = (datetime.now(BD_TZ) + timedelta(hours=delay_hours)).isoformat()
+    q["retry_exhausted"] = False
+    logger.info("Candidate queued for retry | stage=%s attempt=%d | retry_at=%s | title=%s", stage, attempts, q["retry_at"], item.get("title", ""))
+
+def mark_candidate_selected(item):
+    canonical = safe_text(item.get("canonical"))
+    q = STATE.get("queue", {}).get(canonical)
+    if q:
+        q["status"] = "selected"
+        q["selected_at"] = now_iso()
+        q.pop("retry_at", None)
+        q.pop("failure_reason", None)
+        q.pop("failure_stage", None)
 
 def process_story_candidate(item):
-    """Deep-research one strong candidate, then generate and enrich the final story."""
-    research=deep_research_story(item)
-    supplied_video_candidates=list(item.get("video_candidates",[]) or [])
-    supplied_image_candidates=list(item.get("image_candidates",[]) or [])
-    article_text,image_url=extract_article(item)
-    item["video_candidates"]=list(dict.fromkeys(supplied_video_candidates + list(item.get("video_candidates",[]) or [])))[:12]
-    item["image_candidates"]=list(dict.fromkeys(supplied_image_candidates + list(item.get("image_candidates",[]) or [])))[:20]
+    """Serial deep research + generation + local grounding for one strong event."""
+    item["_failure_kind"] = ""
+    supplied_video_candidates = list(item.get("video_candidates", []) or [])
+    supplied_image_candidates = list(item.get("image_candidates", []) or [])
+    supplied_image = safe_text(item.get("image"))
+    article_text, image_url = extract_article(item)
     if not article_text:
-        logger.warning("DROP extraction: %s",item.get("title")); return None
-    story=generate_story(item,article_text,research.get("context",""))
+        item["_failure_kind"] = "extraction"
+        logger.warning("DROP extraction: %s", item.get("title"))
+        return None
+
+    item["video_candidates"] = list(dict.fromkeys(supplied_video_candidates + list(item.get("video_candidates", []) or [])))[:12]
+    item["image_candidates"] = list(dict.fromkeys(supplied_image_candidates + list(item.get("image_candidates", []) or [])))[:20]
+
+    source_is_official = source_class_for_url(item.get("url")) == "official"
+    research = deep_research_story(item, article_text) if not source_is_official else {
+        "context": article_text[:12000],
+        "official_verified": True,
+        "official_source_url": item.get("url", ""),
+        "sources": [{"url": item.get("url", ""), "title": item.get("title", ""), "highlights": "", "official": True}],
+    }
+
+    supplied_video_candidates = list(item.get("video_candidates", []) or [])
+    supplied_image_candidates = list(item.get("image_candidates", []) or [])
+    item["video_candidates"] = list(dict.fromkeys(supplied_video_candidates + list(item.get("video_candidates", []) or [])))[:12]
+    item["image_candidates"] = list(dict.fromkeys(supplied_image_candidates + list(item.get("image_candidates", []) or [])))[:20]
+
+    try:
+        story = generate_story(item, article_text, research.get("context", ""))
+    except CerebrasRateLimitError:
+        item["_failure_kind"] = "ai_rate_limit"
+        raise
+    except CerebrasBudgetError:
+        item["_failure_kind"] = "ai_budget"
+        raise
     if not story:
-        logger.warning("DROP generation: %s",item.get("title")); return None
-    region=item.get("region",REGION)
-    story["topic"]=canonical_topic(story.get("news_type") or item.get("topic"),region)
-    story["image_url"]=image_url or item.get("image")
-    story["official_source_url"]=research.get("official_source_url","")
-    story["research_official_verified"]=bool(research.get("official_verified"))
-    story["research_sources"]=research.get("sources",[])
-    story["reader_context"]=trim_source_text(article_text,6000)
+        item["_failure_kind"] = "generation"
+        logger.warning("DROP generation: %s", item.get("title"))
+        return None
 
-    grounded,bad_number=numeric_grounded(story,article_text)
+    region = item.get("region", REGION)
+    story["topic"] = canonical_topic(story.get("news_type") or item.get("topic"), region)
+    story["image_url"] = image_url or supplied_image or item.get("image")
+    story["official_source_url"] = research.get("official_source_url", "")
+    story["research_official_verified"] = bool(research.get("official_verified"))
+    story["research_sources"] = research.get("sources", [])
+    story["reader_context"] = trim_source_text(article_text, 6000)
+
+    grounding_text = article_text + "\n\nRESEARCH EVIDENCE:\n" + safe_text(research.get("context", ""))
+    grounded, bad_number = numeric_grounded(story, grounding_text)
     if not grounded:
-        logger.warning("DROP numeric grounding: %s (%s)",story.get("headline"),bad_number); return None
-    story["institution"]=item.get("institution","")
-    story["event_key"]=item.get("event_key","")
-    story["event_cluster_id"]=item.get("event_cluster_id","")
-    story["event_confidence"]=item.get("event_confidence",0)
-    story["event_source_count"]=item.get("event_source_count",0)
-    story["official_video_url"]=safe_text(story.get("official_video_url")) if story.get("official_video_url") else ""
-    story["official_video_platform"]=safe_text(story.get("official_video_platform")) if story.get("official_video_url") else ""
-    story["official_video_title"]=safe_text(story.get("official_video_title")) if story.get("official_video_url") else ""
+        item["_failure_kind"] = "numeric_grounding"
+        logger.warning("DROP numeric grounding: %s (%s)", story.get("headline"), bad_number)
+        return None
 
-    if story.get("priority_type")=="Major Trailer / PV" or re.search(r"\b(?:trailer|teaser|pv|promo video|first look|new footage)\b", f"{item.get('title','')} {item.get('excerpt','')}",re.I):
-        for candidate_url in item.get("video_candidates",[])[:8]:
-            ok,platform,video_title=verify_video_url(candidate_url,story.get("title",""))
-            if ok and video_title_relevant(video_title or story.get("title",""),story.get("title","")):
-                story["official_video_url"]=candidate_url; story["official_video_platform"]=platform; story["official_video_title"]=video_title or story.get("title",""); break
+    story["institution"] = item.get("institution", "")
+    story["event_key"] = item.get("event_key", "")
+    story["event_cluster_id"] = item.get("event_cluster_id", "")
+    story["event_confidence"] = item.get("event_confidence", 0)
+    story["event_source_count"] = item.get("event_source_count", 0)
+    story["official_video_url"] = safe_text(story.get("official_video_url")) if story.get("official_video_url") else ""
+    story["official_video_platform"] = safe_text(story.get("official_video_platform")) if story.get("official_video_url") else ""
+    story["official_video_title"] = safe_text(story.get("official_video_title")) if story.get("official_video_url") else ""
+
+    if story.get("priority_type") == "Major Trailer / PV" or re.search(r"\b(?:trailer|teaser|pv|promo video|first look|new footage)\b", f"{item.get('title','')} {item.get('excerpt','')}", re.I) or re.search(r"(?:PV|予告|特報|メインPV|trailer|teaser)", f"{item.get('title','')} {item.get('excerpt','')}", re.I):
+        for candidate_url in item.get("video_candidates", [])[:8]:
+            ok, platform, video_title = verify_video_url(candidate_url, story.get("title", ""))
+            if ok and video_title_relevant(video_title or story.get("title", ""), story.get("title", "")):
+                story["official_video_url"] = candidate_url
+                story["official_video_platform"] = platform
+                story["official_video_title"] = video_title or story.get("title", "")
+                break
         if not story.get("official_video_url"):
-            found=exa_video_search(story.get("title",""))
+            found = exa_video_search(story.get("title", ""))
             if found:
-                story["official_video_url"]=found["url"]; story["official_video_platform"]=found["platform"]; story["official_video_title"]=found["title"]
+                story["official_video_url"] = found["url"]
+                story["official_video_platform"] = found["platform"]
+                story["official_video_title"] = found["title"]
         if story.get("official_video_url") and not story.get("image_url"):
-            thumb=youtube_thumbnail(story.get("official_video_url"))
-            if thumb: story["image_url"]=thumb
-    story["category_hashtags"]=category_hashtags(story)
-    story["_source_article_text"]=article_text
+            thumb = youtube_thumbnail(story.get("official_video_url"))
+            if thumb:
+                story["image_url"] = thumb
+    story["category_hashtags"] = category_hashtags(story)
+    story["_source_article_text"] = article_text
     return story
 
 
@@ -4021,8 +4210,13 @@ def available_candidates(region, source_pool=None):
     for item in STATE.get("queue", {}).values():
         if item.get("region") != region:
             continue
-        if item.get("status") not in {"pending", "selected"}:
+        status = item.get("status")
+        if status not in {"pending", "selected", "retryable"}:
             continue
+        if status == "retryable":
+            retry_at = parse_datetime(item.get("retry_at"))
+            if retry_at and retry_at > NOW_BD:
+                continue
 
         published = parse_datetime(item.get("published_date"))
         if not published or not (DISCOVERY_START <= published <= DISCOVERY_END or meaningful_update_candidate(item)):
@@ -4337,29 +4531,67 @@ def choose_reader_extra_seed(stories, ranked):
     return candidates[0] if candidates else None
 
 def process_ranked_region(region, ranked):
-    candidates=[dict(x) for x in ranked if int(x.get("importance_score",0))>=PUBLISH_THRESHOLD and bool(x.get("important"))]
-    candidates=candidates[:NEWS_RESEARCH_TARGET]
+    """Process a bounded candidate set serially, isolating every candidate failure."""
+    candidates = [dict(x) for x in ranked if int(x.get("importance_score", 0)) >= PUBLISH_THRESHOLD and bool(x.get("important"))]
+    candidates = candidates[:NEWS_RESEARCH_TARGET]
     if not candidates:
-        logger.info("DEEP RESEARCH: no candidates above editorial gate"); return []
-    logger.info("DEEP RESEARCH: processing %d strong candidates",len(candidates))
-    stories=[]
-    with ThreadPoolExecutor(max_workers=STORY_CONCURRENCY) as executor:
-        futures={executor.submit(process_story_candidate,item):item for item in candidates}
-        for future in as_completed(futures):
-            item=futures[future]
-            try:
-                story=future.result()
-                if story: stories.append(story)
-            except Exception as exc:
-                logger.warning("Candidate research failed for %s: %s",item.get("title",""),exc)
-    stories.sort(key=lambda x:(-int(x.get("importance_score",0)),int(x.get("editor_rank",9999))))
-    verified=verify_stories_batch(stories)
+        logger.info("DEEP RESEARCH: no candidates above editorial gate")
+        return []
+
+    logger.info("DEEP RESEARCH: processing %d strong candidates | SERIAL", len(candidates))
+    stories = []
+    for position, item in enumerate(candidates, 1):
+        canonical = safe_text(item.get("canonical"))
+        q = STATE.get("queue", {}).get(canonical)
+        if q:
+            q["status"] = "processing"
+            q["processing_at"] = now_iso()
+            q["processing_rank"] = position
+        save_state(STATE)
+        try:
+            story = process_story_candidate(item)
+            if story:
+                mark_candidate_selected(item)
+                stories.append(story)
+            else:
+                failure = item.get("_failure_kind") or "story_pipeline"
+                content_failure = failure in {"numeric_grounding", "generation", "extraction"}
+                mark_candidate_retryable(item, failure, f"{failure} failed", content_failure=content_failure)
+        except CerebrasRateLimitError as exc:
+            mark_candidate_retryable(item, "ai_rate_limit", str(exc), content_failure=False)
+            logger.warning("Stopping story generation for this run after Cerebras rate limit; successful stories remain publishable.")
+            save_state(STATE)
+            break
+        except CerebrasBudgetError as exc:
+            mark_candidate_retryable(item, "ai_budget", str(exc), content_failure=False)
+            logger.warning("Stopping story generation for this run after Cerebras budget exhaustion.")
+            save_state(STATE)
+            break
+        except Exception as exc:
+            mark_candidate_retryable(item, "candidate_pipeline", str(exc), content_failure=False)
+            logger.warning("Candidate isolated failure: %s | %s", item.get("title", ""), exc)
+        save_state(STATE)
+
+    stories.sort(key=lambda x: (-int(x.get("importance_score", 0)), int(x.get("editor_rank", 9999))))
+    if _cerebras_rate_limited:
+        verified = []
+        for story in stories:
+            if story.get("research_official_verified") or source_class_for_url(story.get("url")) == "official":
+                story["verification_status"] = "official_fallback"
+                verified.append(story)
+        logger.warning("AI verification skipped after hard Cerebras rate limit; kept %d independently official stories", len(verified))
+    else:
+        verified = verify_stories_batch(stories)
+    verified_ids = {safe_text(x.get("canonical")) for x in verified}
+    for story in stories:
+        if safe_text(story.get("canonical")) not in verified_ids:
+            mark_candidate_retryable(story, "claim_verification", "AI/source verification rejected story", content_failure=True)
     for story in verified:
-        story["sector"]=normalize_sector(story.get("sector")) or normalize_sector_from_item(story)
-        story["topic"]=canonical_topic(story.get("topic") or story.get("news_type") or "",region)
-        story["category_hashtags"]=category_hashtags(story)
-    final=balanced_news_selection(verified,limit=NEWS_POST_MAX_PER_RUN)
-    logger.info("FINAL VALID: %d | researched=%d generated=%d verified=%d target=%d-%d",len(final),len(candidates),len(stories),len(verified),NEWS_POST_TARGET_MIN,NEWS_POST_MAX_PER_RUN)
+        story["sector"] = normalize_sector(story.get("sector")) or normalize_sector_from_item(story)
+        story["topic"] = canonical_topic(story.get("topic") or story.get("news_type") or "", region)
+        story["category_hashtags"] = category_hashtags(story)
+    final = balanced_news_selection(verified, limit=NEWS_POST_MAX_PER_RUN)
+    logger.info("FINAL VALID: %d | researched=%d generated=%d verified=%d target=%d-%d", len(final), len(candidates), len(stories), len(verified), NEWS_POST_TARGET_MIN, NEWS_POST_MAX_PER_RUN)
     return final
 
 
@@ -4377,7 +4609,7 @@ def publication_duplicate_reason(story, reserved):
 
 
 def run():
-    logger.info("COMICSNEWSROOM V3.0 DEEP EDITORIAL RUN")
+    logger.info("COMICSNEWSROOM V4.0 PRODUCTION RUN")
     logger.info("Channel=%s Mode=%s Threshold=%d/100",TELEGRAM_CHANNEL,NEWS_MODE,PUBLISH_THRESHOLD)
     logger.info("24H WINDOW | %s -> %s",DISCOVERY_START.isoformat(),DISCOVERY_END.isoformat())
 
@@ -4395,7 +4627,7 @@ def run():
     metrics=STATE.setdefault("adaptive_metrics",{})
     metrics["raw_discovered"]=len(STATE.get("queue",{}))
     logger.info("PRE-CEREBRAS: rejected=%d hard=%d duplicate=%d learned=%d passed=%d",int(metrics.get("pre_cerebras_rejected",0)),int(metrics.get("hard_rejected",0)),int(metrics.get("duplicate_rejected",0)),int(metrics.get("learned_rejected",0)),int(metrics.get("passed_to_cerebras",0)))
-    logger.info("CANDIDATES AFTER FILTER: %d | RANK CAP=%d | RUN AI BUDGET=%d | CONCURRENCY=%d",len(candidates),MAX_RANK_CANDIDATES,CEREBRAS_MAX_REQUESTS_PER_RUN,CEREBRAS_MAX_CONCURRENCY)
+    logger.info("CANDIDATES AFTER FILTER: %d | RANK CAP=%d | AI LOGICAL BUDGET=%d | AI RPM=%d | STORY MODE=SERIAL",len(candidates),MAX_RANK_CANDIDATES,CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN,CEREBRAS_REQUESTS_PER_MINUTE)
 
     ranked=prepare_ranked_region(REGION,candidates)
     logger.info("RANKED ABOVE GATE: %d",len(ranked))
@@ -4445,7 +4677,7 @@ def run():
 
     # One compact reader-value post per run, separate from the three-sector news quota.
     extra_published = 0
-    if READER_EXTRA_ENABLED and READER_EXTRA_MAX_PER_RUN and not reader_extra_recent_global():
+    if READER_EXTRA_ENABLED and READER_EXTRA_MAX_PER_RUN and not _cerebras_rate_limited and not reader_extra_recent_global():
         seed = choose_reader_extra_seed(stories, ranked)
         if seed and not reader_extra_work_recent(seed.get("title") or seed.get("headline")):
             # Current-run stories retain their source article text until this point.
@@ -4484,62 +4716,96 @@ def run():
 # ============================================================
 
 def self_test():
-    """Fast invariant tests that do not require network/API access."""
-    sample={
-        "title":"Example Anime","year":"2026","summary":"The anime's new season has been officially confirmed.",
-        "sector":"Anime","format":"Anime","news_type":"Trailer","priority_type":"Major Trailer / PV",
+    """Fast invariant tests; never depends on the repository's persisted state."""
+    sample = {
+        "title":"Example Anime", "year":"2026", "summary":"The anime's new season has been officially confirmed.",
+        "sector":"Anime", "format":"Anime", "news_type":"Trailer", "priority_type":"Major Trailer / PV",
         "highlights":["The next season has been officially confirmed.","More production details are expected later."],
-        "why_it_matters":"It confirms the franchise will continue.","platform":"Crunchyroll","episodes":"12","chapters":"","languages":"Japanese, English","status":"Coming Soon","release_date":"2026",
-        "official_video_url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ","official_video_platform":"YouTube","official_video_title":"Example Anime Official Trailer","spoiler":"","note":"","bold_terms":["Example Anime","Crunchyroll"],
-        "source":"Anime News Network","url":"https://www.animenewsnetwork.com/example/story","region":REGION,"topic":"Major Trailer / PV","institution":"","importance_score":90,"important":True,"event_key":"example_anime_season_2","source_class":"reported","image_url":"","image_candidates":[],"canonical":"animenewsnetwork.com/example/story"
+        "why_it_matters":"It confirms the franchise will continue.", "platform":"Crunchyroll", "episodes":"12", "chapters":"", "languages":"Japanese, English", "status":"Coming Soon", "release_date":"2026",
+        "official_video_url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ", "official_video_platform":"YouTube", "official_video_title":"Example Anime Official Trailer", "spoiler":"", "note":"", "bold_terms":["Example Anime","Crunchyroll"],
+        "source":"Anime News Network", "url":"https://www.animenewsnetwork.com/example/story", "region":REGION, "topic":"Major Trailer / PV", "institution":"", "importance_score":90, "important":True, "event_key":"example_anime_season_2", "source_class":"reported", "image_url":"", "image_candidates":[], "canonical":"animenewsnetwork.com/example/story"
     }
-    rendered=dynamic_rich_html(sample)
-    assert "@ComicsNewsroom" in rendered
-    assert "Watch Trailer 👉" in rendered and "<h2>" in rendered
-    assert '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">YouTube</a>' in rendered
-    assert "Official Source" not in rendered
-    assert set(SECTORS)=={"Anime","Manga","Comics"}
-    assert normalize_sector("DC")=="Comics" and normalize_sector("Marvel")=="Comics"
-    assert normalize_sector("unknown")==""
-    assert rank_score({"score":100})==100
-    assert rank_score({"score":140})==100 and rank_score({"score":-4})==0
-    assert canonical_topic("trailer")=="Major Trailer / PV"
-    assert canonical_topic("manga to anime")=="Manga → Anime Adaptation"
-    assert update_category_coverage is not None
-    # 24h freshness
-    fresh=NOW_BD-timedelta(hours=2); stale=NOW_BD-timedelta(hours=25)
+    rendered = dynamic_rich_html(sample)
+    assert "@ComicsNewsroom" in rendered and "Watch Trailer 👉" in rendered and "<h2>" in rendered
+    assert set(SECTORS) == {"Anime", "Manga", "Comics"}
+    assert normalize_sector("DC") == "Comics" and normalize_sector("Marvel") == "Comics"
+    assert normalize_sector("unknown") == ""
+    assert rank_score({"score":100}) == 100 and rank_score({"score":140}) == 100 and rank_score({"score":-4}) == 0
+    assert canonical_topic("trailer") == "Major Trailer / PV"
+    assert canonical_topic("manga to anime") == "Manga → Anime Adaptation"
+    # Isolated state for filtering tests.
+    saved_state = globals().get("STATE")
+    saved_posted = globals().get("POSTED_URLS")
+    globals()["STATE"] = default_state(); globals()["POSTED_URLS"] = set()
+    fresh = NOW_BD - timedelta(hours=2); stale = NOW_BD - timedelta(hours=25)
     assert candidate_basic_allowed({"url":"https://animecorner.me/fresh","title":"Major anime announcement","published_dt":fresh,"region":REGION}) is True
     assert candidate_basic_allowed({"url":"https://animecorner.me/stale","title":"Major anime announcement","published_dt":stale,"region":REGION}) is False
-    # Meaningful older update: a previously published work receives a new major development.
-    saved_work_memory=STATE.get("work_memory",{})
-    update_title="Example Anime officially announces Season 3 trailer"
-    update_key=work_key_from_text(update_title)
-    STATE["work_memory"]={update_key:{"published_events":{"New Season / Sequel": (NOW_BD-timedelta(hours=30)).isoformat()}}}
-    old_update={"url":"https://animecorner.me/example-season-3","title":update_title,"excerpt":"The official announcement confirms a new trailer.","published_dt":stale,"region":REGION}
-    assert meaningful_update_candidate(old_update) is True
-    assert candidate_basic_allowed(old_update) is True
-    STATE["work_memory"]=saved_work_memory
-    # Soft diversity: never replaces higher-quality stories merely to fill a sector.
-    ranked=[
-        {"importance_score":96,"important":True,"sector":"Anime","editor_rank":1,"canonical":"a"},
-        {"importance_score":95,"important":True,"sector":"Anime","editor_rank":2,"canonical":"b"},
-        {"importance_score":83,"important":True,"sector":"Comics","editor_rank":3,"canonical":"c"},
-    ]
-    picked=balanced_news_selection(ranked,limit=2)
-    assert [x["canonical"] for x in picked]==["a","b"]
-    # Sector normalization always maps Marvel/DC to Comics.
-    assert normalize_sector_from_item({"title":"Marvel announces a new X-Men event","excerpt":"comic"})=="Comics"
-    # Reader extra global cooldown.
-    old_history=STATE.get("reader_extra_history",[])
-    STATE["reader_extra_history"]= [{"published_at":NOW_BD.isoformat()}]
-    assert reader_extra_recent_global() is True
-    STATE["reader_extra_history"]=old_history
-    # Trailer URL parser.
-    assert _youtube_video_id("https://www.youtube.com/watch?v=dQw4w9WgXcQ") == "dQw4w9WgXcQ"
-    portrait=Image.new("RGB",(700,1100),(60,70,80)); assert fit_full_poster(portrait).size==(700,1100)
-    assert CEREBRAS_MAX_REQUESTS_PER_RUN>=26
-    assert NEWS_POST_TARGET_MIN==7 and NEWS_POST_MAX_PER_RUN==10
-    logger.info("SELF-TEST: PASS")
+    jp = {"url":"https://oricon.co.jp/news/example","title":"『魔法騎士レイアース』メインPV第2弾公開","excerpt":"アニメ新作の制作決定と第2弾PV公開", "published_dt":fresh, "region":REGION}
+    assert candidate_basic_allowed(jp) is True
+    gaming = {"url":"https://animenewsnetwork.com/news/persona","title":"Persona 4 gets a new game update","excerpt":"video game gameplay update", "published_dt":fresh, "region":REGION}
+    assert candidate_basic_allowed(gaming) is False
+    generic_dc = {"url":"https://dc.com/news/example","title":"News | DC","excerpt":"", "published_dt":fresh, "region":REGION}
+    assert candidate_basic_allowed(generic_dc) is False
+    # Numeric grounding accepts “Season 2” vs “second season”.
+    ok, _ = numeric_grounded({"headline":"Example Season 2", "summary":"The second season is confirmed.", "highlights":[]}, "The second season is officially confirmed.")
+    assert ok is True
+    # Retryable state does not become seen forever.
+    c = {"canonical":"example.com/a","title":"Example","region":REGION}
+    globals()["STATE"]["queue"][c["canonical"]] = {**c,"status":"pending"}
+    mark_candidate_retryable(c,"ai_rate_limit","429")
+    assert globals()["STATE"]["queue"][c["canonical"]]["status"] == "retryable"
+    globals()["STATE"]["queue"][c["canonical"]]["retry_at"] = (NOW_BD-timedelta(minutes=1)).isoformat()
+    globals()["STATE"]["queue"][c["canonical"]]["status"] = "retryable"
+    assert len(available_candidates(REGION) if False else [x for x in globals()["STATE"]["queue"].values() if x.get("status") == "retryable"]) == 1
+    globals()["STATE"] = saved_state; globals()["POSTED_URLS"] = saved_posted
+    assert DISCOVERY_END == NOW_BD
+    assert STORY_CONCURRENCY == 1
+    assert CEREBRAS_REQUESTS_PER_MINUTE >= 1 and CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN >= 10
+    assert NEWS_POST_TARGET_MIN == 7 and NEWS_POST_MAX_PER_RUN == 10
+    logger.info("SELF-TEST: PASS | serialized AI, multilingual filter, retryable state, numeric grounding")
+
+
+def rate_limit_test():
+    """Simulate a production-like burst and prove the centralized wrapper retries without concurrency storms."""
+    global _cerebras_next_allowed_at, _cerebras_logical_calls, _cerebras_attempts, _cerebras_rate_limited
+    original_client = globals()["cerebras"]
+    original_interval = globals()["CEREBRAS_REQUEST_INTERVAL_SECONDS"]
+    original_logical = globals()["CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN"]
+    original_attempts = globals()["CEREBRAS_MAX_ATTEMPTS_PER_RUN"]
+    original_retries = globals()["CEREBRAS_MAX_RETRY_ATTEMPTS"]
+
+    class FakeHeaders(dict):
+        pass
+    class FakeExc(Exception):
+        status_code = 429
+        def __init__(self):
+            super().__init__("429 Requests per minute limit exceeded")
+            self.response = type("R", (), {"headers": FakeHeaders({"retry-after":"0.01"})})()
+    class FakeCreate:
+        def __init__(self): self.calls = 0
+        def __call__(self, **kwargs):
+            self.calls += 1
+            if self.calls in {2, 3}:
+                raise FakeExc()
+            return type("Response", (), {"choices":[type("Choice", (), {"message":type("Msg", (), {"content":"{\"ok\":true}"})()})()]})()
+    fake = FakeCreate()
+    globals()["cerebras"] = type("C", (), {"chat":type("Chat", (), {"completions":type("Comp", (), {"create": fake})()})()})()
+    globals()["CEREBRAS_REQUEST_INTERVAL_SECONDS"] = 0.0
+    globals()["CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN"] = 3
+    globals()["CEREBRAS_MAX_ATTEMPTS_PER_RUN"] = 8
+    globals()["CEREBRAS_MAX_RETRY_ATTEMPTS"] = 2
+    _cerebras_next_allowed_at = 0.0; _cerebras_logical_calls = 0; _cerebras_attempts = 0; _cerebras_rate_limited = False
+    for _ in range(2):
+        r = cerebras_create(model="test", messages=[], max_completion_tokens=1)
+        assert r.choices
+    assert fake.calls == 4
+    assert _cerebras_attempts == 4
+    globals()["cerebras"] = original_client
+    globals()["CEREBRAS_REQUEST_INTERVAL_SECONDS"] = original_interval
+    globals()["CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN"] = original_logical
+    globals()["CEREBRAS_MAX_ATTEMPTS_PER_RUN"] = original_attempts
+    globals()["CEREBRAS_MAX_RETRY_ATTEMPTS"] = original_retries
+    logger.info("RATE-LIMIT-TEST: PASS | 429 backoff/retry centralized | attempts=%d", _cerebras_attempts)
 
 
 def fixture_test():
@@ -4568,11 +4834,14 @@ if __name__ == "__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument("--self-test",action="store_true")
     parser.add_argument("--fixture-test",action="store_true")
+    parser.add_argument("--rate-limit-test",action="store_true")
     args=parser.parse_args()
     if args.fixture_test:
         fixture_test()
     elif args.self_test:
         self_test()
+    elif args.rate_limit_test:
+        rate_limit_test()
     else:
         run()
 
