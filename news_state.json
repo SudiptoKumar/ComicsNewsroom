@@ -2,92 +2,92 @@
   "feeds": {
     "https://www.animenewsnetwork.com/all/rss.xml": {
       "etag": null,
-      "last_modified": "Sun, 20 Sep 2026 13:26:54 GMT",
-      "last_checked": "2026-09-20T19:28:55.498111+06:00",
+      "last_modified": "Sun, 20 Sep 2026 14:10:46 GMT",
+      "last_checked": "2026-09-20T20:14:16.742769+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://animecorner.me/feed/": {
-      "etag": "W/\"7eff6069b78d27f43417ee8b4dc2ca89\"",
-      "last_modified": "Sun, 20 Sep 2026 11:37:01 GMT",
-      "last_checked": "2026-09-20T19:28:55.684768+06:00",
+      "etag": "W/\"c5c432a6d28c70092389bdf03adf8a89\"",
+      "last_modified": "Sun, 20 Sep 2026 14:11:53 GMT",
+      "last_checked": "2026-09-20T20:14:18.967859+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://myanimelist.net/rss/news.xml": {
       "etag": null,
       "last_modified": null,
-      "last_checked": "2026-09-20T19:28:56.053617+06:00",
+      "last_checked": "2026-09-20T20:14:19.426576+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.animehunch.com/feed/": {
       "etag": "W/\"7cbcd5e6db16746ebd41ce7227111050\"",
       "last_modified": "Thu, 17 Sep 2026 11:47:18 GMT",
-      "last_checked": "2026-09-20T19:28:57.078554+06:00",
+      "last_checked": "2026-09-20T20:14:20.419069+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://animeuknews.net/feed/": {
       "etag": "\"f725385bbf3196380293bd10c4793b79\"",
       "last_modified": "Sun, 20 Sep 2026 09:00:10 GMT",
-      "last_checked": "2026-09-20T19:28:57.770141+06:00",
+      "last_checked": "2026-09-20T20:14:21.118708+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.otakuusamagazine.com/feed/": {
       "etag": "W/\"bb76aff7643fb0671a5e221e6ef25b9a\"",
       "last_modified": "Tue, 02 Sep 2025 11:00:25 GMT",
-      "last_checked": "2026-09-20T19:28:58.195793+06:00",
+      "last_checked": "2026-09-20T20:14:21.796227+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://comicbook.com/feed/": {
-      "etag": "W/\"9b5a56816d3d69dbaf9fa42b9a13c3b8\"",
-      "last_modified": "Fri, 18 Sep 2026 22:54:15 GMT",
-      "last_checked": "2026-09-20T19:28:58.342652+06:00",
+      "etag": "W/\"13219a594f9ea5a18fc79cd613db5878\"",
+      "last_modified": "Thu, 17 Sep 2026 00:04:40 GMT",
+      "last_checked": "2026-09-20T20:14:22.031445+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://bleedingcool.com/comics/feed/": {
       "etag": "W/\"6aafd14d-66ac\"",
       "last_modified": "Sun, 20 Sep 2026 12:27:57 GMT",
-      "last_checked": "2026-09-20T19:28:58.715166+06:00",
+      "last_checked": "2026-09-20T20:14:22.520380+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.comicsbeat.com/feed/": {
       "etag": "W/\"2414cd8ec20ea3142f83ced8d054239d\"",
       "last_modified": "Fri, 18 Sep 2026 19:30:46 GMT",
-      "last_checked": "2026-09-20T19:28:58.930910+06:00",
+      "last_checked": "2026-09-20T20:14:22.764827+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://aiptcomics.com/feed/": {
       "etag": "W/\"08e35fb2d277f2b4d255a3874af764a0\"",
       "last_modified": "Sun, 20 Sep 2026 11:00:19 GMT",
-      "last_checked": "2026-09-20T19:28:59.423695+06:00",
+      "last_checked": "2026-09-20T20:14:23.522159+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.cbr.com/feed/": {
       "etag": null,
       "last_modified": null,
-      "last_checked": "2026-09-20T19:28:59.638999+06:00",
+      "last_checked": "2026-09-20T20:14:23.857429+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.superherohype.com/feed": {
       "etag": "W/\"9fbcbc4a4334807cc7a3775db05f868e\"",
       "last_modified": "Fri, 18 Sep 2026 22:07:27 GMT",
-      "last_checked": "2026-09-20T19:28:59.739425+06:00",
+      "last_checked": "2026-09-20T20:14:24.029272+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.toei-animation.com/news/feed/": {
       "etag": "\"603781ed27b57d6416160faf2b252abd\"",
       "last_modified": "Wed, 02 Sep 2026 08:15:31 GMT",
-      "last_checked": "2026-09-20T19:29:01.028755+06:00",
+      "last_checked": "2026-09-20T20:14:25.466202+06:00",
       "fail_count": 0,
       "alerted": false
     }
@@ -135,17 +135,17 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.564279+06:00",
-      "last_seen": "2026-09-20T19:28:55.564281+06:00",
-      "importance_score": 88,
-      "priority_type": "Major Trailer / PV",
+      "last_seen": "2026-09-20T20:14:16.809749+06:00",
+      "importance_score": 85,
+      "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
-      "priority_rank": 3,
+      "priority_rank": 1,
       "sector": "Anime",
-      "rank_reason": "First 2‑minute trailer released, generating major buzz.",
-      "last_ranked_at": "2026-09-20T19:29:21.889847+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.484033+06:00",
       "learning_pattern": "",
-      "event_key": "reincarnated_elf_trailer",
-      "event_status": "announced"
+      "event_key": "the reincarnated elf left a journey master his magic anime unveils 1st minutes january debut|Major Trailer / PV|daiki yamashita hana hishikawa star",
+      "event_status": "reported"
     },
     "animenewsnetwork.com/news/2026-09-20/so-what-wrong-with-getting-reborn-as-a-goblin-anime-reveals-more-cast-character-visuals/.241993": {
       "title": "So What's Wrong with Getting Reborn as a Goblin? Anime Reveals More Cast, Character Visuals",
@@ -162,7 +162,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.564713+06:00",
-      "last_seen": "2026-09-20T19:28:55.564715+06:00",
+      "last_seen": "2026-09-20T20:14:16.810225+06:00",
       "importance_score": 79,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
@@ -189,17 +189,17 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.565038+06:00",
-      "last_seen": "2026-09-20T19:28:55.565040+06:00",
-      "importance_score": 88,
+      "last_seen": "2026-09-20T20:14:16.810578+06:00",
+      "importance_score": 85,
       "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
       "priority_rank": 3,
       "sector": "Anime",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.889951+06:00",
+      "rank_reason": "Second main trailer drops, revealing new cast and theme songs for Oct 7 debut.",
+      "last_ranked_at": "2026-09-20T20:15:02.484146+06:00",
       "learning_pattern": "",
-      "event_key": "tetsury meet tetsud musume anime s new previews opening song|Major Trailer / PV|with asaka performs railway for october",
-      "event_status": "reported"
+      "event_key": "magic_knight_rayearth_s2_trailer_oct7_2026",
+      "event_status": "released"
     },
     "animenewsnetwork.com/news/2026-09-20/new-magic-knight-rayearth-anime-2nd-main-trailer-reveals-more-cast-theme-songs/.242011": {
       "title": "New Magic Knight Rayearth Anime's 2nd Main Trailer Reveals More Cast, Theme Songs",
@@ -216,14 +216,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.565378+06:00",
-      "last_seen": "2026-09-20T19:28:55.565381+06:00",
+      "last_seen": "2026-09-20T20:14:16.810929+06:00",
       "importance_score": 84,
       "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
       "priority_rank": 3,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.894852+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.485562+06:00",
       "learning_pattern": "",
       "event_key": "new magic knight rayearth anime s 2nd main reveals more theme songs|Major Trailer / PV|mamiko noto ayumu murase hitomi ueda hiroki yasumoto october",
       "event_status": "reported"
@@ -243,14 +243,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.565689+06:00",
-      "last_seen": "2026-09-20T19:28:55.565691+06:00",
+      "last_seen": "2026-09-20T20:14:16.811261+06:00",
       "importance_score": 84,
       "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
       "priority_rank": 3,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.894945+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.485672+06:00",
       "learning_pattern": "",
       "event_key": "alya sometimes hides her feelings russian tv anime s 2nd season reveals video|Major Trailer / PV|original book franchise has million copies circulation worldwide",
       "event_status": "reported"
@@ -270,14 +270,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.566291+06:00",
-      "last_seen": "2026-09-20T19:28:55.566293+06:00",
+      "last_seen": "2026-09-20T20:14:16.811933+06:00",
       "importance_score": 75,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.901124+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.494245+06:00",
       "learning_pattern": "",
       "event_key": "tokyo int l film fest screen cherry and virgin ghost end night more anime|Major Anime Announcement|grotesqqque are aliens also play october november festival",
       "event_status": "reported"
@@ -297,7 +297,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.566715+06:00",
-      "last_seen": "2026-09-20T19:28:55.566717+06:00",
+      "last_seen": "2026-09-20T20:14:16.812366+06:00",
       "importance_score": 69,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
@@ -324,7 +324,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.566961+06:00",
-      "last_seen": "2026-09-20T19:28:55.566962+06:00",
+      "last_seen": "2026-09-20T20:14:16.812669+06:00",
       "importance_score": 59,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
@@ -351,17 +351,17 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.568156+06:00",
-      "last_seen": "2026-09-20T19:28:55.568159+06:00",
-      "importance_score": 88,
+      "last_seen": "2026-09-20T20:14:16.814165+06:00",
+      "importance_score": 77,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
       "priority_rank": 2,
       "sector": "Anime",
-      "rank_reason": "Season 2 confirmed with teaser video, a major continuation for a high‑profile anime adaptation.",
-      "last_ranked_at": "2026-09-20T19:29:21.890209+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.491512+06:00",
       "learning_pattern": "",
-      "event_key": "daemons_shadow_realm_s2_2026_09_19",
-      "event_status": "announced"
+      "event_key": "daemons the shadow realm anime gets 2nd season|New Season / Sequel|part ended sunday",
+      "event_status": "reported"
     },
     "animecorner.me/katekyo-hitman-reborn-anime-reveals-twelfth-ending-featuring-aoi-yume-by-mori-tsubasa": {
       "title": "Katekyo Hitman Reborn! Anime Reveals Twelfth  Ending Featuring \"Aoi Yume\" by Mori Tsubasa",
@@ -376,19 +376,23 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-09-20T19:28:55.694243+06:00",
-      "last_seen": "2026-09-20T19:28:55.694246+06:00",
+      "last_seen": "2026-09-20T20:14:18.977313+06:00",
       "importance_score": 87,
       "priority_type": "Manga → Anime Adaptation",
       "priority_tier": 1,
       "priority_rank": 4,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.890436+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.482531+06:00",
       "learning_pattern": "",
       "event_key": "katekyo hitman reborn anime reveals twelfth ending featuring aoi yume mori tsubasa|Manga → Anime Adaptation|has officially the creditless version its the song the song was used 140 153 while the video was part the 20th anniversary celebration the follows yesterday the eleventh the song smile for ueto aya the releases are part music month september long music project celebrating the 20th anniversary previously reported the campaign will have creditless versions the past theme song sequences daily the youtube channel these creditless sequences were previously included with physical releases the but had",
-      "event_status": "reported"
+      "event_status": "reported",
+      "processing_at": "2026-09-20T20:17:12.543124+06:00",
+      "processing_rank": 9,
+      "selected_at": "2026-09-20T20:17:22.602731+06:00",
+      "posted_at": "2026-09-20T20:18:05.803698+06:00"
     },
     "animecorner.me/my-hero-academia-announces-ultra-expo-event-for-april-2027-to-conclude-animes-10th-anniversary": {
       "title": "My Hero Academia Announces ULTRA EXPO Event for April 2027 to Conclude Anime's 10th Anniversary",
@@ -405,7 +409,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.694810+06:00",
-      "last_seen": "2026-09-20T19:28:55.694812+06:00",
+      "last_seen": "2026-09-20T20:14:18.977911+06:00",
       "importance_score": 69,
       "priority_type": "Manga → Anime Adaptation",
       "priority_tier": 1,
@@ -432,14 +436,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.695437+06:00",
-      "last_seen": "2026-09-20T19:28:55.695455+06:00",
-      "importance_score": 88,
+      "last_seen": "2026-09-20T20:14:18.978618+06:00",
+      "importance_score": 82,
       "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
       "priority_rank": 3,
       "sector": "Anime",
-      "rank_reason": "New trailer reveals cast and theme songs for high‑profile remake",
-      "last_ranked_at": "2026-09-20T19:29:21.890117+06:00",
+      "rank_reason": "Magic Knight Rayearth remake releases new trailer with theme songs and additional cast.",
+      "last_ranked_at": "2026-09-20T20:15:02.489183+06:00",
       "learning_pattern": "",
       "event_key": "magic_knight_rayearth_2026_trailer",
       "event_status": "announced"
@@ -459,17 +463,17 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.695719+06:00",
-      "last_seen": "2026-09-20T19:28:55.695722+06:00",
-      "importance_score": 85,
-      "priority_type": "New Season / Sequel",
+      "last_seen": "2026-09-20T20:14:18.978924+06:00",
+      "importance_score": 83,
+      "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
-      "priority_rank": 2,
+      "priority_rank": 3,
       "sector": "Anime",
-      "rank_reason": "Teaser confirms continuation of popular series",
-      "last_ranked_at": "2026-09-20T19:29:21.892793+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.488294+06:00",
       "learning_pattern": "",
-      "event_key": "roshidere_season2_teaser",
-      "event_status": "announced"
+      "event_key": "roshidere reveals|New Season / Sequel|alya sometimes hides her feelings russian revealed sunday",
+      "event_status": "reported"
     },
     "animecorner.me/daemons-of-the-shadow-realm-season-2": {
       "title": "Daemons of the Shadow Realm Season 2 Announced With Teaser Video",
@@ -486,17 +490,17 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.696009+06:00",
-      "last_seen": "2026-09-20T19:28:55.696011+06:00",
-      "importance_score": 78,
-      "priority_type": "Major Trailer / PV",
+      "last_seen": "2026-09-20T20:14:18.979243+06:00",
+      "importance_score": 85,
+      "priority_type": "New Season / Sequel",
       "priority_tier": 1,
-      "priority_rank": 3,
+      "priority_rank": 2,
       "sector": "Anime",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.899033+06:00",
+      "rank_reason": "Official season‑2 announcement with teaser video right after finale.",
+      "last_ranked_at": "2026-09-20T20:15:02.484243+06:00",
       "learning_pattern": "",
-      "event_key": "daemons the shadow realm video|Major Trailer / PV|with was officially immediately after finale finished airing japan",
-      "event_status": "reported"
+      "event_key": "DAEMONS_SHADOW_REALM_S2",
+      "event_status": "announced"
     },
     "animecorner.me/bleach-fes-announced-for-february-2027-with-15-voice-actors-to-celebrate-animes-conclusion": {
       "title": "BLEACH FES Announced for February 2027 With 15 Voice Actors to Celebrate Anime's Conclusion",
@@ -513,7 +517,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:55.696540+06:00",
-      "last_seen": "2026-09-20T19:28:55.696542+06:00",
+      "last_seen": "2026-09-20T20:14:18.979807+06:00",
       "importance_score": 74,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
@@ -538,19 +542,23 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-09-20T19:28:56.060214+06:00",
-      "last_seen": "2026-09-20T19:28:56.060218+06:00",
-      "importance_score": 84,
-      "priority_type": "Major Cast / Staff Reveal",
-      "priority_tier": 2,
-      "priority_rank": 8,
+      "last_seen": "2026-09-20T20:14:19.433181+06:00",
+      "importance_score": 87,
+      "priority_type": "Manga → Anime Adaptation",
+      "priority_tier": 1,
+      "priority_rank": 4,
       "sector": "Anime",
-      "rank_reason": "Supporting cast for upcoming adaptation officially revealed.",
-      "last_ranked_at": "2026-09-20T19:29:21.894518+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.482960+06:00",
       "learning_pattern": "",
-      "event_key": "tensai_goblin_cast",
-      "event_status": "announced"
+      "event_key": "tensei goblin dakedo shitsumon aru announces supporting|Major Cast / Staff Reveal|the website for the television anime adaptation nazuna miki what wrong with getting reborn manga sunday the anime scheduled october tokyo followed broadcasts bs11 sun and sandaime hanzou junko takeuchi haigakura nanadaime hanzou mariya ise made abyss rokudaime masamune rin mizuki tomodachi imouto ore",
+      "event_status": "reported",
+      "processing_at": "2026-09-20T20:17:22.607254+06:00",
+      "processing_rank": 10,
+      "selected_at": "2026-09-20T20:17:32.682185+06:00",
+      "posted_at": "2026-09-20T20:18:08.556891+06:00"
     },
     "myanimelist.net/news/74737075": {
       "title": "Winners of Next Manga Award 2026 Announced",
@@ -567,7 +575,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:56.061001+06:00",
-      "last_seen": "2026-09-20T19:28:56.061003+06:00",
+      "last_seen": "2026-09-20T20:14:19.434024+06:00",
       "importance_score": 68,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
@@ -594,7 +602,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:56.061511+06:00",
-      "last_seen": "2026-09-20T19:28:56.061513+06:00",
+      "last_seen": "2026-09-20T20:14:19.434583+06:00",
       "importance_score": 63,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
@@ -621,14 +629,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.525411+06:00",
-      "last_seen": "2026-09-20T19:28:58.525417+06:00",
+      "last_seen": "2026-09-20T20:14:22.222509+06:00",
       "importance_score": 84,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.893577+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.484329+06:00",
       "learning_pattern": "",
       "event_key": "marvel heroes who would slay a reality tv show|Major Marvel News|image courtesy comics comics has done outstanding job creating characters that fans want read about the house ideas decided that they wanted superheroes different way from their distinguished competition creating that have been able really connect with fans their adventures have allowed readers watch them grow",
       "event_status": "reported"
@@ -675,14 +683,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.531003+06:00",
-      "last_seen": "2026-09-20T19:28:58.531007+06:00",
+      "last_seen": "2026-09-20T20:14:22.227333+06:00",
       "importance_score": 84,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.894680+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.485373+06:00",
       "learning_pattern": "",
       "event_key": "actors who almost played spider man before tom holland wound up the mcu anyway|Major Marvel News|one marvel most beloved and popular characters and when marvel cinematic universe started taking shape there was lot curiosity about would take role after tobey maguire and andrew garfield today pretty much phenomenon for entire generation widely praised and admired",
       "event_status": "reported"
@@ -702,14 +710,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.532477+06:00",
-      "last_seen": "2026-09-20T19:28:58.532481+06:00",
+      "last_seen": "2026-09-20T20:14:22.228968+06:00",
       "importance_score": 82,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
       "priority_rank": 2,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.897557+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.489283+06:00",
       "learning_pattern": "",
       "event_key": "years later jurassic park s most intense quote carries its biggest message especially all the sequels|New Season / Sequel|for came out ago and while there have been kinds and sequel since original still hasn been topped understood successors 1993 fun about dinosaurs but also about hubris nature and",
       "event_status": "reported"
@@ -729,17 +737,17 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.532973+06:00",
-      "last_seen": "2026-09-20T19:28:58.532975+06:00",
-      "importance_score": 90,
-      "priority_type": "Major Comic Storyline / Event",
+      "last_seen": "2026-09-20T20:14:22.229508+06:00",
+      "importance_score": 84,
+      "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
-      "priority_rank": 18,
+      "priority_rank": 3,
       "sector": "Comics",
-      "rank_reason": "Trailer for major Batman event signals upcoming storyline",
-      "last_ranked_at": "2026-09-20T19:29:21.889053+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.485787+06:00",
       "learning_pattern": "",
-      "event_key": "batman_knightfall_part2_trailer",
-      "event_status": "announced"
+      "event_key": "batman knightfall reveals bruce wayne s unconventional replacement|Major Comic Storyline / Event|part the early nineties two events changed how people looked comics the death superman and comics replaced its marquee superheroes with substitute characters that more closely resembled the image and marvel comics the time sales for the events were stratospheric readers were introduced characters like superboy",
+      "event_status": "reported"
     },
     "comicbook.com/tv-shows/list/4-1980s-cartoons-every-90s-kid-missed-but-are-still-a-must-watch": {
       "title": "4 1980s Cartoons Every 90s Kid Missed But Are Still A Must Watch",
@@ -756,14 +764,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.533661+06:00",
-      "last_seen": "2026-09-20T19:28:58.533664+06:00",
+      "last_seen": "2026-09-20T20:14:22.230446+06:00",
       "importance_score": 79,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.898757+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.490836+06:00",
       "learning_pattern": "",
       "event_key": "1980s cartoons every 90s kid missed but are still a must watch|Major Marvel News|you were born the mid your cartoon memory starts around 1990 ninja turtles batman the animated men animaniacs the whole run shows that turned out the last great era american kids television before cable fragmented were big deals what you three four years",
       "event_status": "reported"
@@ -783,14 +791,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.534554+06:00",
-      "last_seen": "2026-09-20T19:28:58.534557+06:00",
+      "last_seen": "2026-09-20T20:14:22.231414+06:00",
       "importance_score": 80,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.898055+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.489760+06:00",
       "learning_pattern": "",
       "event_key": "years later this is still one anime s most heartbreaking movies ever|Major Anime Announcement|image courtesy crunchyroll the growing popularity the industry recent has many curious people looking venture into the world exciting shows and while the medium has been popular the since the 1990s continues grow even the 2010s was transformative era for the industry since continued",
       "event_status": "reported"
@@ -810,14 +818,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.535121+06:00",
-      "last_seen": "2026-09-20T19:28:58.535123+06:00",
+      "last_seen": "2026-09-20T20:14:22.232071+06:00",
       "importance_score": 84,
       "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
       "priority_rank": 3,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.895037+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.485964+06:00",
       "learning_pattern": "",
       "event_key": "shonen jump confirms crunchyroll return new season after finale watch|Major Trailer / PV|hit date for courtesy shueisha the fall 2026 anime right around the corner and going the biggest quarter this year 2026 has been considerably exciting year for fans with the many major shows including jujutsu kaisen frieren beyond journey end and more doubt that the fall 2026 lineup doesn plan",
       "event_status": "reported"
@@ -837,14 +845,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.536106+06:00",
-      "last_seen": "2026-09-20T19:28:58.536109+06:00",
+      "last_seen": "2026-09-20T20:14:22.233147+06:00",
       "importance_score": 75,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.901230+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.494359+06:00",
       "learning_pattern": "",
       "event_key": "years ago the network that revolutionized teen tv went off the air it paved the way superhero tv as we know it|Major Anime Announcement|for when people think television networks medium names come mind are accurate not predictable people cite nbc world regularly scheduled television broadcast cbs comes having essentially invented idea television abc gets mention for its programming introducing prime time",
       "event_status": "reported"
@@ -864,7 +872,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.537105+06:00",
-      "last_seen": "2026-09-20T19:28:58.537107+06:00",
+      "last_seen": "2026-09-20T20:14:22.234295+06:00",
       "importance_score": 72,
       "priority_type": "Major Anime Movie",
       "priority_tier": 1,
@@ -891,7 +899,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.537867+06:00",
-      "last_seen": "2026-09-20T19:28:58.537870+06:00",
+      "last_seen": "2026-09-20T20:14:22.235137+06:00",
       "importance_score": 74,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
@@ -918,7 +926,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.538688+06:00",
-      "last_seen": "2026-09-20T19:28:58.538690+06:00",
+      "last_seen": "2026-09-20T20:14:22.236031+06:00",
       "importance_score": 74,
       "priority_type": "Major DC News",
       "priority_tier": 1,
@@ -945,7 +953,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.539403+06:00",
-      "last_seen": "2026-09-20T19:28:58.539406+06:00",
+      "last_seen": "2026-09-20T20:14:22.236818+06:00",
       "importance_score": 74,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
@@ -972,7 +980,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.540879+06:00",
-      "last_seen": "2026-09-20T19:28:58.540883+06:00",
+      "last_seen": "2026-09-20T20:14:22.238200+06:00",
       "importance_score": 54,
       "priority_type": "Major Comic Announcement",
       "priority_tier": 1,
@@ -999,14 +1007,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.541566+06:00",
-      "last_seen": "2026-09-20T19:28:58.541568+06:00",
+      "last_seen": "2026-09-20T20:14:22.238924+06:00",
       "importance_score": 77,
       "priority_type": "Major Anime Movie",
       "priority_tier": 1,
       "priority_rank": 6,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.899113+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.491139+06:00",
       "learning_pattern": "",
       "event_key": "resident evil director pitched a horror movie during a fight between batman the joker|Major Anime Movie|set zach cregger officially hit with projected weekend over million that best opening far trajectory his career after barbarian has been something cregger couldn have imagined just few years ago come long way from directed",
       "event_status": "reported"
@@ -1026,14 +1034,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.542790+06:00",
-      "last_seen": "2026-09-20T19:28:58.542792+06:00",
+      "last_seen": "2026-09-20T20:14:22.240157+06:00",
       "importance_score": 75,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.901543+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.495043+06:00",
       "learning_pattern": "",
       "event_key": "forgotten anime only 1990s kids love|Major Anime Announcement|image courtesy sunrise madhouse the industry has gone through massive surge recent years leading oversaturation shows and films unlike the endless options fans can choose from these days the was completely different era who grew that era didn have services for them which why they",
       "event_status": "reported"
@@ -1080,7 +1088,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.545022+06:00",
-      "last_seen": "2026-09-20T19:28:58.545024+06:00",
+      "last_seen": "2026-09-20T20:14:22.242211+06:00",
       "importance_score": 57,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
@@ -1107,7 +1115,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.546968+06:00",
-      "last_seen": "2026-09-20T19:28:58.546974+06:00",
+      "last_seen": "2026-09-20T20:14:22.243972+06:00",
       "importance_score": 74,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
@@ -1134,7 +1142,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.547764+06:00",
-      "last_seen": "2026-09-20T19:28:58.547767+06:00",
+      "last_seen": "2026-09-20T20:14:22.244730+06:00",
       "importance_score": 72,
       "priority_type": "Major Anime Movie",
       "priority_tier": 1,
@@ -1161,14 +1169,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.548400+06:00",
-      "last_seen": "2026-09-20T19:28:58.548403+06:00",
+      "last_seen": "2026-09-20T20:14:22.245421+06:00",
       "importance_score": 82,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
       "priority_rank": 2,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.897885+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.489479+06:00",
       "learning_pattern": "",
       "event_key": "years later south park surprises major kenny return fans have been waiting|New Season / Sequel|with for courtesy studios has officially kicked off its run this year and with has brought back face for that nearly for has gearing for the debut its huge way creators trey parker and",
       "event_status": "reported"
@@ -1188,7 +1196,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.549052+06:00",
-      "last_seen": "2026-09-20T19:28:58.549054+06:00",
+      "last_seen": "2026-09-20T20:14:22.246148+06:00",
       "importance_score": 72,
       "priority_type": "Major Anime Movie",
       "priority_tier": 1,
@@ -1215,14 +1223,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.549962+06:00",
-      "last_seen": "2026-09-20T19:28:58.549965+06:00",
+      "last_seen": "2026-09-20T20:14:22.247117+06:00",
       "importance_score": 80,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.898307+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.490038+06:00",
       "learning_pattern": "",
       "event_key": "dragon ball super fans bring black frieza life ahead the villain s anime return watch|Major Anime Announcement|shueisha currently works coming back with picking with missing arcs manga but special fan animation has brought they are looking forward seeing this moment hit setting",
       "event_status": "reported"
@@ -1242,14 +1250,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.551312+06:00",
-      "last_seen": "2026-09-20T19:28:58.551315+06:00",
+      "last_seen": "2026-09-20T20:14:22.248555+06:00",
       "importance_score": 84,
       "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
       "priority_rank": 3,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.895492+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.486455+06:00",
       "learning_pattern": "",
       "event_key": "netflix s dark action confirms home watch|Major Trailer / PV|hit date yura urushibara akitashoten tougen anki project with has its date for its second and has gotten boot had its fair share cool anime releases that fans got see last year but there was one franchise that really struck out the",
       "event_status": "reported"
@@ -1269,14 +1277,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.552953+06:00",
-      "last_seen": "2026-09-20T19:28:58.552956+06:00",
+      "last_seen": "2026-09-20T20:14:22.250387+06:00",
       "importance_score": 77,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
       "priority_rank": 2,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.899289+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.491330+06:00",
       "learning_pattern": "",
       "event_key": "comic book sequel stories that couldn t match the greatness the originals|New Season / Sequel|image courtesy marvel comics anyone who watched read can probably tell you sequels are rarely good oftentimes sequels come off cheap cash ins trying and failing recapture magic their predecessors same rule applies well both and marvel comics have made",
       "event_status": "reported"
@@ -1296,14 +1304,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:58.553645+06:00",
-      "last_seen": "2026-09-20T19:28:58.553648+06:00",
+      "last_seen": "2026-09-20T20:14:22.251099+06:00",
       "importance_score": 76,
       "priority_type": "Major Manga Return / Hiatus",
       "priority_tier": 2,
       "priority_rank": 11,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.899789+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.491954+06:00",
       "learning_pattern": "",
       "event_key": "crunchyroll s solo leveling replacement confirms sudden hiatus before finale|Major Manga Return / Hiatus|courtesy studio eek has been anime this summer that has been perfect for fans who want more but has unfortunately that going taking short break its final releases the summer 2026 anime schedule rounding out its final the",
       "event_status": "reported"
@@ -1357,7 +1365,7 @@
       "priority_rank": 1,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.901842+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.495367+06:00",
       "learning_pattern": "",
       "event_key": "after years this is still the funniest character south park s history|Major Anime Announcement|paramount longevity one most remarkable things television any that can last three decades and coming incredible but especially impressive for raunchy animated aimed adults that never fails cover some most controversial and topical",
       "event_status": "reported"
@@ -1384,7 +1392,7 @@
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.893733+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.484497+06:00",
       "learning_pattern": "",
       "event_key": "spider man hulk fire and brimstone preview hulk gets religion|Major Marvel News|posted comics marvel comics tagged bruce banner seeks salvation while daredevil battle the white rabbit broadway out wednesday article summary arrives stores from marvel comics wednesday september 23rd bruce banner explores his spiritual side seeking confession salvation before the inevitably emerges teams with guest star daredevil stop white rabbit chaotic broadway disaster from spiraling further loltron rejoices banner church visit inspires its glorious plan replace all clergy with obedient si",
       "event_status": "reported"
@@ -1411,7 +1419,7 @@
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.894055+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.484872+06:00",
       "learning_pattern": "",
       "event_key": "absolute batman leads the anticipated comics this wednesday|Major Marvel News|top posted boom idw image marvel oni press tagged titles top top part what looking like week article summary tops most leading dominant showing week wonder woman and flash follow close behind making clear week claims top seven spots before void rivals breaks through with wolverine leading marvel charge top based league comic geeks pull data tracking reader interest across shops and digital fifty most week followed directly two counterparts for what clearly week with taking top seven before energ",
       "event_status": "reported"
@@ -1429,19 +1437,27 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "retryable",
       "first_seen": "2026-09-20T19:28:58.728910+06:00",
       "last_seen": "2026-09-20T19:28:58.728911+06:00",
-      "importance_score": 85,
-      "priority_type": "Major Comic Announcement",
+      "importance_score": 90,
+      "priority_type": "New Season / Sequel",
       "priority_tier": 1,
-      "priority_rank": 17,
-      "sector": "Comics",
-      "rank_reason": "Mad Cave's full December 2026 solicits unveiled, notable new titles announced.",
-      "last_ranked_at": "2026-09-20T19:29:21.892420+06:00",
+      "priority_rank": 2,
+      "sector": "Anime",
+      "rank_reason": "Season 2 confirmed with teaser visual; fans await release date.",
+      "last_ranked_at": "2026-09-20T20:15:02.480571+06:00",
       "learning_pattern": "",
-      "event_key": "madcave_dec2026_solicits",
-      "event_status": "announced"
+      "event_key": "daemons_shadow_realm_s2_announcement",
+      "event_status": "announced",
+      "processing_at": "2026-09-20T20:15:02.971335+06:00",
+      "processing_rank": 1,
+      "selected_at": "2026-09-20T20:15:12.642180+06:00",
+      "content_retry_count": 1,
+      "failure_stage": "claim_verification",
+      "failure_reason": "AI/source verification rejected story",
+      "retry_at": "2026-09-21T02:17:52.824795+06:00",
+      "retry_exhausted": false
     },
     "bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus": {
       "title": "Rebellion Official Full December 2026 Solicits With Zenith Omnibus",
@@ -1456,19 +1472,23 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-09-20T19:28:58.729291+06:00",
       "last_seen": "2026-09-20T19:28:58.729293+06:00",
       "importance_score": 88,
-      "priority_type": "Major Anime Announcement",
+      "priority_type": "Major Release Date",
       "priority_tier": 1,
-      "priority_rank": 1,
-      "sector": "",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.889769+06:00",
+      "priority_rank": 5,
+      "sector": "Anime",
+      "rank_reason": "Season 2 release date set for Oct 7 2026 with anniversary visual.",
+      "last_ranked_at": "2026-09-20T20:15:02.480702+06:00",
       "learning_pattern": "",
-      "event_key": "rebellion full december solicits zenith omnibus|Major Anime Announcement|2026 with 2026 with the grant morrison and steve yeowell",
-      "event_status": "reported"
+      "event_key": "detective_dead_s2_release_oct7_2026",
+      "event_status": "announced",
+      "processing_at": "2026-09-20T20:15:12.646747+06:00",
+      "processing_rank": 2,
+      "selected_at": "2026-09-20T20:15:23.293727+06:00",
+      "posted_at": "2026-09-20T20:17:55.444427+06:00"
     },
     "bleedingcool.com/comics/that-reference-in-absolute-batman-the-daily-litg-20th-september-2026": {
       "title": "That Reference In Absolute Batman: The Daily LITG, 20th September 2026",
@@ -1492,7 +1512,7 @@
       "priority_rank": 16,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.894433+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.485282+06:00",
       "learning_pattern": "",
       "event_key": "that reference absolute batman the daily litg 20th september|Major DC News|2026 did you get 2026 did",
       "event_status": "reported"
@@ -1519,7 +1539,7 @@
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.898671+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.490737+06:00",
       "learning_pattern": "",
       "event_key": "the muppets take the marvel universe preview rowlf kidnapped|Major Marvel News|kermit miss piggy and fozzie invade mojo kidnaps out this wednesday",
       "event_status": "reported"
@@ -1546,7 +1566,7 @@
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.898224+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.489946+06:00",
       "learning_pattern": "",
       "event_key": "green lantern preview kyle battles killer burger mascots|Major Anime Announcement|pits rayner against homicidal fast food and extraterrestrial plastic surgeons while romance blooms with jade",
       "event_status": "reported"
@@ -1573,7 +1593,7 @@
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.901022+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.494134+06:00",
       "learning_pattern": "",
       "event_key": "schomburg the fight democracy black terror auction|Major Anime Announcement|038 1946 for features cover and story rooted 1946 history about recruiting wwii vets into deceptive organization that plans subvert",
       "event_status": "reported"
@@ -1627,7 +1647,7 @@
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.901448+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.494941+06:00",
       "learning_pattern": "",
       "event_key": "dc w i p watchmen preview who facsimiles the facsimiles|Major Anime Announcement|turns back clock years reprinting alan moore and dave gibbons groundbreaking glorious facsimile form",
       "event_status": "reported"
@@ -1681,7 +1701,7 @@
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.901683+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.495197+06:00",
       "learning_pattern": "",
       "event_key": "black tower the raven conspiracy preview demon dating|Major Anime Announcement|sends dream slipping assassin after spy agency where witches date demons and bosses cozy russians",
       "event_status": "reported"
@@ -1708,7 +1728,7 @@
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.898487+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.490227+06:00",
       "learning_pattern": "",
       "event_key": "dynamite entertainment s full december solicits|Major Anime Announcement|2026 2026 including the launch the files joe harris and brown",
       "event_status": "reported"
@@ -1735,7 +1755,7 @@
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.901767+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.495288+06:00",
       "learning_pattern": "",
       "event_key": "dnx smashes this wednesday s ten comics bestseller list|Major Anime Announcement|weekend top weekend top",
       "event_status": "reported"
@@ -1890,14 +1910,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:59.452721+06:00",
-      "last_seen": "2026-09-20T19:28:59.452725+06:00",
+      "last_seen": "2026-09-20T20:14:23.550670+06:00",
       "importance_score": 78,
       "priority_type": "Major DC News",
       "priority_tier": 1,
       "priority_rank": 16,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.898917+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.491013+06:00",
       "learning_pattern": "",
       "event_key": "aipt comics podcast ep tom king and daniel sampere reflect issues wonder woman|Major DC News|396 their journey reveal what means bring their ambitious run end with issue",
       "event_status": "reported"
@@ -1917,14 +1937,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:59.646740+06:00",
-      "last_seen": "2026-09-20T19:28:59.646743+06:00",
+      "last_seen": "2026-09-20T20:14:23.867244+06:00",
       "importance_score": 76,
       "priority_type": "Major Anime Movie",
       "priority_tier": 1,
       "priority_rank": 6,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.899464+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.491580+06:00",
       "learning_pattern": "",
       "event_key": "transformers brings its most overlooked g1 dinobot 40th anniversary|Major Anime Movie|back for the the franchise years old and hasbro has several figures commemorate the one previous action figure representing character who was barely seen the big screen studio leader class the snarl screen accurate toy for one the more generation dinobots originally three years ago the toy one many meant honor the the the purchase through various websites the toy gives fans another chance complete their collection snarl the latest stomp into the studio back 2023 studio leader class the snarl hit",
       "event_status": "reported"
@@ -1944,7 +1964,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-09-20T19:28:59.647820+06:00",
-      "last_seen": "2026-09-20T19:28:59.647823+06:00",
+      "last_seen": "2026-09-20T20:14:23.868239+06:00",
       "importance_score": 61,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
@@ -1969,7 +1989,7 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-09-20T19:28:59.648197+06:00",
       "last_seen": "2026-09-20T19:28:59.648199+06:00",
       "importance_score": 86,
@@ -1978,10 +1998,14 @@
       "priority_rank": 2,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.890817+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.483142+06:00",
       "learning_pattern": "",
       "event_key": "conan the barbarian s savage stories are a new|New Season / Sequel|back with date has just made his triumphant return with exciting perfect for fans sword and sorcery icon stunning eighth omnibus sale from titan comics sword original comics omnibus vol was sept with over one thousand pages digitally remastered artwork and host bonus material high quality collects sword 1974 102 116 well marvel comics super special 1977 beautiful and deluxe hardcover format picks story directly from where seventh omnibus left off fans looking complete their collection will defin",
-      "event_status": "reported"
+      "event_status": "reported",
+      "processing_at": "2026-09-20T20:17:32.686753+06:00",
+      "processing_rank": 11,
+      "selected_at": "2026-09-20T20:17:42.589319+06:00",
+      "posted_at": "2026-09-20T20:18:11.663400+06:00"
     },
     "cbr.com/dark-garfield-storylines-we-wish-we-could-forget": {
       "title": "Garfield Once Had Darker Storylines We Wish We Could Forget",
@@ -2005,7 +2029,7 @@
       "priority_rank": 11,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.900657+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.493729+06:00",
       "learning_pattern": "",
       "event_key": "garfield once had darker storylines we wish we could forget|Major Manga Return / Hiatus|over the past five decades jim davis has provided readers with some the most memorable comic strip characters ever though the titular tabby cat has largely been relegated the realm relatively mundane humor and three panel gags there have been occasions when the has completely eschewed such family friendly content returns its family friendly nature though hard ignore the comic strips bleaker moments one the most well known stories all time far from wholesome any sense the word instead explores lo",
       "event_status": "reported"
@@ -2050,7 +2074,7 @@
       "discovery": "exa",
       "source_pool": "primary",
       "source_class": "official",
-      "status": "pending",
+      "status": "retryable",
       "first_seen": "2026-09-20T19:29:05.094358+06:00",
       "last_seen": "2026-09-20T19:29:05.094363+06:00",
       "importance_score": 88,
@@ -2059,10 +2083,18 @@
       "priority_rank": 3,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.890041+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.480786+06:00",
       "learning_pattern": "",
       "event_key": "new magic knight rayearth anime theme songs previewed new|Major Trailer / PV|top stories depth insights crunchyroll",
-      "event_status": "reported"
+      "event_status": "reported",
+      "processing_at": "2026-09-20T20:15:23.298284+06:00",
+      "processing_rank": 3,
+      "selected_at": "2026-09-20T20:15:33.307473+06:00",
+      "content_retry_count": 1,
+      "failure_stage": "claim_verification",
+      "failure_reason": "AI/source verification rejected story",
+      "retry_at": "2026-09-21T02:17:52.824845+06:00",
+      "retry_exhausted": false
     },
     "crunchyroll.com/news/latest/2026/9/19/the-cat-and-the-dragon-season-2-anime-announced-stream-crunchyroll": {
       "title": "The Cat and the Dragon Season 2 Announced, Will Stream on ...",
@@ -2080,13 +2112,13 @@
       "status": "pending",
       "first_seen": "2026-09-20T19:29:05.098597+06:00",
       "last_seen": "2026-09-20T19:29:05.098600+06:00",
-      "importance_score": 86,
+      "importance_score": 81,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
       "priority_rank": 2,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.892343+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.489675+06:00",
       "learning_pattern": "",
       "event_key": "the cat and the dragon will stream|New Season / Sequel|anime top stories depth anime insights crunchyroll",
       "event_status": "reported"
@@ -2107,16 +2139,16 @@
       "status": "pending",
       "first_seen": "2026-09-20T19:29:05.099353+06:00",
       "last_seen": "2026-09-20T19:29:05.099357+06:00",
-      "importance_score": 84,
+      "importance_score": 83,
       "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
       "priority_rank": 3,
       "sector": "Anime",
-      "rank_reason": "Theatrical preview trailer released with theme song details.",
-      "last_ranked_at": "2026-09-20T19:29:21.896395+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.488367+06:00",
       "learning_pattern": "",
-      "event_key": "inherit_the_winds_trailer_2026",
-      "event_status": "released"
+      "event_key": "inherit the winds anime reveals theme song details|Major Trailer / PV|screening crunchyroll original will begin airing january 2027 brand was today for two week preview run which will commence november before debuts next january previewed namida kawa hitsujibungaku and quruli will serve preview well ending pair will also perform kaze tsugu mono for opening furthermore takaya kamikawa shinbei umeda retainer iwakuni domain advance screening inspired story popular tachikawa jinsuke stage play tetralogy performed theatre group caramel since 1996 set time around meiji",
+      "event_status": "reported"
     },
     "crunchyroll.com/news/latest/2026/9/19/tougen-anki-nikko-kegon-falls-anime-new-trailer-visual-stream-crunchyroll": {
       "title": "TOUGEN ANKI: Nikko Kegon Falls Arc Releases New Trailer and ...",
@@ -2139,11 +2171,11 @@
       "priority_tier": 1,
       "priority_rank": 3,
       "sector": "Anime",
-      "rank_reason": "New trailer and visual for Tougen Anki arc announced with premiere date.",
-      "last_ranked_at": "2026-09-20T19:29:21.897266+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.488832+06:00",
       "learning_pattern": "",
-      "event_key": "tougen_anki_nikko_trailer_2026",
-      "event_status": "released"
+      "event_key": "tougen anki nikko kegon falls arc releases new and|Major Trailer / PV|visual will stream crunchyroll crunchyroll october the website accounts for the opens tab anime visual for the announcing the continuation will october additionally crunchyroll announcing today that will stream the platform worldwide excluding japan china when next month key visual the newly opening theme song will backlash hiromitsu kitayama while track15 will performing the ending theme song hand hand three members were also including kenichi suzumura kusabi momoura yuki kaji hizumi momotsugi",
+      "event_status": "reported"
     },
     "comicbook.com/anime/news/the-apothecary-diaries-creator-to-return-with-new-anime-first-look-revealed": {
       "title": "The Apothecary Diaries Creator to Return With New Anime (First ...",
@@ -2193,10 +2225,10 @@
       "priority_tier": 1,
       "priority_rank": 4,
       "sector": "Manga",
-      "rank_reason": "Long‑running Oishinbo manga gets a new TV anime series announced at ABEMA Anime Festival.",
-      "last_ranked_at": "2026-09-20T19:29:21.895208+06:00",
+      "rank_reason": "Long‑running Oishinbo manga gets new TV anime announced at ABEMA Anime Festival.",
+      "last_ranked_at": "2026-09-20T20:15:02.486148+06:00",
       "learning_pattern": "",
-      "event_key": "oishinbo_anime_adaptation_2026_09_20",
+      "event_key": "OISHINBO_SHIN_ADAPTATION_2026",
       "event_status": "announced"
     },
     "crunchyroll.com/ko/news/latest/2026/9/19/new-oishinbo-tv-anime-announced": {
@@ -2212,19 +2244,23 @@
       "discovery": "exa",
       "source_pool": "primary",
       "source_class": "official",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-09-20T19:29:06.094233+06:00",
       "last_seen": "2026-09-20T19:29:06.094235+06:00",
-      "importance_score": 86,
-      "priority_type": "Major Anime Announcement",
+      "importance_score": 88,
+      "priority_type": "Manga → Anime Adaptation",
       "priority_tier": 1,
-      "priority_rank": 1,
+      "priority_rank": 4,
       "sector": "Anime",
-      "rank_reason": "New Oishinbo TV anime revealed at studio anniversary event.",
-      "last_ranked_at": "2026-09-20T19:29:21.891955+06:00",
+      "rank_reason": "New Oishinbo TV anime adaptation revealed at ABEMA Anime Festival 2026.",
+      "last_ranked_at": "2026-09-20T20:15:02.481886+06:00",
       "learning_pattern": "",
-      "event_key": "new_oishinbo_tv_anime_2026",
-      "event_status": "announced"
+      "event_key": "oishinbo_tv_anime_2026_announce",
+      "event_status": "announced",
+      "processing_at": "2026-09-20T20:16:03.236763+06:00",
+      "processing_rank": 7,
+      "selected_at": "2026-09-20T20:17:06.286501+06:00",
+      "posted_at": "2026-09-20T20:18:03.390516+06:00"
     },
     "comicbook.com/anime/news/bleach-officially-returning-with-major-event-after-animes-finale": {
       "title": "Bleach Officially Returning With Major Event After Anime's Finale",
@@ -2242,15 +2278,15 @@
       "status": "pending",
       "first_seen": "2026-09-20T19:29:06.096728+06:00",
       "last_seen": "2026-09-20T19:29:06.096731+06:00",
-      "importance_score": 85,
+      "importance_score": 84,
       "priority_type": "Major Franchise Update",
       "priority_tier": 1,
       "priority_rank": 7,
       "sector": "Anime",
-      "rank_reason": "Bleach franchise announces a post‑finale major event, signaling continued relevance and fan interest.",
-      "last_ranked_at": "2026-09-20T19:29:21.892858+06:00",
+      "rank_reason": "Bleach: Thousand-Year Blood War announces a major post‑finale event despite production hiatus.",
+      "last_ranked_at": "2026-09-20T20:15:02.487485+06:00",
       "learning_pattern": "",
-      "event_key": "bleach_major_event_2026_09_19",
+      "event_key": "bleach_thousand_year_event_2026",
       "event_status": "announced"
     },
     "comicbook.com/anime/news/crunchyrolls-fullmetal-alchemist-successor-confirms-season-2-return-with-first-look-trailer-watch": {
@@ -2275,7 +2311,7 @@
       "priority_rank": 3,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.895665+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.486649+06:00",
       "learning_pattern": "",
       "event_key": "crunchyroll s fullmetal alchemist successor confirms|Major Trailer / PV|after taking over the year with its debut anime the newest anime from creator with has revealed coming back for its second one the most revered anime and manga franchises all time and real secret why hiromu arakawa original packed with tons memorable characters and that been the case for the creator latest that made its anime debut this year daemons the shadow realm daemons the shadow realm had two cour run through the year thus far after making its debut earlier this spring and the final has pa",
       "event_status": "reported"
@@ -2302,7 +2338,7 @@
       "priority_rank": 2,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.891529+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.483556+06:00",
       "learning_pattern": "",
       "event_key": "the detective is already dead anime unveils 5th anniversary visual crunchyroll news|New Season / Sequel|second will stream starting october with little over two weeks until debut mystery accounts today unveiled commemorating five years since kimihiko and siesta were case season2 tanmoshi pic twitter com e893rzkflv 2026 tanteiwamou september 2026 manabu kurihara returns direct studio engi with composition deko akao case study vanitas opens tab character designs yosuke ito our dating story experienced you and inexperienced opens tab and music 40mp and yuyu nigozyu story and umibouzu art created orig",
       "event_status": "reported"
@@ -2383,7 +2419,7 @@
       "priority_rank": 2,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-09-20T19:29:21.899941+06:00",
+      "last_ranked_at": "2026-09-20T20:15:02.492120+06:00",
       "learning_pattern": "",
       "event_key": "batman takes his biggest detective case yet investigating his own death|New Season / Sequel|with much good coming out studios hit knightfall part the installment the highly anticipated trilogy gets easy forget that isn the only place where the dark knight excelling also offering plenty elite storylines comics well and not simply the acclaimed absolute whether poison ivy becoming mayor ivy bruce wayne being murdered wait minute bruce wayne being what yes you right that correctly but while the latest isn the time met demise comics this one comes with intriguing twist bruce wayne meets un",
       "event_status": "reported"
@@ -2401,19 +2437,23 @@
       "discovery": "exa",
       "source_pool": "primary",
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-09-20T19:29:17.171471+06:00",
       "last_seen": "2026-09-20T19:29:17.171476+06:00",
-      "importance_score": 83,
-      "priority_type": "Major Trailer / PV",
+      "importance_score": 88,
+      "priority_type": "New Season / Sequel",
       "priority_tier": 1,
-      "priority_rank": 3,
+      "priority_rank": 2,
       "sector": "Anime",
-      "rank_reason": "New visual, trailer, and theme songs revealed for the upcoming Tougen Anki season 2 arc.",
-      "last_ranked_at": "2026-09-20T19:29:21.896808+06:00",
+      "rank_reason": "Season 2 visual, trailer, theme songs and cast reveal for Oct 2 debut.",
+      "last_ranked_at": "2026-09-20T20:15:02.480954+06:00",
       "learning_pattern": "",
-      "event_key": "tougen_anki_nikko_kegon_falls_trailer_2026_09_20",
-      "event_status": "announced"
+      "event_key": "TOUGEN_ANKI_2026_SEASON2",
+      "event_status": "announced",
+      "processing_at": "2026-09-20T20:15:42.332226+06:00",
+      "processing_rank": 5,
+      "selected_at": "2026-09-20T20:15:54.383491+06:00",
+      "posted_at": "2026-09-20T20:17:58.255538+06:00"
     },
     "oricon.co.jp/news/2480986/full": {
       "title": "『魔法騎士レイアース』メインPV第2弾公開で主題歌解禁　追加キャストに能登麻美子、村瀬歩ら4人  | オリコンニュース（ORICON NEWS）",
@@ -2431,16 +2471,16 @@
       "status": "pending",
       "first_seen": "2026-09-20T19:29:17.172730+06:00",
       "last_seen": "2026-09-20T19:29:17.172732+06:00",
-      "importance_score": 86,
-      "priority_type": "Major Trailer / PV",
+      "importance_score": 75,
+      "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
-      "priority_rank": 3,
+      "priority_rank": 1,
       "sector": "Anime",
-      "rank_reason": "Second main PV reveals theme songs and new cast for upcoming TV anime.",
-      "last_ranked_at": "2026-09-20T19:29:21.891195+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.494584+06:00",
       "learning_pattern": "",
-      "event_key": "magic_knight_reearth_pv_2026_09_20",
-      "event_status": "announced"
+      "event_key": "pv oricon news|Major Trailer / PV|2026 imanimation clamp tms 2026 clamp tms kawaguchi yurina clamp 1993 1995 1994 1995 100 clamp tms 1994 2024",
+      "event_status": "reported"
     },
     "crunchyroll.com/hi/news/latest/2026/9/20/the-detective-is-already-dead-anime-5th-anniversary-visual": {
       "title": "The Detective Is Already Dead Anime Unveils 5th Anniversary Visual - Crunchyroll News",
@@ -2485,20 +2525,509 @@
       "learning_pattern": "routine_rank",
       "event_key": "ram fights lye re zero preview anime corner|Major Trailer / PV|written marko jovanovic september 2026 starting life another world has revealed the overall ahead its september 2026 this will the seventh the second cour which subtitled the recapture arc the part the dominated our spring 2026 awards winning total awards while the ranked fifth the latest weekly ranking after studio white fox animating you can watch the for the seventeenth below the title the and the synopsis described upon arriving the floor emilia finds herself face face with volcanica the div",
       "event_status": "reported"
+    },
+    "animenewsnetwork.com/interest/2026-09-20/nier-yoko-taro-evangelion-yoko-takahashi-collaborate-on-the-weeknd-latest-tour/.242019": {
+      "title": "NieR's Yokō Tarō, Evangelion's Yoko Takahashi Collaborate on The Weeknd's Latest Tour",
+      "url": "https://www.animenewsnetwork.com/interest/2026-09-20/nier-yoko-taro-evangelion-yoko-takahashi-collaborate-on-the-weeknd-latest-tour/.242019",
+      "canonical": "animenewsnetwork.com/interest/2026-09-20/nier-yoko-taro-evangelion-yoko-takahashi-collaborate-on-the-weeknd-latest-tour/.242019",
+      "published_dt": "2026-09-20T19:15:00+06:00",
+      "published_date": "2026-09-20T19:15:00+06:00",
+      "source": "Anime News Network",
+      "region": "ComicAnime",
+      "excerpt": "Featuring visuals from legendary anime series Neon Genesis Evangelion",
+      "image": "",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-09-20T20:14:16.808884+06:00",
+      "last_seen": "2026-09-20T20:14:16.808889+06:00",
+      "importance_score": 79,
+      "priority_type": "Major Cast / Staff Reveal",
+      "priority_tier": 2,
+      "priority_rank": 8,
+      "sector": "Anime",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.490311+06:00",
+      "learning_pattern": "",
+      "event_key": "nier s yok tar evangelion s yoko takahashi collaborate the weeknd s latest tour|Major Cast / Staff Reveal|canadian singer songwriter and record producer abel tesfaye showcased visual presentation produced automata game writer with japanese singer his after hours til dawn saturday tokyo presentation features clips from popular anime franchiseneon genesis samples from opening theme song cruel angel thesis and imagery evocative before video presentation streamed online evangelionfranchise social media accounts shared three photos from september concert wth caption part special visual stage during after",
+      "event_status": "reported"
+    },
+    "comicbook.com/collectibles/news/ana-de-armas-futuristic-costumes-are-a-surprise-instant-hit-in-this-auction-while-one-movie-legend-is-left-waiting-for-a-bid": {
+      "title": "Ana de Armas’ Futuristic Costumes Are a Surprise Instant Hit in This Auction (While One Movie Legend is Left Waiting for a Bid)",
+      "url": "https://comicbook.com/collectibles/news/ana-de-armas-futuristic-costumes-are-a-surprise-instant-hit-in-this-auction-while-one-movie-legend-is-left-waiting-for-a-bid/",
+      "canonical": "comicbook.com/collectibles/news/ana-de-armas-futuristic-costumes-are-a-surprise-instant-hit-in-this-auction-while-one-movie-legend-is-left-waiting-for-a-bid",
+      "published_dt": "2026-09-20T20:00:00+06:00",
+      "published_date": "2026-09-20T20:00:00+06:00",
+      "source": "ComicBook.com",
+      "region": "ComicAnime",
+      "excerpt": "Courtesy of Warner Bros. Pictures Being a movie legend doesn’t always mean you will get all the attention when it comes to the sale of movie props. A newly launched auction at Prop Store is selling of many costumes, weapons and other pieces of production-used memorabilia from Denis Villeneuve’s acclaimed 2017 sequel, Blade Runner 2049, the belated follow-up to Ridley […]",
+      "image": "",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "retryable",
+      "first_seen": "2026-09-20T20:14:22.221235+06:00",
+      "last_seen": "2026-09-20T20:14:22.221240+06:00",
+      "importance_score": 87,
+      "priority_type": "New Season / Sequel",
+      "priority_tier": 1,
+      "priority_rank": 2,
+      "sector": "",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.482304+06:00",
+      "learning_pattern": "",
+      "event_key": "ana de armas futuristic costumes are a surprise instant this auction while one movie legend is left waiting a bid|New Season / Sequel|hit for courtesy warner bros pictures being doesn always mean you will get all the attention when comes the sale props newly launched prop store selling many weapons and other pieces used memorabilia from denis villeneuve acclaimed 2017 sequel blade runner 2049 the belated follow ridley",
+      "event_status": "reported",
+      "processing_at": "2026-09-20T20:17:06.291115+06:00",
+      "processing_rank": 8,
+      "content_retry_count": 1,
+      "failure_stage": "generation",
+      "failure_reason": "generation failed",
+      "retry_at": "2026-09-21T02:17:12.538467+06:00",
+      "retry_exhausted": false
+    },
+    "cbr.com/dark-matter-sci-fi-apple-tv-success-september-2026": {
+      "title": "Apple TV’s Mind-Bending 2-Season Sci-Fi Hit Is Surging as a Perfect Silo Replacement",
+      "url": "https://www.cbr.com/dark-matter-sci-fi-apple-tv-success-september-2026/",
+      "canonical": "cbr.com/dark-matter-sci-fi-apple-tv-success-september-2026",
+      "published_dt": "2026-09-20T20:03:06+06:00",
+      "published_date": "2026-09-20T20:03:06+06:00",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "excerpt": "One of the most critically acclaimed sci-fi thrillers of the decade is making major waves in the world of streaming while fans wait for Season 3.",
+      "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2026/09/joel-edgerton-looks-off-in-the-distance-from-dark-matter.jpg",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-09-20T20:14:23.865696+06:00",
+      "last_seen": "2026-09-20T20:14:23.865700+06:00"
+    },
+    "crunchyroll.com/news/latest/2026/9/19/daemons-of-the-shadow-realm-season-2-anime-announced": {
+      "title": "Daemons of the Shadow Realm Season 2 Anime Announced",
+      "url": "https://www.crunchyroll.com/news/latest/2026/9/19/daemons-of-the-shadow-realm-season-2-anime-announced",
+      "canonical": "crunchyroll.com/news/latest/2026/9/19/daemons-of-the-shadow-realm-season-2-anime-announced",
+      "published_dt": "2026-09-19T21:14:26.358000+06:00",
+      "published_date": "2026-09-19T21:14:26.358000+06:00",
+      "source": "Crunchyroll News",
+      "region": "ComicAnime",
+      "excerpt": "Daemons of the Shadow Realm Season 2 Anime Announced - Crunchyroll News\n...\nFollowing the broadcast of Daemons of the Shadow Realm Opens in a new tab's 24th and final episode tonight in Japan, the anime's official website and accounts revealed that a second season is in production. A release date was not confirmed at the time of reporting, but a teaser video and visual were released to give us a taste of what's next for Yuru and Asa.\n...\n## Daemons of the Shadow Realm Season 2 Anime Super Teaser Visual\n...\n> ◈♢━━━━━━━━♢◈ #黄泉のツガイ 第2期スーパーティザー ビジュアル解禁 ◈♢━━━━━━━━♢◈ TVアニメ「黄泉のツガイ」 第2期制作決定！ ▼第2期特報映像 https://t.co/kak3PR0mCS ▽公式サイト https://t.co/LNH4esWdpk#ヨミツガ pic.twitter.com/uNYd5hY8M7\n> \n> — 「黄泉のツガイ」TVアニメ公式 (@tsugai_official) September 19, 2026\n...\nMasahiro Ando (Sword of the Stranger Opens in a new tab) directed the first season of Daemons of the Shadow Realm at studio bones film, with series composition by Noboru Takagi (Golden Kamuy Opens in a new tab), character designs by Nobuhiro Arai (Bungo Stray Dogs Opens in a new tab) and music by Kenichiro Suehiro (Fire Force Opens in a new tab). Crunchyroll describes the story:",
+      "image": "https://a.storyblok.com/f/178900/960x540/126d3499f2/daemons-of-the-shadow-realm.jpg",
+      "discovery": "exa",
+      "source_pool": "primary",
+      "source_class": "official",
+      "status": "posted",
+      "first_seen": "2026-09-20T20:14:26.504186+06:00",
+      "last_seen": "2026-09-20T20:14:26.504191+06:00",
+      "importance_score": 88,
+      "priority_type": "Major Trailer / PV",
+      "priority_tier": 1,
+      "priority_rank": 3,
+      "sector": "Anime",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.481461+06:00",
+      "learning_pattern": "",
+      "event_key": "daemons the shadow realm anime|Major Trailer / PV|crunchyroll following broadcast opens tab 24th and final tonight japan website and accounts revealed that second date was not time reporting but video and visual were give taste what next for yuru and asa super visual https kak3pr0mcs https lnh4eswdpk pic twitter com unyd5hy8m7 tsugai september 2026 masahiro ando sword stranger opens tab directed studio bones with composition noboru takagi golden kamuy opens tab character designs nobuhiro arai bungo stray dogs opens tab and music kenichiro suehi",
+      "event_status": "reported",
+      "processing_at": "2026-09-20T20:15:54.388080+06:00",
+      "processing_rank": 6,
+      "selected_at": "2026-09-20T20:16:03.232103+06:00",
+      "posted_at": "2026-09-20T20:18:01.223995+06:00"
+    },
+    "crunchyroll.com/news/latest/2026/9/20/alya-sometimes-hides-her-feelings-in-russian-season-2-anime-teaser-trailer": {
+      "title": "Alya Sometimes Hides Her Feelings in Russian Season 2 Anime ...",
+      "url": "https://www.crunchyroll.com/news/latest/2026/9/20/alya-sometimes-hides-her-feelings-in-russian-season-2-anime-teaser-trailer",
+      "canonical": "crunchyroll.com/news/latest/2026/9/20/alya-sometimes-hides-her-feelings-in-russian-season-2-anime-teaser-trailer",
+      "published_dt": "2026-09-20T10:14:26.358000+06:00",
+      "published_date": "2026-09-20T10:14:26.358000+06:00",
+      "source": "Crunchyroll News",
+      "region": "ComicAnime",
+      "excerpt": "Anime News, Top Stories & In-Depth Anime Insights - Crunchyroll",
+      "image": "https://www.crunchyroll.com/news/img/favicons/favicon-v2-96x96.png",
+      "discovery": "exa",
+      "source_pool": "primary",
+      "source_class": "official",
+      "status": "retryable",
+      "first_seen": "2026-09-20T20:14:26.508233+06:00",
+      "last_seen": "2026-09-20T20:14:26.508235+06:00",
+      "importance_score": 88,
+      "priority_type": "Major Trailer / PV",
+      "priority_tier": 1,
+      "priority_rank": 3,
+      "sector": "Anime",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.480870+06:00",
+      "learning_pattern": "",
+      "event_key": "alya sometimes hides her feelings russian anime|Major Trailer / PV|top stories depth insights crunchyroll",
+      "event_status": "reported",
+      "processing_at": "2026-09-20T20:15:33.311985+06:00",
+      "processing_rank": 4,
+      "content_retry_count": 1,
+      "failure_stage": "numeric_grounding",
+      "failure_reason": "numeric_grounding failed",
+      "retry_at": "2026-09-21T02:15:42.327449+06:00",
+      "retry_exhausted": false
+    },
+    "cbr.com/zach-cregger-joker-batman-movie": {
+      "title": "Resident Evil Director Wrote a Batman Script With an Unusual Twist",
+      "url": "https://www.cbr.com/zach-cregger-joker-batman-movie/",
+      "canonical": "cbr.com/zach-cregger-joker-batman-movie",
+      "published_dt": "2026-09-20T06:00:00+06:00",
+      "published_date": "2026-09-20T06:00:00+06:00",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "excerpt": "Filmmaker Zach Cregger has another big hit on his hands with the successful launch of Resident Evil. Amid the new film's success, fans may be wondering how his Batman movie would have turned out if it had gotten made.\n...\nDuring a new interview for Men's Health, Cregger shared details about Henchman, his screenplay for a film set in Gotham City. It came with a unique twist, as while characters like Batman and The Joker were present, they were not the focus. The film would have instead focused on an everyman who happens to get caught up in a conflict between the Dark Knight and the Clown Prince of Crime. This is reminiscent of the new Resident Evil following a courier who stumbles into Raccoon City right when the zombie outbreak from the games begins, rather than using a powerful and established character.\n...\n“It’s about a normal guy,\" Cregger said of the script, which was the first movie screenplay he ever wrote. \"It’s about a pharmacist who lives in Gotham City, and he gets accidentally sucked into this incredible power play between Batman and The Joker. And he finds himself a very integral part of something. And so, it’s a weird movie. It’s someone living on the periphery of all the stories in Gotham that we know of, and it’s about some rando. I’m not the world’s biggest Batman guy at all, but I just liked this story. I liked this character. I liked what happened to him, so it was just fun.”\n...\nMost comic book movies focus on popular superheroes, although some will shift the focus to villains, with characters like The Joker and Clayface getting their own movies. What's very uncommon is for a movie based on DC or Marvel comic books to keep the focus on a \"normal guy\" and turning the superheroes and supervillains into side characters. As the movie was not made and Cregger has moved on to other projects, it seems improbable that Henchman will ever see the light of day, though the director's fans can imagine how it might have turned out.\n...\nCregger turned things around in a big way with the success of the horror flick Barbarian, his first feature film as a sole director. Last year's Weapons was a huge hit for Cregger as well, leading to his hiring to direct a new Resident Evil movie. This was a move that is working out well for Sony, as Resident Evil is now being declared as the greatest video game movie of all time.\n...\nResident Evil is now playing in movi",
+      "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2022/08/DCeased-2-Batman-Nightwing-Batgirl-Header.jpg?w=1200&h=675&fit=crop",
+      "discovery": "exa",
+      "source_pool": "primary",
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-09-20T20:14:36.897664+06:00",
+      "last_seen": "2026-09-20T20:14:36.897670+06:00"
+    },
+    "cbr.com/the-twilight-zone-stories-from-the-fifth-dimension-comic": {
+      "title": "67 Years Later, The Twilight Zone Returns For Its Next Major Release",
+      "url": "https://www.cbr.com/the-twilight-zone-stories-from-the-fifth-dimension-comic/",
+      "canonical": "cbr.com/the-twilight-zone-stories-from-the-fifth-dimension-comic",
+      "published_dt": "2026-09-19T22:14:37.779000+06:00",
+      "published_date": "2026-09-19T22:14:37.779000+06:00",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "excerpt": "67 Years Later, The Twilight Zone Returns For Its Next Major Release\n...\nThe legacy of host Rod Serling's most iconic creation only continues to endure, and not just through its 1983 feature-length adaptation and many series reboots or even in the way it has influenced many modern-day sci-fi and horror anthology TV shows. The Twilight Zone has reemerged in the form of a must-read comic book.\n...\n## New Twilight Zone Comic Released In Trade \n\n It has practically become tradition for an acclaimed horror anthology TV show or film that was not already based on a comic, such as Tales from the Crypt, to inspire a spin-off comic book that continues to deliver more spooky stories, such as Creepshow, which is merely a tribute to classic creepy\n...\n. The Twilight Zone is one such series.\n...\nIDW Publishing launched its own comic book adaptation of The Twilight Zone, which continues to honor the original series' black-and-white presentation with grayscale illustrations, in Sept. 2025. Now, one year later, the series' first five issues have been collected in one oversized trade paperback release subtitled Stories from the Fifth Dimension.\n...\nThe book contains five original stories written in the vein of some of the best Twilight Zone episodes and featuring narration in the style of Serling's timeless introductions. Writer Dan Watters and artist Morgan Beem kick things off with \"Blanks,\" in which a cure for death proves to come with grave side effects, and the following tale, Tom Scioli's \"World of Your Wildest Dreams,\" depicts the exploration of a newly discovered planet.\n...\nJames Stokoe’s \"The Relic,\" a post-apocalyptic, commercialist satire, is followed by \"False Bottom,\" a story from Nate Powell about a party boat with a glass bottom that is actually a portal said to promise a good time on the other end. Finally, L. Marlow Francavilla and Francesco Francavilla, the latter of whom also serves as the illustrator, co-write the Lovecraftian \"Silent Warning,\" in which an acoustic scientist helps investigate the unsettling sounds emitting from a recently discovered meteor.\n...\ns current run of The Twilight Zone is certainly not the first time it has made the\n...\nscreen to the pages of a comic book. In fact, its association with the medium has existed almost as long as the\n...\nIn 1961, Dell Comics published two issues of its Four Color anthology series featuring Twilight ",
+      "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2026/04/janet-with-a-doctor-in-the-twilight-zone-eye-of-the-beholder.jpg?w=1600&h=900&fit=crop",
+      "discovery": "exa",
+      "source_pool": "primary",
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-09-20T20:14:37.982750+06:00",
+      "last_seen": "2026-09-20T20:14:37.982755+06:00",
+      "importance_score": 76,
+      "priority_type": "New Season / Sequel",
+      "priority_tier": 1,
+      "priority_rank": 2,
+      "sector": "Comics",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-09-20T20:15:02.492931+06:00",
+      "learning_pattern": "",
+      "event_key": "years later the twilight zone its next major|New Season / Sequel|returns for returns for legacy host rod serling most iconic creation only continues endure and not just through 1983 feature length adaptation and many reboots even way has influenced many modern day sci and horror anthology shows has reemerged form must read comic book comic trade has practically become tradition for acclaimed horror anthology that was not already based comic such tales from crypt inspire spin off comic book that continues deliver more spooky stories such creepshow which merely",
+      "event_status": "reported"
+    },
+    "cbr.com/avatar-legends-master-of-the-elements-volume-1-out-now": {
+      "title": "Avatar: The Last Airbender Returns to Reclaim Its Legacy After ...",
+      "url": "https://www.cbr.com/avatar-legends-master-of-the-elements-volume-1-out-now/",
+      "canonical": "cbr.com/avatar-legends-master-of-the-elements-volume-1-out-now",
+      "published_dt": "2026-09-20T06:14:37.779000+06:00",
+      "published_date": "2026-09-20T06:14:37.779000+06:00",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "excerpt": "Avatar: The Last Airbender Returns to Reclaim Its Legacy After Netflix’s Live-Action Letdown\n...\n# Avatar: The Last Airbender Makes a Major Comeback After Netflix’s Live-Action Failure\n...\nWater. Earth. Fire. Air. Long ago, the four nations lived together in harmony. Then, everything changed when Netflix attacked, leaving Dark Horse Comics to bring Avatar: The Last Airbender back to its roots.\n...\n\"Witness the never-ending quest for balance as Aang and Team Avatar work to rebuild the Four Nations in stunning stories that enrich the world explored in the new Paramount+ movie—ideal for longtime fans of the Avatar Legends universe and newcomers alike,\" Dark Horse Comics' solicit for Avatar Legends: Masters of the Elements Volume 1 reads. \"For the first time ever, your favorite Avatars from across the ages are gathered together in one graphic novel anthology!\"\n...\nDark Horse Comics and Penguin Random House shared on the official sales page that \"The first volume of Avatar Legends: Masters of the Elements collects short stories from beyond the confines of a single Avatar Cycle. Tales from Avatars Korra, Aang, Roku, Kyoshi, and Yangchen are rendered in exciting detail by comics masters including Brandon Hoàng, BellBessa, Rachel Silverstein, Ingrid Kan, Ben Wilgus, David M. Booher, Amy Chu, and many more! From the Western Air Temple to the ramen houses of the Fire Nation and everywhere in between, these stories bring a new dose of Avatar adventure to your bookshelf.\"\n...\nAvatar: The Last Airbender has been celebrated for its diverse storytelling, and a new print collection of standalone stories will offer an even greater means of immersion into such a precious universe. By pulling unique creatives together to emphasize the individualism of each Avatar. Dark Horse Comics is determined to take a series that's already been so lived in and make it feel even more personal.\n...\nLike countless other pieces of precious pop culture sacrificed for live-action adaptations, Avatar: The Last Airbender has been faced with frustrating misunderstandings of such an irreplaceable cornerstone of fiction. M. Night Shyamalan's scorned The Last Airbender was a grave warning to Netflix not to recklessly make the same mistakes, resulting in a greatly divisive iteration of Nickelodeon's crown jewel. The comic book, WEBTOON, and graphic novel ventures into the Avatar: The Last Airbender uni",
+      "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2025/03/aang-avatar-state-with-wind.jpg?w=1200&h=675&fit=crop",
+      "discovery": "exa",
+      "source_pool": "primary",
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-09-20T20:14:37.984445+06:00",
+      "last_seen": "2026-09-20T20:14:37.984447+06:00"
+    },
+    "crunchyroll.com/id/news/latest/2026/9/20/overgeared-anime-yura-character-trailer": {
+      "title": "Overgeared Anime Spotlights Yura in New Character Trailer - Crunchyroll News",
+      "url": "https://www.crunchyroll.com/id/news/latest/2026/9/20/overgeared-anime-yura-character-trailer",
+      "canonical": "crunchyroll.com/id/news/latest/2026/9/20/overgeared-anime-yura-character-trailer",
+      "published_dt": "2026-09-20T06:00:00+06:00",
+      "published_date": "2026-09-20T06:00:00+06:00",
+      "source": "Crunchyroll News",
+      "region": "ComicAnime",
+      "excerpt": "Overgeared Anime Spotlights Yura in New Character Trailer - Crunchyroll News\n...\n## Crunchyroll will stream the manhwa adaptation\n...\nThe anime adaptation of Saenal and Monohumbug's manhwa Overgeared is introducing its characters one by one in a series of new trailers. Today, we get to know Yura, the high-ranking Black Magician known as the \"Blood Witch.\" As previously announced, Asami Seto voices Yura. Check out her performance in the new trailer:\n...\n## Overgeared Character Trailer: Yura",
+      "image": "https://a.storyblok.com/f/178900/1920x1080/08b9c1b96d/overgeared-anime-yura-hero.png",
+      "discovery": "exa",
+      "source_pool": "primary",
+      "source_class": "official",
+      "status": "pending",
+      "first_seen": "2026-09-20T20:14:38.766583+06:00",
+      "last_seen": "2026-09-20T20:14:38.766588+06:00"
+    },
+    "oricon.co.jp/news/2481578/full": {
+      "title": "『黄泉のツガイ』第2期制作決定　キャラ続々登場の特報映像公開  | オリコンニュース（ORICON NEWS）",
+      "url": "https://www.oricon.co.jp/news/2481578/full/",
+      "canonical": "oricon.co.jp/news/2481578/full",
+      "published_dt": "2026-09-20T06:00:00+06:00",
+      "published_date": "2026-09-20T06:00:00+06:00",
+      "source": "ORICON NEWS",
+      "region": "ComicAnime",
+      "excerpt": "『黄泉のツガイ』第2期制作決定 キャラ続々登場の特報映像公開 | オリコンニュース（ORICON NEWS）\n\n 2026-09-20 07:35 オリコンニュース \n\n# 『黄泉のツガイ』第2期制作決定 キャラ続々登場の特報映像公開 \n\n テレビアニメ『黄泉のツガイ』の第2期が制作されることが発表された。あわせて、第2期特報映像も公開された。 \n\nテレビアニメ『黄泉のツガイ』第2期制作決定 発表キービジュアル（C）Hiromu Arakawa/SQUARE ENIX, Project TSUGAI \n\n写真ページを見る\n\n 映像では、さまざまなキャラクターがフラッシュカットで次々と映し出され、「自分の目で見るまで信じるな！」というユルの力強いセリフが響き渡る。 \n\n アサ、左右様、ガブちゃん、デラ、ハナといったメインキャラクターをはじめ、ユルたちと激しいバトルを繰り広げた重要なキーパーソン・イワンも登場。 さらに、ユルとアサを狙う西ノ村陣営のリーダー格・御陵の姿も映し出され、今後の物語を予感させる内容となっている。 本作は、国内外から今なお熱い支持を得る名作『鋼の錬金術師』の荒川弘氏が描く最新作にして、月刊『少年ガンガン』にて連載中のシリーズ累計600万部を突破する人気作が原作。 製作布陣は2003年から2011年にかけて放送・公開したアニメ『鋼の錬金術師』シリーズと同様、スクウェア・エニックス×アニプレックス×ボンズの強力タッグとなっている。",
+      "image": "https://contents.oricon.co.jp/upimg/news/2482000/2481578/20260920_003858_p_o_28303150.jpg",
+      "discovery": "exa",
+      "source_pool": "primary",
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-09-20T20:14:38.771845+06:00",
+      "last_seen": "2026-09-20T20:14:38.771847+06:00"
     }
   },
-  "events": {},
+  "events": {
+    "detective_dead_s2_release_oct7_2026": {
+      "event_id": "detective_dead_s2_release_oct7_2026",
+      "canonical_url": "bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus",
+      "original_url": "https://bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus/",
+      "source": "Bleeding Cool",
+      "region": "ComicAnime",
+      "sector": "Comics",
+      "topic": "Major Comic Announcement",
+      "institution": "",
+      "event_cluster_id": "evt_d822f07571",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Zenith HC Full Colour Omnibus Edition",
+      "summary": "Rebellion Publishing announced a full‑colour hardcover omnibus of Grant Morrison and Steve Yeowell’s 2000 AD classic Zenith, slated for February 2027.",
+      "highlights": [
+        "The omnibus will collect the entire Zenith run in full colour, coloured by JP Jordan",
+        "Features the original creators Grant Morrison (writer) and Steve Yeowell (artist)",
+        "Priced at $65.99 and scheduled for release on 2/10/2027",
+        "Marks the first time the series is presented in colour, celebrating 2000 AD’s 50th anniversary"
+      ],
+      "why_it_matters": "It revives a seminal 2000 AD superhero saga with new colour art, appealing to both longtime fans and new readers.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "New Season / Sequel",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-09-20T15:57:10+06:00",
+      "selected_at": "2026-09-20T20:17:55.444742+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 6
+    },
+    "tougen_anki_2026_season2": {
+      "event_id": "tougen_anki_2026_season2",
+      "canonical_url": "anitrendz.net/news/2026/09/19/tougen-anki-nikko-kegon-falls-arc-reveals-new-visual-trailer-theme-songs-more-cast-members",
+      "original_url": "https://anitrendz.net/news/2026/09/19/tougen-anki-nikko-kegon-falls-arc-reveals-new-visual-trailer-theme-songs-more-cast-members/",
+      "source": "Anime Trending",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "Major Trailer / PV",
+      "institution": "",
+      "event_cluster_id": "evt_bfb04b8631",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "TOUGEN ANKI: Nikko Kegon Falls Arc",
+      "summary": "A new key visual, trailer, theme songs, and additional cast members were revealed for the second season of TOUGEN ANKI, set to premiere on October 2, 2026.",
+      "highlights": [
+        "Opening theme “BACKLASH” by Hiromitsu Kitayama and ending theme “Hand in Hand” by TRACK15 were announced",
+        "Three new voice actors—Kenichi Suzumura, Yuki Kaji, and Kisho Taniyama—joined the cast",
+        "Studio HIBARI is handling animation production and Ato Nonaka directs the arc",
+        "The series will stream worldwide (excluding Japan and China) on Crunchyroll"
+      ],
+      "why_it_matters": "The reveal expands the series' talent and music lineup while confirming the October 2026 broadcast, building anticipation for fans of the dark fantasy franchise.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Trailer / PV",
+      "source_class": "reported",
+      "official_video_url": "https://www.youtube.com/watch?v=H8gOtQ0fTSo",
+      "published_at": "2026-09-20T01:20:20+06:00",
+      "selected_at": "2026-09-20T20:17:58.255642+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 7
+    },
+    "daemons_the_shadow_realm_anime_major_trailer_pv_crunchyroll_following_broadcast_opens_tab_24th_and_final_tonight_japan_website_and_accounts_revealed_that_second_date_was_not_time_reporting_but_video_and_visual_were_give_taste_what_next_for_yuru_and_asa_super_visual_https_kak3pr0mcs_https_lnh4eswdpk_pic_twitter_com_unyd5hy8m7_tsugai_september_2026_masahiro_ando_sword_stranger_opens_tab_directed_studio_bones_with_composition_noboru_takagi_golden_kamuy_opens_tab_character_designs_nobuhiro_arai_bungo_stray_dogs_opens_tab_and_music_kenichiro_suehi": {
+      "event_id": "daemons_the_shadow_realm_anime_major_trailer_pv_crunchyroll_following_broadcast_opens_tab_24th_and_final_tonight_japan_website_and_accounts_revealed_that_second_date_was_not_time_reporting_but_video_and_visual_were_give_taste_what_next_for_yuru_and_asa_super_visual_https_kak3pr0mcs_https_lnh4eswdpk_pic_twitter_com_unyd5hy8m7_tsugai_september_2026_masahiro_ando_sword_stranger_opens_tab_directed_studio_bones_with_composition_noboru_takagi_golden_kamuy_opens_tab_character_designs_nobuhiro_arai_bungo_stray_dogs_opens_tab_and_music_kenichiro_suehi",
+      "canonical_url": "crunchyroll.com/news/latest/2026/9/19/daemons-of-the-shadow-realm-season-2-anime-announced",
+      "original_url": "https://www.crunchyroll.com/news/latest/2026/9/19/daemons-of-the-shadow-realm-season-2-anime-announced",
+      "source": "Crunchyroll News",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "New Season / Sequel",
+      "institution": "",
+      "event_cluster_id": "evt_60a3268dea",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Daemons of the Shadow Realm",
+      "summary": "A second season of the Daemons of the Shadow Realm anime has been officially announced.",
+      "highlights": [
+        "The official website and social accounts confirmed season 2 is in production",
+        "A teaser video and visual have been released",
+        "Masahiro Ando, who directed season 1, returns as director",
+        "Studio Bones is handling the animation"
+      ],
+      "why_it_matters": "The continuation expands the story of twins Yuru and Asa, promising more supernatural action for fans.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Trailer / PV",
+      "source_class": "official",
+      "official_video_url": "https://www.youtube.com/watch?v=ufD2IvYem0k",
+      "published_at": "2026-09-19T21:14:26.358000+06:00",
+      "selected_at": "2026-09-20T20:18:01.224124+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 8
+    },
+    "oishinbo_tv_anime_2026_announce": {
+      "event_id": "oishinbo_tv_anime_2026_announce",
+      "canonical_url": "crunchyroll.com/ko/news/latest/2026/9/19/new-oishinbo-tv-anime-announced",
+      "original_url": "https://www.crunchyroll.com/ko/news/latest/2026/9/19/new-oishinbo-tv-anime-announced",
+      "source": "Crunchyroll News",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "Major Anime Announcement",
+      "institution": "",
+      "event_cluster_id": "evt_85351416ee",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Oishinbo (new TV anime)",
+      "summary": "A new TV anime adaptation of the classic food manga Oishinbo was announced at Shin‑Ei Animation’s 50th anniversary event during the ABEMA Anime Festival 2026.",
+      "highlights": [
+        "Announced at Shin‑Ei Animation’s 50th anniversary stage event during ABEMA Anime Festival 2026",
+        "Teaser videos for the new Oishinbo TV anime were released",
+        "The adaptation will be produced by studio Shin‑Ei Animation, which handled the original 1988‑1992 series",
+        "The manga, created by Tetsu Kariya and Akira Hanasaki, has sold over 135 million copies worldwide"
+      ],
+      "why_it_matters": "Reviving a beloved classic introduces its culinary storytelling to a new generation of viewers.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Trailer / PV",
+      "source_class": "official",
+      "official_video_url": "https://www.youtube.com/watch?v=AdFCh865M_w",
+      "published_at": "2026-09-19T19:29:05.953000+06:00",
+      "selected_at": "2026-09-20T20:18:03.390590+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 9
+    },
+    "katekyo_hitman_reborn_anime_reveals_twelfth_ending_featuring_aoi_yume_mori_tsubasa_manga_anime_adaptation_has_officially_the_creditless_version_its_the_song_the_song_was_used_140_153_while_the_video_was_part_the_20th_anniversary_celebration_the_follows_yesterday_the_eleventh_the_song_smile_for_ueto_aya_the_releases_are_part_music_month_september_long_music_project_celebrating_the_20th_anniversary_previously_reported_the_campaign_will_have_creditless_versions_the_past_theme_song_sequences_daily_the_youtube_channel_these_creditless_sequences_were_previously_included_with_physical_releases_the_but_had": {
+      "event_id": "katekyo_hitman_reborn_anime_reveals_twelfth_ending_featuring_aoi_yume_mori_tsubasa_manga_anime_adaptation_has_officially_the_creditless_version_its_the_song_the_song_was_used_140_153_while_the_video_was_part_the_20th_anniversary_celebration_the_follows_yesterday_the_eleventh_the_song_smile_for_ueto_aya_the_releases_are_part_music_month_september_long_music_project_celebrating_the_20th_anniversary_previously_reported_the_campaign_will_have_creditless_versions_the_past_theme_song_sequences_daily_the_youtube_channel_these_creditless_sequences_were_previously_included_with_physical_releases_the_but_had",
+      "canonical_url": "animecorner.me/katekyo-hitman-reborn-anime-reveals-twelfth-ending-featuring-aoi-yume-by-mori-tsubasa",
+      "original_url": "https://animecorner.me/katekyo-hitman-reborn-anime-reveals-twelfth-ending-featuring-aoi-yume-by-mori-tsubasa/",
+      "source": "Anime Corner",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "Major Release Date",
+      "institution": "",
+      "event_cluster_id": "evt_2f72cd1e52",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Katekyo Hitman Reborn! Anime Releases Creditless Twelfth Ending Featuring \"Aoi Yume\"",
+      "summary": "The anime’s twelfth ending video, creditless and set to Mori Tsubasa’s \"Aoi Yume,\" was released as part of the series’ 20th‑anniversary music project.",
+      "highlights": [
+        "The creditless ending video was released on September 20, 2026, marking the latest entry in the REBORN! MUSIC MONTH campaign",
+        "\"Aoi Yume\" was the ending theme for episodes 140‑153 of the series",
+        "The video is now available on the official REBORN! YouTube channel, having previously only appeared on physical releases",
+        "Studio Artland produced the original anime, which streams on Crunchyroll"
+      ],
+      "why_it_matters": "It gives fans online access to a previously physical‑only ending sequence, celebrating the franchise’s 20‑year milestone.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Manga → Anime Adaptation",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-09-20T17:34:55+06:00",
+      "selected_at": "2026-09-20T20:18:05.803870+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 10
+    },
+    "tensei_goblin_dakedo_shitsumon_aru_announces_supporting_major_cast_staff_reveal_the_website_for_the_television_anime_adaptation_nazuna_miki_what_wrong_with_getting_reborn_manga_sunday_the_anime_scheduled_october_tokyo_followed_broadcasts_bs11_sun_and_sandaime_hanzou_junko_takeuchi_haigakura_nanadaime_hanzou_mariya_ise_made_abyss_rokudaime_masamune_rin_mizuki_tomodachi_imouto_ore": {
+      "event_id": "tensei_goblin_dakedo_shitsumon_aru_announces_supporting_major_cast_staff_reveal_the_website_for_the_television_anime_adaptation_nazuna_miki_what_wrong_with_getting_reborn_manga_sunday_the_anime_scheduled_october_tokyo_followed_broadcasts_bs11_sun_and_sandaime_hanzou_junko_takeuchi_haigakura_nanadaime_hanzou_mariya_ise_made_abyss_rokudaime_masamune_rin_mizuki_tomodachi_imouto_ore",
+      "canonical_url": "myanimelist.net/news/74738383",
+      "original_url": "https://myanimelist.net/news/74738383?_location=rss",
+      "source": "MyAnimeList News",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "Major Cast / Staff Reveal",
+      "institution": "",
+      "event_cluster_id": "evt_e3bdf27702",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Tensei Goblin dakedo Shitsumon Aru? Announces Supporting Cast",
+      "summary": "The TV anime adaptation of Nazuna Miki's manga will premiere on October 5, 2026 and has revealed a lineup of supporting voice actors.",
+      "highlights": [
+        "Junko Takeuchi, Mariya Ise, and Rin Mizuki are among the announced supporting cast",
+        "The series is directed by Ryouta Kawahara and produced by studio Bakkka",
+        "It will air at 10:00 p.m. on Tokyo MX, with subsequent broadcasts on BS11, Sun TV, and AT-X"
+      ],
+      "why_it_matters": "The announced cast adds notable talent and raises anticipation for the upcoming fantasy series.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Manga → Anime Adaptation",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-09-20T14:43:55+06:00",
+      "selected_at": "2026-09-20T20:18:08.556980+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 11
+    },
+    "conan_the_barbarian_s_savage_stories_are_a_new_new_season_sequel_back_with_date_has_just_made_his_triumphant_return_with_exciting_perfect_for_fans_sword_and_sorcery_icon_stunning_eighth_omnibus_sale_from_titan_comics_sword_original_comics_omnibus_vol_was_sept_with_over_one_thousand_pages_digitally_remastered_artwork_and_host_bonus_material_high_quality_collects_sword_1974_102_116_well_marvel_comics_super_special_1977_beautiful_and_deluxe_hardcover_format_picks_story_directly_from_where_seventh_omnibus_left_off_fans_looking_complete_their_collection_will_defin": {
+      "event_id": "conan_the_barbarian_s_savage_stories_are_a_new_new_season_sequel_back_with_date_has_just_made_his_triumphant_return_with_exciting_perfect_for_fans_sword_and_sorcery_icon_stunning_eighth_omnibus_sale_from_titan_comics_sword_original_comics_omnibus_vol_was_sept_with_over_one_thousand_pages_digitally_remastered_artwork_and_host_bonus_material_high_quality_collects_sword_1974_102_116_well_marvel_comics_super_special_1977_beautiful_and_deluxe_hardcover_format_picks_story_directly_from_where_seventh_omnibus_left_off_fans_looking_complete_their_collection_will_defin",
+      "canonical_url": "cbr.com/conan-the-barbarian-savage-sword-omnibus-release-information",
+      "original_url": "https://www.cbr.com/conan-the-barbarian-savage-sword-omnibus-release-information/",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "sector": "Comics",
+      "topic": "Major Release Date",
+      "institution": "",
+      "event_cluster_id": "evt_0dfa95ec98",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "The Savage Sword of Conan: The Original Comics Omnibus Vol. 8",
+      "summary": "Titan Comics released a deluxe hardcover omnibus collecting Savage Sword of Conan #102‑116 and Marvel Super Special #35 on Sept.",
+      "highlights": [
+        "Collects Savage Sword of Conan (1974) issues #102‑116 and Marvel Comics Super Special (1977) #35",
+        "Over 1,000 pages of digitally remastered artwork with bonus material and rare artwork",
+        "Features a new introduction by Gary Kwapisz and a never‑before‑reprinted adaptation by Big John Buscema",
+        "Suggested retail price is $150"
+      ],
+      "why_it_matters": "Provides the first comprehensive, high‑quality collection of late‑era Conan stories, completing the omnibus series for collectors.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "New Season / Sequel",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-09-20T18:00:11+06:00",
+      "selected_at": "2026-09-20T20:18:11.663596+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 12
+    },
+    "bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus": {
+      "event_id": "bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus",
+      "canonical_url": "bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus",
+      "original_url": "https://bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus/",
+      "source": "",
+      "region": "ComicAnime",
+      "sector": "Comics",
+      "topic": "",
+      "institution": "",
+      "event_cluster_id": "bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus",
+      "event_confidence": 0,
+      "event_source_count": 0,
+      "headline": "Why the Zenith Omnibus Is a Milestone for 2000 AD",
+      "summary": "",
+      "highlights": [],
+      "why_it_matters": "",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Sales / Milestone",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-09-20T20:18:13.878403+06:00",
+      "selected_at": "2026-09-20T20:18:13.878405+06:00",
+      "status": "published",
+      "event_kind": "reader_extra",
+      "message_id": 13
+    }
+  },
   "event_clusters": {
     "evt_d805fd5393": {
       "event_id": "evt_d805fd5393",
-      "topic": "Major Comic Storyline / Event",
+      "topic": "Major Trailer / PV",
       "region": "ComicAnime",
       "sources": [
         "ComicBook.com"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898505+06:00",
+      "last_seen": "2026-09-20T20:15:02.971121+06:00",
       "headline": "Batman Knightfall Part 2 Trailer Reveals Bruce Wayne’s Unconventional Replacement"
     },
     "evt_1b82503ea5": {
@@ -2527,26 +3056,26 @@
     },
     "evt_d822f07571": {
       "event_id": "evt_d822f07571",
-      "topic": "Major Anime Announcement",
+      "topic": "Major Release Date",
       "region": "ComicAnime",
       "sources": [
         "Bleeding Cool"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898527+06:00",
+      "last_seen": "2026-09-20T20:15:02.971071+06:00",
       "headline": "Rebellion Official Full December 2026 Solicits With Zenith Omnibus"
     },
     "evt_3275560814": {
       "event_id": "evt_3275560814",
-      "topic": "Major Trailer / PV",
+      "topic": "Major Anime Announcement",
       "region": "ComicAnime",
       "sources": [
         "Anime News Network"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898529+06:00",
+      "last_seen": "2026-09-20T20:15:02.971102+06:00",
       "headline": "The Reincarnated Elf Left on a Journey to Master His Magic Anime Unveils 1st 2 Minutes, January Debut"
     },
     "evt_e769b24560": {
@@ -2558,7 +3087,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898531+06:00",
+      "last_seen": "2026-09-20T20:15:02.971105+06:00",
       "headline": "'Tetsuryō! meet with Tetsudō Musume' Anime's New Trailer Previews Opening Song"
     },
     "evt_553547fbdb": {
@@ -2571,7 +3100,7 @@
       ],
       "source_count": 2,
       "confidence": 1.0,
-      "last_seen": "2026-09-20T19:29:22.898533+06:00",
+      "last_seen": "2026-09-20T20:15:02.971076+06:00",
       "headline": "New Magic Knight Rayearth Anime Theme Songs Previewed in New ..."
     },
     "evt_dd552e027a": {
@@ -2583,7 +3112,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898535+06:00",
+      "last_seen": "2026-09-20T20:15:02.971141+06:00",
       "headline": "Magic Knight Rayearth 2026 Unveils New Trailer Featuring Theme Songs, Additional Cast"
     },
     "evt_1b42509335": {
@@ -2619,7 +3148,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898541+06:00",
+      "last_seen": "2026-09-20T20:15:02.971091+06:00",
       "headline": "Katekyo Hitman Reborn! Anime Reveals Twelfth  Ending Featuring \"Aoi Yume\" by Mori Tsubasa"
     },
     "evt_0dfa95ec98": {
@@ -2631,7 +3160,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898543+06:00",
+      "last_seen": "2026-09-20T20:15:02.971097+06:00",
       "headline": "Conan the Barbarian’s Savage Stories Are Back With a New Release Date"
     },
     "evt_310ed25438": {
@@ -2655,19 +3184,19 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898546+06:00",
+      "last_seen": "2026-09-20T20:15:02.971100+06:00",
       "headline": "The Detective Is Already Dead Anime Unveils 5th Anniversary Visual - Crunchyroll News"
     },
     "evt_85351416ee": {
       "event_id": "evt_85351416ee",
-      "topic": "Major Anime Announcement",
+      "topic": "Manga → Anime Adaptation",
       "region": "ComicAnime",
       "sources": [
         "Crunchyroll News"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898548+06:00",
+      "last_seen": "2026-09-20T20:15:02.971086+06:00",
       "headline": "New Oishinbo TV Anime Announced - Crunchyroll News"
     },
     "evt_a5900ab42a": {
@@ -2684,26 +3213,26 @@
     },
     "evt_ef52f78ee0": {
       "event_id": "evt_ef52f78ee0",
-      "topic": "Major Comic Announcement",
+      "topic": "New Season / Sequel",
       "region": "ComicAnime",
       "sources": [
         "Bleeding Cool"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898552+06:00",
+      "last_seen": "2026-09-20T20:15:02.971054+06:00",
       "headline": "Mad Cave's Official Full December 2026 Solicits With Weekly World News"
     },
     "evt_a1611bbbd2": {
       "event_id": "evt_a1611bbbd2",
-      "topic": "New Season / Sequel",
+      "topic": "Major Trailer / PV",
       "region": "ComicAnime",
       "sources": [
         "Anime Corner"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898553+06:00",
+      "last_seen": "2026-09-20T20:15:02.971135+06:00",
       "headline": "Roshidere Season 2 Reveals Teaser Trailer"
     },
     "evt_a2767b3b00": {
@@ -2715,7 +3244,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898555+06:00",
+      "last_seen": "2026-09-20T20:15:02.971133+06:00",
       "headline": "Bleach Officially Returning With Major Event After Anime's Finale"
     },
     "evt_48f378f8b0": {
@@ -2727,7 +3256,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898557+06:00",
+      "last_seen": "2026-09-20T20:15:02.971109+06:00",
       "headline": "5 Marvel Heroes Who Would Slay In a Reality TV Show"
     },
     "evt_d267a6ce8e": {
@@ -2739,7 +3268,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898558+06:00",
+      "last_seen": "2026-09-20T20:15:02.971111+06:00",
       "headline": "Spider-Man/Hulk: Fire and Brimstone #2 Preview: Hulk Gets Religion"
     },
     "evt_cbdb9383c0": {
@@ -2751,7 +3280,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898560+06:00",
+      "last_seen": "2026-09-20T20:15:02.971114+06:00",
       "headline": "Absolute Batman #24 Leads The Top 50 Anticipated Comics This Wednesday"
     },
     "evt_c75fbc094b": {
@@ -2763,19 +3292,19 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898562+06:00",
+      "last_seen": "2026-09-20T20:15:02.971116+06:00",
       "headline": "That Reference In Absolute Batman: The Daily LITG, 20th September 2026"
     },
     "evt_e3bdf27702": {
       "event_id": "evt_e3bdf27702",
-      "topic": "Major Cast / Staff Reveal",
+      "topic": "Manga → Anime Adaptation",
       "region": "ComicAnime",
       "sources": [
         "MyAnimeList News"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898565+06:00",
+      "last_seen": "2026-09-20T20:15:02.971094+06:00",
       "headline": "'Tensei Goblin dakedo Shitsumon Aru?' Announces Supporting Cast"
     },
     "evt_3abb3fdff0": {
@@ -2787,7 +3316,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898567+06:00",
+      "last_seen": "2026-09-20T20:15:02.971119+06:00",
       "headline": "4 Actors Who Almost Played Spider-Man Before Tom Holland, & #1 Wound Up in the MCU Anyway"
     },
     "evt_b0758b4f9c": {
@@ -2811,7 +3340,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898570+06:00",
+      "last_seen": "2026-09-20T20:15:02.971123+06:00",
       "headline": "Shonen Jump Hit Confirms Crunchyroll Return Date for New Season After Finale – Watch Trailer"
     },
     "evt_f9bb38aa60": {
@@ -2823,7 +3352,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898572+06:00",
+      "last_seen": "2026-09-20T20:15:02.971126+06:00",
       "headline": "Oishinbo Cooking Manga Receives New TV Anime Series"
     },
     "evt_10319fffad": {
@@ -2835,7 +3364,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898574+06:00",
+      "last_seen": "2026-09-20T20:15:02.971128+06:00",
       "headline": "Netflix’s Dark Action Hit Confirms Season 2 Release Date & Streaming Home – Watch Trailer"
     },
     "evt_27baeadfe9": {
@@ -2847,7 +3376,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898576+06:00",
+      "last_seen": "2026-09-20T20:15:02.971130+06:00",
       "headline": "Crunchyroll's Fullmetal Alchemist Successor Confirms Season 2 ..."
     },
     "evt_c8447fa1a6": {
@@ -2859,19 +3388,19 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898577+06:00",
+      "last_seen": "2026-09-20T20:15:02.971137+06:00",
       "headline": "Inherit the Winds Anime Reveals Theme Song Details, Theatrical ..."
     },
     "evt_bfb04b8631": {
       "event_id": "evt_bfb04b8631",
-      "topic": "Major Trailer / PV",
+      "topic": "New Season / Sequel",
       "region": "ComicAnime",
       "sources": [
         "Anime Trending"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898579+06:00",
+      "last_seen": "2026-09-20T20:15:02.971081+06:00",
       "headline": "TOUGEN ANKI: Nikko Kegon Falls Arc Reveals New Visual, Trailer, Theme Songs & More Cast Members"
     },
     "evt_566630deca": {
@@ -2883,7 +3412,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898581+06:00",
+      "last_seen": "2026-09-20T20:15:02.971139+06:00",
       "headline": "TOUGEN ANKI: Nikko Kegon Falls Arc Releases New Trailer and ..."
     },
     "evt_d2be662a98": {
@@ -2895,7 +3424,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898583+06:00",
+      "last_seen": "2026-09-20T20:15:02.971143+06:00",
       "headline": "33 Years Later, Jurassic Park’s Most Intense Quote Carries Its Biggest Message, Especially for All the Sequels"
     },
     "evt_8ff2fdf703": {
@@ -2919,14 +3448,222 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-09-20T19:29:22.898586+06:00",
+      "last_seen": "2026-09-20T20:15:02.971146+06:00",
       "headline": "27 Years Later, South Park Surprises With Major Kenny Return Fans Have Been Waiting for"
+    },
+    "evt_cfbc05e67c": {
+      "event_id": "evt_cfbc05e67c",
+      "topic": "Major Trailer / PV",
+      "region": "ComicAnime",
+      "sources": [
+        "Anime News Network",
+        "Crunchyroll News"
+      ],
+      "source_count": 2,
+      "confidence": 1.0,
+      "last_seen": "2026-09-20T20:15:02.971079+06:00",
+      "headline": "Alya Sometimes Hides Her Feelings in Russian Season 2 Anime ..."
+    },
+    "evt_60a3268dea": {
+      "event_id": "evt_60a3268dea",
+      "topic": "Major Trailer / PV",
+      "region": "ComicAnime",
+      "sources": [
+        "Crunchyroll News"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-09-20T20:15:02.971084+06:00",
+      "headline": "Daemons of the Shadow Realm Season 2 Anime Announced"
+    },
+    "evt_c15fa15384": {
+      "event_id": "evt_c15fa15384",
+      "topic": "New Season / Sequel",
+      "region": "ComicAnime",
+      "sources": [
+        "ComicBook.com"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-09-20T20:15:02.971089+06:00",
+      "headline": "Ana de Armas’ Futuristic Costumes Are a Surprise Instant Hit in This Auction (While One Movie Legend is Left Waiting for a Bid)"
+    },
+    "evt_7fae0c46d8": {
+      "event_id": "evt_7fae0c46d8",
+      "topic": "New Season / Sequel",
+      "region": "ComicAnime",
+      "sources": [
+        "Anime Corner",
+        "Anime News Network"
+      ],
+      "source_count": 2,
+      "confidence": 1.0,
+      "last_seen": "2026-09-20T20:15:02.971107+06:00",
+      "headline": "Daemons of the Shadow Realm Season 2 Announced With Teaser Video"
     }
   },
-  "posted_event_ids": [],
-  "recent_titles": [],
-  "work_memory": {},
-  "publication_fingerprints": [],
+  "posted_event_ids": [
+    "evt_d822f07571",
+    "evt_bfb04b8631",
+    "evt_60a3268dea",
+    "evt_85351416ee",
+    "evt_2f72cd1e52",
+    "evt_e3bdf27702",
+    "evt_0dfa95ec98"
+  ],
+  "recent_titles": [
+    "zenith hc full colour omnibus edition",
+    "tougen anki nikko kegon falls arc",
+    "daemons of the shadow realm",
+    "oishinbo new tv anime",
+    "katekyo hitman reborn anime releases creditless twelfth ending featuring aoi yume",
+    "tensei goblin dakedo shitsumon aru announces supporting cast",
+    "the savage sword of conan the original comics omnibus vol 8"
+  ],
+  "work_memory": {
+    "zenith hc full colour omnibus edition": {
+      "title": "Zenith HC Full Colour Omnibus Edition",
+      "sector": "Comics",
+      "first_published_at": "2026-09-20T20:17:55.444780+06:00",
+      "published_events": {
+        "New Season / Sequel": "2026-09-20T20:17:55.444786+06:00"
+      },
+      "last_published_at": "2026-09-20T20:17:55.444783+06:00"
+    },
+    "tougen anki nikko kegon falls arc": {
+      "title": "TOUGEN ANKI: Nikko Kegon Falls Arc",
+      "sector": "Anime",
+      "first_published_at": "2026-09-20T20:17:58.255683+06:00",
+      "published_events": {
+        "Major Trailer / PV": "2026-09-20T20:17:58.255688+06:00"
+      },
+      "last_published_at": "2026-09-20T20:17:58.255686+06:00"
+    },
+    "daemons the shadow realm": {
+      "title": "Daemons of the Shadow Realm",
+      "sector": "Anime",
+      "first_published_at": "2026-09-20T20:18:01.224161+06:00",
+      "published_events": {
+        "Major Trailer / PV": "2026-09-20T20:18:01.224166+06:00"
+      },
+      "last_published_at": "2026-09-20T20:18:01.224164+06:00"
+    },
+    "oishinbo new tv anime": {
+      "title": "Oishinbo (new TV anime)",
+      "sector": "Anime",
+      "first_published_at": "2026-09-20T20:18:03.390666+06:00",
+      "published_events": {
+        "Major Trailer / PV": "2026-09-20T20:18:03.390673+06:00"
+      },
+      "last_published_at": "2026-09-20T20:18:03.390671+06:00"
+    },
+    "katekyo hitman reborn anime releases creditless twelfth ending featuring aoi yume": {
+      "title": "Katekyo Hitman Reborn! Anime Releases Creditless Twelfth Ending Featuring \"Aoi Yume\"",
+      "sector": "Anime",
+      "first_published_at": "2026-09-20T20:18:05.803925+06:00",
+      "published_events": {
+        "Manga → Anime Adaptation": "2026-09-20T20:18:05.803930+06:00"
+      },
+      "last_published_at": "2026-09-20T20:18:05.803928+06:00"
+    },
+    "tensei goblin dakedo shitsumon aru announces supporting": {
+      "title": "Tensei Goblin dakedo Shitsumon Aru? Announces Supporting Cast",
+      "sector": "Anime",
+      "first_published_at": "2026-09-20T20:18:08.557025+06:00",
+      "published_events": {
+        "Manga → Anime Adaptation": "2026-09-20T20:18:08.557032+06:00"
+      },
+      "last_published_at": "2026-09-20T20:18:08.557029+06:00"
+    },
+    "the savage sword conan the original comics omnibus vol": {
+      "title": "The Savage Sword of Conan: The Original Comics Omnibus Vol. 8",
+      "sector": "Comics",
+      "first_published_at": "2026-09-20T20:18:11.663683+06:00",
+      "published_events": {
+        "New Season / Sequel": "2026-09-20T20:18:11.663689+06:00"
+      },
+      "last_published_at": "2026-09-20T20:18:11.663687+06:00"
+    }
+  },
+  "publication_fingerprints": [
+    {
+      "fingerprint": "zenith hc full colour omnibus edition|New Season / Sequel|rebellion december 2026 solicits with the grant morrison and steve yeowell rebellion publishing hardcover grant morrison and steve yeowell 2000 classic slated for february 2027 the will collect the entire run coloured jordan features the original creators grant morrison writer and steve yeowell artist priced and scheduled for 2027 print 2027",
+      "work_key": "zenith hc full colour omnibus edition",
+      "priority_type": "New Season / Sequel",
+      "headline": "Zenith HC Full Colour Omnibus Edition",
+      "event_text": "Zenith HC Full Colour Omnibus Edition Rebellion's Official Full December 2026 Solicits with the Grant Morrison and Steve Yeowell Zenith Omnibus Rebellion Publishing announced a full‑colour hardcover omnibus of Grant Morrison and Steve Yeowell’s 2000 AD classic Zenith, slated for February 2027. The omnibus will collect the entire Zenith run in full colour, coloured by JP Jordan Features the original creators Grant Morrison (writer) and Steve Yeowell (artist) Priced at $65.99 and scheduled for release on 2/10/2027 Print 2027-02-10",
+      "core": "rebellion december 2026 solicits with the grant morrison and steve yeowell rebellion publishing hardcover grant morrison and steve yeowell 2000 classic slated for february 2027 the will collect the entire run coloured jordan features the original creators grant morrison writer and steve yeowell artist priced and scheduled for 2027 print 2027",
+      "event_key": "detective_dead_s2_release_oct7_2026",
+      "canonical": "bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus",
+      "published_at": "2026-09-20T20:17:55.445188+06:00"
+    },
+    {
+      "fingerprint": "tougen anki nikko kegon falls arc|Major Trailer / PV|visual theme songs more members william moo september 2026 key visual main theme songs and three more voice members have been revealed for the anime the second will begin broadcasting japan october 2026 the latest highlights the main theme songs which include the opening theme backlash hiromitsu kitayama and ending theme hand hand track15 english subtitled the anime was also which may not viewable certain territories the three additional members jining the anime include kenichi suzumura kusabi m",
+      "work_key": "tougen anki nikko kegon falls arc",
+      "priority_type": "Major Trailer / PV",
+      "headline": "TOUGEN ANKI: Nikko Kegon Falls Arc",
+      "event_text": "TOUGEN ANKI: Nikko Kegon Falls Arc # TOUGEN ANKI: Nikko Kegon Falls Arc Reveals New Visual, Trailer, Theme Songs & More Cast Members\n...\nBy\n\nWilliam Moo\n\n September 19, 2026 \n\nA new key visual, trailer, main theme songs, and three more voice cast members have been revealed for the upcoming TOUGEN ANKI: Nikko Kegon Falls Arc TV anime series. The second season of TOUGEN ANKI will begin broadcasting in Japan on October 2, 2026. \n\n- ©\n...\nThe latest trailer highlights the main theme songs of Nikko Kegon Falls Arc, which include the opening theme “BACKLASH” by Hiromitsu Kitayama and ending theme “Hand in Hand” by TRACK15. \n\nAn English-subtitled trailer of the anime was also released, which may not be viewable in certain territories. \n\nThe three additional cast members jining the anime include Kenichi Suzumura as Kusabi Momoura, Yuki Kaji as Hizumi Momotsugi, and Kisho Taniyama as Senritsu Momoo.\n...\nThe Nikko Kegon Falls Arc anime was first announced in December 2025 alongside a teaser visual. The first season had two cours that were released in July 2025 to October 2025.\n...\nThe dark fantasy action manga series by Yura Urushibara began serialization in Akita Shoten’s Weekly Shonen Champion magazine on June 11, 2020. Thirty tankobon volumes have been published in Japan as of July\n...\n2026.\n...\nYen Press licensed the TOUGEN ANKI manga for English release under the title Tougen Anki: ",
+      "core": "visual theme songs more members william moo september 2026 key visual main theme songs and three more voice members have been revealed for the anime the second will begin broadcasting japan october 2026 the latest highlights the main theme songs which include the opening theme backlash hiromitsu kitayama and ending theme hand hand track15 english subtitled the anime was also which may not viewable certain territories the three additional members jining the anime include kenichi suzumura kusabi m",
+      "event_key": "TOUGEN_ANKI_2026_SEASON2",
+      "canonical": "anitrendz.net/news/2026/09/19/tougen-anki-nikko-kegon-falls-arc-reveals-new-visual-trailer-theme-songs-more-cast-members",
+      "published_at": "2026-09-20T20:17:58.256452+06:00"
+    },
+    {
+      "fingerprint": "daemons the shadow realm|Major Trailer / PV|anime crunchyroll following broadcast opens tab 24th and final tonight japan anime website and accounts revealed that second date was not time reporting but video and visual were give taste what next for yuru and asa anime super visual https kak3pr0mcs https lnh4eswdpk pic twitter com unyd5hy8m7 tsugai september 2026 masahiro ando sword stranger opens tab directed studio bones with composition noboru takagi golden kamuy opens tab character designs nobuhiro arai bungo stray dogs opens tab and mus",
+      "work_key": "daemons the shadow realm",
+      "priority_type": "Major Trailer / PV",
+      "headline": "Daemons of the Shadow Realm",
+      "event_text": "Daemons of the Shadow Realm Daemons of the Shadow Realm Season 2 Anime Announced - Crunchyroll News\n...\nFollowing the broadcast of Daemons of the Shadow Realm Opens in a new tab's 24th and final episode tonight in Japan, the anime's official website and accounts revealed that a second season is in production. A release date was not confirmed at the time of reporting, but a teaser video and visual were released to give us a taste of what's next for Yuru and Asa.\n...\n## Daemons of the Shadow Realm Season 2 Anime Super Teaser Visual\n...\n> ◈♢━━━━━━━━♢◈ #黄泉のツガイ 第2期スーパーティザー ビジュアル解禁 ◈♢━━━━━━━━♢◈ TVアニメ「黄泉のツガイ」 第2期制作決定！ ▼第2期特報映像 https://t.co/kak3PR0mCS ▽公式サイト https://t.co/LNH4esWdpk#ヨミツガ pic.twitter.com/uNYd5hY8M7\n> \n> — 「黄泉のツガイ」TVアニメ公式 (@tsugai_official) September 19, 2026\n...\nMasahiro Ando (Sword of the Stranger Opens in a new tab) directed the first season of Daemons of the Shadow Realm at studio bones film, with series composition by Noboru Takagi (Golden Kamuy Opens in a new tab), character designs by Nobuhiro Arai (Bungo Stray Dogs Opens in a new tab) and music by Kenichiro Suehiro (Fire Force Opens in a new tab). Crunchyroll describes the story: A second season of the Daemons of the Shadow Realm anime has been officially announced. The official website and social accounts confirmed season 2 is in production A teaser video and visual have been released Masahiro Ando, who directed ",
+      "core": "anime crunchyroll following broadcast opens tab 24th and final tonight japan anime website and accounts revealed that second date was not time reporting but video and visual were give taste what next for yuru and asa anime super visual https kak3pr0mcs https lnh4eswdpk pic twitter com unyd5hy8m7 tsugai september 2026 masahiro ando sword stranger opens tab directed studio bones with composition noboru takagi golden kamuy opens tab character designs nobuhiro arai bungo stray dogs opens tab and mus",
+      "event_key": "daemons the shadow realm anime|Major Trailer / PV|crunchyroll following broadcast opens tab 24th and final tonight japan website and accounts revealed that second date was not time reporting but video and visual were give taste what next for yuru and asa super visual https kak3pr0mcs https lnh4eswdpk pic twitter com unyd5hy8m7 tsugai september 2026 masahiro ando sword stranger opens tab directed studio bones with composition noboru takagi golden kamuy opens tab character designs nobuhiro arai bungo stray dogs opens tab and music kenichiro suehi",
+      "canonical": "crunchyroll.com/news/latest/2026/9/19/daemons-of-the-shadow-realm-season-2-anime-announced",
+      "published_at": "2026-09-20T20:18:01.224702+06:00"
+    },
+    {
+      "fingerprint": "oishinbo new tv anime|Major Trailer / PV|crunchyroll studio shin animation 50th anniversary stage event during abema festival 2026 today revealed that adaptation the works along with atashin chi next directed taku kimura chainsmoker cat videos for each were also further details will later date tetsu kariya and akira hanasaki manga was serialized shogakukan big comic spirits magazine october 1983 before going indefinite hiatus may 2014 the spans 111 collected volumes which have over 135 million copies circulation 136 adaptation directed",
+      "work_key": "oishinbo new tv anime",
+      "priority_type": "Major Trailer / PV",
+      "headline": "Oishinbo (new TV anime)",
+      "event_text": "Oishinbo (new TV anime) New Oishinbo TV Anime Announced - Crunchyroll News\n...\nStudio Shin-Ei Animation's 50th anniversary stage event during ABEMA Anime Festival 2026 today revealed that a new Oishinbo TV anime adaptation is in the works, along with new episodes of Atashin'chi NEXT directed by Taku Kimura (Chainsmoker Cat). Teaser videos for each announcement were also released. Further details will be confirmed at a later date.\n...\nTetsu Kariya and Akira Hanasaki's Oishinbo manga was first serialized in Shogakukan's Big Comic Spirits magazine in October 1983, before going on indefinite hiatus in May 2014. The series spans 111 collected volumes, which have over 135 million copies in circulation. A 136-episode anime adaptation directed by Yoshio Takeuchi at studio Shin-Ei Animation aired between October 1988 and March 1992. Two anime films and a live-action film were released in the following years. Viz Media publishes the original manga in English, describing the story like so:\n...\nAs part of the celebrations for its 100th anniversary, the publishers of the Tōzai News have commissioned the creation of the “Ultimate Menu,” a model meal embodying the pinnacle of Japanese cuisine. This all-important task has been entrusted to journalist\n...\noka Shirō\n...\neterate cyn\n...\nbut also an\n...\nof food. A new TV anime adaptation of the classic food manga Oishinbo was announced at Shin‑Ei ",
+      "core": "crunchyroll studio shin animation 50th anniversary stage event during abema festival 2026 today revealed that adaptation the works along with atashin chi next directed taku kimura chainsmoker cat videos for each were also further details will later date tetsu kariya and akira hanasaki manga was serialized shogakukan big comic spirits magazine october 1983 before going indefinite hiatus may 2014 the spans 111 collected volumes which have over 135 million copies circulation 136 adaptation directed",
+      "event_key": "oishinbo_tv_anime_2026_announce",
+      "canonical": "crunchyroll.com/ko/news/latest/2026/9/19/new-oishinbo-tv-anime-announced",
+      "published_at": "2026-09-20T20:18:03.391279+06:00"
+    },
+    {
+      "fingerprint": "katekyo hitman reborn anime releases creditless twelfth ending featuring aoi yume|Manga → Anime Adaptation|has officially the version its the song mori tsubasa the song was used 140 153 while the video was part the 20th anniversary celebration the follows yesterday the eleventh the song smile for ueto aya the are part music month september long music project celebrating the 20th anniversary previously reported the campaign will have versions the past theme song sequences daily the youtube channel these sequences were previously included with physical the but had not been officially made online you ca",
+      "work_key": "katekyo hitman reborn anime releases creditless twelfth ending featuring aoi yume",
+      "priority_type": "Manga → Anime Adaptation",
+      "headline": "Katekyo Hitman Reborn! Anime Releases Creditless Twelfth Ending Featuring \"Aoi Yume\"",
+      "event_text": "Katekyo Hitman Reborn! Anime Releases Creditless Twelfth Ending Featuring \"Aoi Yume\" Katekyo Hitman REBORN! anime has officially released the creditless version of its twelfth ending, featuring the song “Aoi Yume” by Mori Tsubasa. The song was used in Episodes 140-153, while the new video was released as part of the series’ 20th anniversary celebration.\nThe release follows yesterday’s release of the eleventh ending, featuring the song “Smile for…” by Ueto Aya. The releases are part of “REBORN! MUSIC MONTH,” a September-long music project celebrating the anime’s 20th anniversary. As previously reported, the campaign will have creditless versions of the series’ past theme song sequences released daily on the official YouTube channel.\nThese creditless sequences were previously included with physical releases of the anime but had not been officially made available online. You can watch the latest entry below.\nThe campaign began on September 1 with an official 25-song playlist featuring opening themes, ending themes and other music from the TV anime.\nThe manga by Akira Amano ran in Weekly Shonen Jump from May 2004 to November 2012, ending with a total of 42 compilation volumes. The series also received an anime adaptation, which ran for 203 episodes from October 7, 2006 The anime’s twelfth ending video, creditless and set to Mori Tsubasa’s \"Aoi Yume,\" was released as part of the ser",
+      "core": "has officially the version its the song mori tsubasa the song was used 140 153 while the video was part the 20th anniversary celebration the follows yesterday the eleventh the song smile for ueto aya the are part music month september long music project celebrating the 20th anniversary previously reported the campaign will have versions the past theme song sequences daily the youtube channel these sequences were previously included with physical the but had not been officially made online you ca",
+      "event_key": "katekyo hitman reborn anime reveals twelfth ending featuring aoi yume mori tsubasa|Manga → Anime Adaptation|has officially the creditless version its the song the song was used 140 153 while the video was part the 20th anniversary celebration the follows yesterday the eleventh the song smile for ueto aya the releases are part music month september long music project celebrating the 20th anniversary previously reported the campaign will have creditless versions the past theme song sequences daily the youtube channel these creditless sequences were previously included with physical releases the but had",
+      "canonical": "animecorner.me/katekyo-hitman-reborn-anime-reveals-twelfth-ending-featuring-aoi-yume-by-mori-tsubasa",
+      "published_at": "2026-09-20T20:18:05.805072+06:00"
+    },
+    {
+      "fingerprint": "tensei goblin dakedo shitsumon aru announces supporting|Manga → Anime Adaptation|the website for the television anime adaptation nazuna miki what wrong with getting reborn manga sunday the anime scheduled october tokyo followed broadcasts bs11 sun and sandaime hanzou junko takeuchi haigakura nanadaime hanzou mariya ise made abyss rokudaime masamune rin mizuki tomodachi imouto ore the anime adaptation nazuna miki manga will october 2026 and has revealed lineup voice actors junko takeuchi mariya ise and rin mizuki are among the the directed ryouta kawahara and produced studio ",
+      "work_key": "tensei goblin dakedo shitsumon aru announces supporting",
+      "priority_type": "Manga → Anime Adaptation",
+      "headline": "Tensei Goblin dakedo Shitsumon Aru? Announces Supporting Cast",
+      "event_text": "Tensei Goblin dakedo Shitsumon Aru? Announces Supporting Cast The official website for the television anime adaptation of Nazuna Miki's Tensei Goblin dakedo Shitsumon Aru? (So What's Wrong with Getting Reborn as a Goblin?) manga announced supporting cast on Sunday. The anime series is scheduled to premiere on October 5 at 10.00 p.m. on Tokyo MX, followed by broadcasts on BS11, Sun TV, and AT-X. Cast Sandaime Hanzou: Junko Takeuchi (Haigakura) Nanadaime Hanzou: Mariya Ise (Made in Abyss) Rokudaime Masamune: Rin Mizuki (Tomodachi no Imouto ga Ore... The TV anime adaptation of Nazuna Miki's manga will premiere on October 5, 2026 and has revealed a lineup of supporting voice actors. Junko Takeuchi, Mariya Ise, and Rin Mizuki are among the announced supporting cast The series is directed by Ryouta Kawahara and produced by studio Bakkka It will air at 10:00 p.m. on Tokyo MX, with subsequent broadcasts on BS11, Sun TV, and AT-X Tokyo MX, BS11, Sun TV, AT-X 2026-10-05",
+      "core": "the website for the television anime adaptation nazuna miki what wrong with getting reborn manga sunday the anime scheduled october tokyo followed broadcasts bs11 sun and sandaime hanzou junko takeuchi haigakura nanadaime hanzou mariya ise made abyss rokudaime masamune rin mizuki tomodachi imouto ore the anime adaptation nazuna miki manga will october 2026 and has revealed lineup voice actors junko takeuchi mariya ise and rin mizuki are among the the directed ryouta kawahara and produced studio ",
+      "event_key": "tensei goblin dakedo shitsumon aru announces supporting|Major Cast / Staff Reveal|the website for the television anime adaptation nazuna miki what wrong with getting reborn manga sunday the anime scheduled october tokyo followed broadcasts bs11 sun and sandaime hanzou junko takeuchi haigakura nanadaime hanzou mariya ise made abyss rokudaime masamune rin mizuki tomodachi imouto ore",
+      "canonical": "myanimelist.net/news/74738383",
+      "published_at": "2026-09-20T20:18:08.557589+06:00"
+    },
+    {
+      "fingerprint": "the savage sword conan the original comics omnibus vol|New Season / Sequel|barbarian has just made his triumphant return with exciting perfect for fans and sorcery icon stunning eighth sale from titan was sept with over one thousand pages digitally remastered artwork and host bonus material high quality collects 1974 102 116 well marvel super special 1977 beautiful and deluxe hardcover format picks story directly from where seventh left off fans looking complete their collection will definitely want pick which has suggested retail price 150 renowned barbarian illustrat",
+      "work_key": "the savage sword conan the original comics omnibus vol",
+      "priority_type": "New Season / Sequel",
+      "headline": "The Savage Sword of Conan: The Original Comics Omnibus Vol. 8",
+      "event_text": "The Savage Sword of Conan: The Original Comics Omnibus Vol. 8 Conan the Barbarian has just made his triumphant return with an exciting new release perfect for fans of the sword-and-sorcery icon. A stunning eighth new omnibus is now on sale from Titan Comics.\nThe Savage Sword of Conan: The Original Comics Omnibus Vol.8 was released on Sept. 8 with over one thousand pages of digitally remastered artwork and a host of bonus material. The high-quality release collects Savage Sword of Conan (1974) #102-116 as well as Marvel Comics Super Special (1977) #35 in a beautiful and deluxe hardcover format. It picks up the story directly from where the seventh omnibus left off, so Conan fans looking to complete their collection will definitely want to pick up the new release, which has a suggested retail price of $150.\nRenowned Conan the Barbarian Illustrator Returns for New Omnibus Release\nTitan and Penguin Random House's listing for the Original Comics Omnibus Vol. 8 promises unseen bonus material, a section of \"rarely seen artwork\" as well as an all-new introduction from Conan comics legend, Gary Kwapisz. Known for his detailed artwork that brought some of Conan's most savage scenes to life, Kwapisz worked not only on The Savage Sword of Conan but also Titan Comics released a deluxe hardcover omnibus collecting Savage Sword of Conan #102‑116 and Marvel Super Special #35 on Sept. Collects ",
+      "core": "barbarian has just made his triumphant return with exciting perfect for fans and sorcery icon stunning eighth sale from titan was sept with over one thousand pages digitally remastered artwork and host bonus material high quality collects 1974 102 116 well marvel super special 1977 beautiful and deluxe hardcover format picks story directly from where seventh left off fans looking complete their collection will definitely want pick which has suggested retail price 150 renowned barbarian illustrat",
+      "event_key": "conan the barbarian s savage stories are a new|New Season / Sequel|back with date has just made his triumphant return with exciting perfect for fans sword and sorcery icon stunning eighth omnibus sale from titan comics sword original comics omnibus vol was sept with over one thousand pages digitally remastered artwork and host bonus material high quality collects sword 1974 102 116 well marvel comics super special 1977 beautiful and deluxe hardcover format picks story directly from where seventh omnibus left off fans looking complete their collection will defin",
+      "canonical": "cbr.com/conan-the-barbarian-savage-sword-omnibus-release-information",
+      "published_at": "2026-09-20T20:18:11.664678+06:00"
+    }
+  ],
   "fresh_start_at": "",
   "learned_rejections": {
     "routine_rank": {
@@ -3696,27 +4433,507 @@
       "priority_type": "Major Comic Announcement",
       "source": "ComicBook.com",
       "seen_at": "2026-09-20T19:29:21.925383+06:00"
+    },
+    {
+      "title": "Mad Cave's Official Full December 2026 Solicits With Weekly World News",
+      "score": 90,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.495674+06:00"
+    },
+    {
+      "title": "Rebellion Official Full December 2026 Solicits With Zenith Omnibus",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Major Release Date",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.495756+06:00"
+    },
+    {
+      "title": "New Magic Knight Rayearth Anime Theme Songs Previewed in New ...",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Crunchyroll News",
+      "seen_at": "2026-09-20T20:15:02.495835+06:00"
+    },
+    {
+      "title": "Alya Sometimes Hides Her Feelings in Russian Season 2 Anime ...",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Crunchyroll News",
+      "seen_at": "2026-09-20T20:15:02.495915+06:00"
+    },
+    {
+      "title": "TOUGEN ANKI: Nikko Kegon Falls Arc Reveals New Visual, Trailer, Theme Songs & More Cast Members",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "Anime Trending",
+      "seen_at": "2026-09-20T20:15:02.496423+06:00"
+    },
+    {
+      "title": "Daemons of the Shadow Realm Season 2 Anime Announced",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Crunchyroll News",
+      "seen_at": "2026-09-20T20:15:02.496819+06:00"
+    },
+    {
+      "title": "New Oishinbo TV Anime Announced - Crunchyroll News",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Manga → Anime Adaptation",
+      "source": "Crunchyroll News",
+      "seen_at": "2026-09-20T20:15:02.497232+06:00"
+    },
+    {
+      "title": "Ana de Armas’ Futuristic Costumes Are a Surprise Instant Hit in This Auction (While One Movie Legend is Left Waiting for a Bid)",
+      "score": 87,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.497465+06:00"
+    },
+    {
+      "title": "Katekyo Hitman Reborn! Anime Reveals Twelfth  Ending Featuring \"Aoi Yume\" by Mori Tsubasa",
+      "score": 87,
+      "pattern": "",
+      "priority_type": "Manga → Anime Adaptation",
+      "source": "Anime Corner",
+      "seen_at": "2026-09-20T20:15:02.497888+06:00"
+    },
+    {
+      "title": "'Tensei Goblin dakedo Shitsumon Aru?' Announces Supporting Cast",
+      "score": 87,
+      "pattern": "",
+      "priority_type": "Manga → Anime Adaptation",
+      "source": "MyAnimeList News",
+      "seen_at": "2026-09-20T20:15:02.498060+06:00"
+    },
+    {
+      "title": "Conan the Barbarian’s Savage Stories Are Back With a New Release Date",
+      "score": 86,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "CBR",
+      "seen_at": "2026-09-20T20:15:02.498472+06:00"
+    },
+    {
+      "title": "The Detective Is Already Dead Anime Unveils 5th Anniversary Visual - Crunchyroll News",
+      "score": 86,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "Crunchyroll News",
+      "seen_at": "2026-09-20T20:15:02.498939+06:00"
+    },
+    {
+      "title": "The Reincarnated Elf Left on a Journey to Master His Magic Anime Unveils 1st 2 Minutes, January Debut",
+      "score": 85,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Anime News Network",
+      "seen_at": "2026-09-20T20:15:02.499048+06:00"
+    },
+    {
+      "title": "'Tetsuryō! meet with Tetsudō Musume' Anime's New Trailer Previews Opening Song",
+      "score": 85,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Anime News Network",
+      "seen_at": "2026-09-20T20:15:02.499143+06:00"
+    },
+    {
+      "title": "Daemons of the Shadow Realm Season 2 Announced With Teaser Video",
+      "score": 85,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "Anime Corner",
+      "seen_at": "2026-09-20T20:15:02.499227+06:00"
+    },
+    {
+      "title": "5 Marvel Heroes Who Would Slay In a Reality TV Show",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.499390+06:00"
+    },
+    {
+      "title": "Spider-Man/Hulk: Fire and Brimstone #2 Preview: Hulk Gets Religion",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.499752+06:00"
+    },
+    {
+      "title": "Absolute Batman #24 Leads The Top 50 Anticipated Comics This Wednesday",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.500160+06:00"
+    },
+    {
+      "title": "That Reference In Absolute Batman: The Daily LITG, 20th September 2026",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major DC News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.500248+06:00"
+    },
+    {
+      "title": "4 Actors Who Almost Played Spider-Man Before Tom Holland, & #1 Wound Up in the MCU Anyway",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.500437+06:00"
+    },
+    {
+      "title": "New Magic Knight Rayearth Anime's 2nd Main Trailer Reveals More Cast, Theme Songs",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Anime News Network",
+      "seen_at": "2026-09-20T20:15:02.500541+06:00"
+    },
+    {
+      "title": "Alya Sometimes Hides Her Feelings in Russian TV Anime's 2nd Season Reveals Teaser Video",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Anime News Network",
+      "seen_at": "2026-09-20T20:15:02.500644+06:00"
+    },
+    {
+      "title": "Batman Knightfall Part 2 Trailer Reveals Bruce Wayne’s Unconventional Replacement",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.500810+06:00"
+    },
+    {
+      "title": "Shonen Jump Hit Confirms Crunchyroll Return Date for New Season After Finale – Watch Trailer",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.500995+06:00"
+    },
+    {
+      "title": "Oishinbo Cooking Manga Receives New TV Anime Series",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Manga → Anime Adaptation",
+      "source": "Anime Trending",
+      "seen_at": "2026-09-20T20:15:02.501297+06:00"
+    },
+    {
+      "title": "Netflix’s Dark Action Hit Confirms Season 2 Release Date & Streaming Home – Watch Trailer",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.501481+06:00"
+    },
+    {
+      "title": "Crunchyroll's Fullmetal Alchemist Successor Confirms Season 2 ...",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.502278+06:00"
+    },
+    {
+      "title": "Bleach Officially Returning With Major Event After Anime's Finale",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Franchise Update",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.503083+06:00"
+    },
+    {
+      "title": "Roshidere Season 2 Reveals Teaser Trailer",
+      "score": 83,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Anime Corner",
+      "seen_at": "2026-09-20T20:15:02.503152+06:00"
+    },
+    {
+      "title": "Inherit the Winds Anime Reveals Theme Song Details, Theatrical ...",
+      "score": 83,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Crunchyroll News",
+      "seen_at": "2026-09-20T20:15:02.503608+06:00"
+    },
+    {
+      "title": "TOUGEN ANKI: Nikko Kegon Falls Arc Releases New Trailer and ...",
+      "score": 83,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Crunchyroll News",
+      "seen_at": "2026-09-20T20:15:02.503916+06:00"
+    },
+    {
+      "title": "Magic Knight Rayearth 2026 Unveils New Trailer Featuring Theme Songs, Additional Cast",
+      "score": 82,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "Anime Corner",
+      "seen_at": "2026-09-20T20:15:02.504010+06:00"
+    },
+    {
+      "title": "33 Years Later, Jurassic Park’s Most Intense Quote Carries Its Biggest Message, Especially for All the Sequels",
+      "score": 82,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.504204+06:00"
+    },
+    {
+      "title": "27 Years Later, South Park Surprises With Major Kenny Return Fans Have Been Waiting for",
+      "score": 82,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.504386+06:00"
+    },
+    {
+      "title": "The Cat and the Dragon Season 2 Announced, Will Stream on ...",
+      "score": 81,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "Crunchyroll News",
+      "seen_at": "2026-09-20T20:15:02.504464+06:00"
+    },
+    {
+      "title": "10 Years Later, This Is Still One of Anime’s Most Heartbreaking Movies Ever",
+      "score": 80,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.504652+06:00"
+    },
+    {
+      "title": "Green Lantern #39 Preview: Kyle Battles Killer Burger Mascots",
+      "score": 80,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.504743+06:00"
+    },
+    {
+      "title": "Dragon Ball Super Fans Bring Black Frieza to Life Ahead of the Villain’s Anime Return – Watch Now",
+      "score": 80,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.504929+06:00"
+    },
+    {
+      "title": "Dynamite Entertainment's Official Full December 2026 Solicits",
+      "score": 80,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.505010+06:00"
+    },
+    {
+      "title": "NieR's Yokō Tarō, Evangelion's Yoko Takahashi Collaborate on The Weeknd's Latest Tour",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Cast / Staff Reveal",
+      "source": "Anime News Network",
+      "seen_at": "2026-09-20T20:15:02.505427+06:00"
+    },
+    {
+      "title": "The Muppets Take the Marvel Universe #1 Preview: Rowlf Kidnapped",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.505541+06:00"
+    },
+    {
+      "title": "4 1980s Cartoons Every 90s Kid Missed But Are Still A Must Watch",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.505721+06:00"
+    },
+    {
+      "title": "AIPT Comics Podcast Ep 396: Tom King and Daniel Sampere reflect on 40 issues of ‘Wonder Woman’",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major DC News",
+      "source": "AIPT",
+      "seen_at": "2026-09-20T20:15:02.505844+06:00"
+    },
+    {
+      "title": "Resident Evil Director Pitched a Horror Movie Set During a Fight Between Batman & The Joker",
+      "score": 77,
+      "pattern": "",
+      "priority_type": "Major Anime Movie",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.506034+06:00"
+    },
+    {
+      "title": "5 Comic Book Sequel Stories That Couldn’t Match the Greatness of the Originals",
+      "score": 77,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.506213+06:00"
+    },
+    {
+      "title": "Daemons of the Shadow Realm Anime Gets 2nd Season",
+      "score": 77,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "Anime News Network",
+      "seen_at": "2026-09-20T20:15:02.506279+06:00"
+    },
+    {
+      "title": "Transformers Brings Back Its Most Overlooked G1 Dinobot for 40th Anniversary",
+      "score": 76,
+      "pattern": "",
+      "priority_type": "Major Anime Movie",
+      "source": "CBR",
+      "seen_at": "2026-09-20T20:15:02.506646+06:00"
+    },
+    {
+      "title": "Crunchyroll’s Solo Leveling Replacement Confirms Sudden Hiatus Before Finale",
+      "score": 76,
+      "pattern": "",
+      "priority_type": "Major Manga Return / Hiatus",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.506811+06:00"
+    },
+    {
+      "title": "Batman Takes On His Biggest Detective Case Yet: Investigating His Own Death",
+      "score": 76,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "CBR",
+      "seen_at": "2026-09-20T20:15:02.507589+06:00"
+    },
+    {
+      "title": "67 Years Later, The Twilight Zone Returns For Its Next Major Release",
+      "score": 76,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "CBR",
+      "seen_at": "2026-09-20T20:15:02.508348+06:00"
+    },
+    {
+      "title": "Garfield Once Had Darker Storylines We Wish We Could Forget",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Manga Return / Hiatus",
+      "source": "CBR",
+      "seen_at": "2026-09-20T20:15:02.508752+06:00"
+    },
+    {
+      "title": "Schomburg &#038; the 1946 Fight for Democracy, Black Terror #16 at Auction",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.508861+06:00"
+    },
+    {
+      "title": "Tokyo Int'l Film Fest to Screen Cherry and Virgin, ghost – end of night, More Anime",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Anime News Network",
+      "seen_at": "2026-09-20T20:15:02.508973+06:00"
+    },
+    {
+      "title": "20 Years Ago, the Network that Revolutionized Teen TV Went Off the Air (& It Paved the Way For Superhero TV As We Know It)",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.509196+06:00"
+    },
+    {
+      "title": "『魔法騎士レイアース』メインPV第2弾公開で主題歌解禁　追加キャストに能登麻美子、村瀬歩ら4人  | オリコンニュース（ORICON NEWS）",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "ORICON NEWS",
+      "seen_at": "2026-09-20T20:15:02.509538+06:00"
+    },
+    {
+      "title": "DC W.I.P.: Watchmen #1 Preview: Who Facsimiles the Facsimiles?",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.509644+06:00"
+    },
+    {
+      "title": "5 Forgotten Anime Only 1990s Kids Love",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.509798+06:00"
+    },
+    {
+      "title": "Black Tower: The Raven Conspiracy #2 Preview: Demon Dating",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.509887+06:00"
+    },
+    {
+      "title": "DNX Smashes This Wednesday-To-Weekend's Top Ten Comics Bestseller List",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-09-20T20:15:02.509965+06:00"
+    },
+    {
+      "title": "After 29 Years, This Is Still the Funniest Character in South Park’s History",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "ComicBook.com",
+      "seen_at": "2026-09-20T20:15:02.510139+06:00"
     }
   ],
   "adaptive_metrics": {
-    "raw_discovered": 89,
-    "pre_cerebras_rejected": 40,
-    "hard_rejected": 40,
+    "raw_discovered": 99,
+    "pre_cerebras_rejected": 81,
+    "hard_rejected": 73,
     "duplicate_rejected": 0,
     "learned_rejected": 0,
-    "passed_to_cerebras": 120,
-    "cerebras_ranked": 15,
-    "published": 0,
-    "estimated_candidates_avoided": 40,
-    "reader_extra_published": 0
+    "passed_to_cerebras": 216,
+    "cerebras_ranked": 24,
+    "published": 7,
+    "estimated_candidates_avoided": 81,
+    "reader_extra_published": 1
   },
   "source_quality": {
     "comicbook.com": {
-      "observations": 31,
-      "low_score_count": 20,
-      "total_score": 2384,
-      "avg_score": 76.9,
-      "last_seen": "2026-09-20T19:29:21.925913+06:00"
+      "observations": 50,
+      "low_score_count": 29,
+      "total_score": 3917,
+      "avg_score": 78.3,
+      "last_seen": "2026-09-20T20:15:02.510528+06:00"
     },
     "dc.com": {
       "observations": 1,
@@ -3726,67 +4943,67 @@
       "last_seen": "2026-09-20T19:29:21.925408+06:00"
     },
     "animenewsnetwork.com": {
-      "observations": 10,
-      "low_score_count": 4,
-      "total_score": 802,
-      "avg_score": 80.2,
-      "last_seen": "2026-09-20T19:29:21.925902+06:00"
+      "observations": 17,
+      "low_score_count": 7,
+      "total_score": 1371,
+      "avg_score": 80.6,
+      "last_seen": "2026-09-20T20:15:02.510488+06:00"
     },
     "bleedingcool.com": {
-      "observations": 19,
-      "low_score_count": 14,
-      "total_score": 1477,
-      "avg_score": 77.7,
-      "last_seen": "2026-09-20T19:29:21.925860+06:00"
+      "observations": 31,
+      "low_score_count": 21,
+      "total_score": 2446,
+      "avg_score": 78.9,
+      "last_seen": "2026-09-20T20:15:02.510523+06:00"
     },
     "crunchyroll.com": {
-      "observations": 6,
-      "low_score_count": 0,
-      "total_score": 513,
-      "avg_score": 85.5,
-      "last_seen": "2026-09-20T19:29:21.925604+06:00"
+      "observations": 14,
+      "low_score_count": 1,
+      "total_score": 1198,
+      "avg_score": 85.6,
+      "last_seen": "2026-09-20T20:15:02.510382+06:00"
     },
     "animecorner.me": {
-      "observations": 7,
+      "observations": 11,
       "low_score_count": 4,
-      "total_score": 541,
-      "avg_score": 77.3,
-      "last_seen": "2026-09-20T19:29:21.925896+06:00"
+      "total_score": 878,
+      "avg_score": 79.8,
+      "last_seen": "2026-09-20T20:15:02.510365+06:00"
     },
     "cbr.com": {
-      "observations": 6,
-      "low_score_count": 5,
-      "total_score": 447,
-      "avg_score": 74.5,
-      "last_seen": "2026-09-20T19:29:21.925890+06:00"
+      "observations": 11,
+      "low_score_count": 9,
+      "total_score": 836,
+      "avg_score": 76.0,
+      "last_seen": "2026-09-20T20:15:02.510476+06:00"
     },
     "oricon.co.jp": {
-      "observations": 1,
-      "low_score_count": 0,
-      "total_score": 86,
-      "avg_score": 86.0,
-      "last_seen": "2026-09-20T19:29:21.925480+06:00"
+      "observations": 2,
+      "low_score_count": 1,
+      "total_score": 161,
+      "avg_score": 80.5,
+      "last_seen": "2026-09-20T20:15:02.510499+06:00"
     },
     "myanimelist.net": {
-      "observations": 3,
+      "observations": 4,
       "low_score_count": 2,
-      "total_score": 215,
-      "avg_score": 71.7,
-      "last_seen": "2026-09-20T19:29:21.925884+06:00"
+      "total_score": 302,
+      "avg_score": 75.5,
+      "last_seen": "2026-09-20T20:15:02.510234+06:00"
     },
     "anitrendz.net": {
-      "observations": 2,
+      "observations": 4,
       "low_score_count": 0,
-      "total_score": 167,
-      "avg_score": 83.5,
-      "last_seen": "2026-09-20T19:29:21.925598+06:00"
+      "total_score": 339,
+      "avg_score": 84.8,
+      "last_seen": "2026-09-20T20:15:02.510323+06:00"
     },
     "aiptcomics.com": {
-      "observations": 1,
-      "low_score_count": 1,
-      "total_score": 78,
+      "observations": 2,
+      "low_score_count": 2,
+      "total_score": 156,
       "avg_score": 78.0,
-      "last_seen": "2026-09-20T19:29:21.925667+06:00"
+      "last_seen": "2026-09-20T20:15:02.510429+06:00"
     },
     "superherohype.com": {
       "observations": 1,
@@ -3796,9 +5013,34 @@
       "last_seen": "2026-09-20T19:29:21.925872+06:00"
     }
   },
-  "category_coverage": {},
-  "topic_coverage": {},
-  "reader_extra_history": [],
-  "reader_extra_type_history": [],
-  "reader_extra_work_history": []
+  "category_coverage": {
+    "Comics": 2,
+    "Anime": 5
+  },
+  "topic_coverage": {
+    "New Season / Sequel": 2,
+    "Major Trailer / PV": 3,
+    "Manga → Anime Adaptation": 2
+  },
+  "reader_extra_history": [
+    {
+      "id": "5c9f39cd2914a96f",
+      "event_kind": "reader_extra",
+      "extra_type": "Quick Fact",
+      "title": "Why the Zenith Omnibus Is a Milestone for 2000 AD",
+      "work": "Zenith HC Full Colour Omnibus Edition",
+      "sector": "Comics",
+      "source": "Bleeding Cool",
+      "source_url": "https://bleedingcool.com/comics/rebellion-official-full-december-2026-solicits-with-zenith-omnibus/",
+      "published_at": "2026-09-20T20:18:13.878269+06:00",
+      "message_id": 13,
+      "status": "published"
+    }
+  ],
+  "reader_extra_type_history": [
+    "Quick Fact"
+  ],
+  "reader_extra_work_history": [
+    "Zenith HC Full Colour Omnibus Edition"
+  ]
 }
