@@ -12,6 +12,8 @@ from urllib.parse import urlparse, urljoin, quote
 from difflib import SequenceMatcher
 from email.utils import parsedate_to_datetime
 from io import BytesIO
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock, BoundedSemaphore
 
 import requests
 import feedparser
@@ -61,7 +63,7 @@ BD_TZ = ZoneInfo("Asia/Dhaka")
 # ============================================================
 # TAXONOMY: COMICS + ANIME NEWSROOM
 # ============================================================
-SECTORS = ["Anime", "Manga", "Marvel", "DC", "Comics"]
+SECTORS = ["Anime", "Manga", "Comics"]
 REGION = "ComicAnime"
 
 TOPICS = {"ComicAnime": [
@@ -251,8 +253,6 @@ RSS_FEEDS = [
     {"name":"AIPT","region":REGION,"url":"https://aiptcomics.com/feed/","source_class":"reported"},
     {"name":"CBR","region":REGION,"url":"https://www.cbr.com/feed/","source_class":"reported"},
     {"name":"SuperHeroHype","region":REGION,"url":"https://www.superherohype.com/feed","source_class":"reported"},
-    {"name":"Marvel","region":REGION,"url":"https://www.marvel.com/articles/feed","source_class":"official"},
-    {"name":"DC","region":REGION,"url":"https://www.dc.com/blog/rss.xml","source_class":"official"},
     {"name":"Toei Animation","region":REGION,"url":"https://www.toei-animation.com/news/feed/","source_class":"official"},
 ]
 
@@ -260,8 +260,32 @@ RSS_FEEDS = [
 # GLOBAL EDITORIAL SETTINGS
 # ============================================================
 PUBLISH_THRESHOLD = 82
-RANKING_BATCH_SIZE = 15
-MAX_RANK_CANDIDATES = 120
+RANKING_BATCH_SIZE = 20
+MAX_RANK_CANDIDATES = 40
+MAX_STORY_CANDIDATES = 6
+STORY_CONCURRENCY = 6
+NEWS_POST_MAX_PER_RUN = 6
+NEWS_POST_MAX_PER_SECTOR = 2
+SECTOR_BALANCE_LOOKBACK_HOURS = 24
+READER_EXTRA_ENABLED = True
+READER_EXTRA_MAX_PER_RUN = 1
+READER_EXTRA_RETENTION_DAYS = 45
+READER_EXTRA_HISTORY_LIMIT = 120
+READER_EXTRA_AVOID_WORK_DAYS = 14
+READER_EXTRA_MAX_COMPLETION_TOKENS = 700
+READER_EXTRA_TYPES = [
+    "Quick Fact",
+    "Hidden Detail",
+    "Franchise Timeline",
+    "Creator Spotlight",
+    "Fan Guide",
+    "Origin Story",
+    "Why It Matters",
+    "Did You Know",
+]
+RANKING_MAX_COMPLETION_TOKENS = 1200
+STORY_MAX_COMPLETION_TOKENS = 900
+VERIFY_MAX_COMPLETION_TOKENS = 600
 DISCOVERY_LOOKBACK_HOURS = 24
 ROLLING_DISCOVERY_HOURS = 24
 FUTURE_TOLERANCE_MINUTES = 10
@@ -271,8 +295,8 @@ MAX_RSS_CANDIDATES = 320
 MAX_EXA_CANDIDATES = 80
 MAX_GOOGLE_NEWS_CANDIDATES = 60
 THIN_EXCERPT_CHARS = 180
-MAX_EXCERPT_ENRICH = 14
-POST_DELAY_SECONDS = 2.5
+MAX_EXCERPT_ENRICH = 10
+POST_DELAY_SECONDS = 0.8
 DEFAULT_EVENT_DEDUP_HOURS = 36
 ANNOUNCEMENT_DEDUP_HOURS = 48
 TRAILER_DEDUP_HOURS = 72
@@ -342,14 +366,19 @@ def canonical_topic(topic, region=REGION):
 def normalize_sector(value):
     raw = safe_text(value).strip().lower()
     aliases = {
-        "anime": "Anime", "manga": "Manga", "marvel": "Marvel", "dc": "DC", "comics": "Comics",
-        "comic": "Comics", "western comics": "Comics",
+        "anime": "Anime",
+        "manga": "Manga",
+        "marvel": "Comics",
+        "dc": "Comics",
+        "comics": "Comics",
+        "comic": "Comics",
+        "western comics": "Comics",
     }
     return aliases.get(raw, "Anime")
 
 
 def sector_hashtag(sector):
-    return {"Anime":"#Anime", "Manga":"#Manga", "Marvel":"#Marvel", "DC":"#DC", "Comics":"#Comics"}.get(normalize_sector(sector), "#Anime")
+    return {"Anime": "#Anime", "Manga": "#Manga", "Comics": "#Comics"}.get(normalize_sector(sector), "#Anime")
 
 
 def category_hashtags(story):
@@ -651,8 +680,14 @@ def default_state():
             "cerebras_ranked": 0,
             "published": 0,
             "estimated_candidates_avoided": 0,
+            "reader_extra_published": 0,
         },
         "source_quality": {},
+        "category_coverage": {},
+        "topic_coverage": {},
+        "reader_extra_history": [],
+        "reader_extra_type_history": [],
+        "reader_extra_work_history": [],
     }
 
 
@@ -834,6 +869,14 @@ def prune_state():
 
     history = STATE.get("score_history", [])
     STATE["score_history"] = history[-LEARNED_HISTORY_LIMIT:]
+    extra_history = STATE.get("reader_extra_history", [])
+    cutoff_extra = datetime.now(BD_TZ) - timedelta(days=READER_EXTRA_RETENTION_DAYS)
+    STATE["reader_extra_history"] = [
+        x for x in extra_history
+        if (parse_datetime(x.get("published_at")) is None) or parse_datetime(x.get("published_at")) >= cutoff_extra
+    ][-READER_EXTRA_HISTORY_LIMIT:]
+    STATE["reader_extra_type_history"] = STATE.get("reader_extra_type_history", [])[-12:]
+    STATE["reader_extra_work_history"] = STATE.get("reader_extra_work_history", [])[-30:]
 
 
 # ============================================================
@@ -880,9 +923,49 @@ exa = Exa(
     api_key=EXA_API_KEY
 )
 
+# Disable the SDK's default automatic retries. In the previous run, a 429
+# caused the SDK to sleep for 57–59 seconds before retrying, turning a
+# fast newsroom run into an 8+ minute serial process.
 cerebras = Cerebras(
-    api_key=CEREBRAS_API_KEY
+    api_key=CEREBRAS_API_KEY,
+    max_retries=0,
+    timeout=20.0,
 )
+
+# The normal API documents rate limits in requests/minute and tokens/minute,
+# not a fixed concurrency ceiling. We therefore use controlled parallelism,
+# a deliberately small per-run request budget, and no 60-second blocking retry.
+CEREBRAS_MAX_CONCURRENCY = 6
+CEREBRAS_MAX_REQUESTS_PER_RUN = 16
+_cerebras_gate = BoundedSemaphore(CEREBRAS_MAX_CONCURRENCY)
+_cerebras_lock = Lock()
+_cerebras_requests_issued = 0
+
+def cerebras_create(**kwargs):
+    """Fast, no-long-retry Cerebras request wrapper."""
+    global _cerebras_requests_issued
+    with _cerebras_lock:
+        if _cerebras_requests_issued >= CEREBRAS_MAX_REQUESTS_PER_RUN:
+            raise RuntimeError(
+                f"Cerebras per-run request budget exhausted ({CEREBRAS_MAX_REQUESTS_PER_RUN})"
+            )
+        _cerebras_requests_issued += 1
+
+    with _cerebras_gate:
+        try:
+            return cerebras.chat.completions.create(**kwargs)
+        except Exception as exc:
+            message = str(exc)
+            response = getattr(exc, "response", None)
+            headers = getattr(response, "headers", None)
+            if "429" in message or getattr(exc, "status_code", None) == 429:
+                remaining = headers.get("x-ratelimit-remaining-tokens-minute") if headers else None
+                reset = headers.get("x-ratelimit-reset-tokens-minute") if headers else None
+                logger.warning(
+                    "Cerebras 429: no long retry; remaining_tokens=%s reset_seconds=%s",
+                    remaining, reset
+                )
+            raise
 
 
 # ============================================================
@@ -2018,7 +2101,7 @@ def rank_candidates(candidates, region):
             lines.append("\n".join([
                 f"ID: {idx}", f"Title: {item.get('title','')}", f"Source: {item.get('source','')}",
                 f"Published: {item.get('published_date','')}", age,
-                f"Excerpt: {trim_source_text(item.get('excerpt',''),900)}", ""
+                f"Excerpt: {trim_source_text(item.get('excerpt',''),650)}", ""
             ]))
         prompt=f"""You are the senior editorial gatekeeper for @ComicsNewsroom. This is a quality-first fan newsroom, not a high-volume scraper.
 Only recommend stories that anime, manga or comics fans would genuinely want to know TODAY.
@@ -2027,13 +2110,13 @@ Prefer official confirmations and meaningful reporting. A developing report may 
 Freshness matters: candidates are from a rolling 24-hour window, and older material must not be rewarded merely because it is popular.
 Score exactly 100 points using: fan_interest 0-25; significance 0-20; franchise_reach 0-15; freshness 0-15; novelty 0-10; source_authority 0-10; visual_value 0-5.
 A rumor MUST NOT exceed 69 even if otherwise interesting.
-Choose one sector from: Anime, Manga, Marvel, DC, Comics.
+Choose one sector from: Anime, Manga, Comics. Marvel and DC are sub-topics inside Comics.
 Choose one priority_type from the fixed taxonomy: {', '.join(NEWS_PRIORITY.keys())}.
 The rank order should reflect editorial value, not publication volume. There is no post quota. If nothing is worth posting, score everything below the publication gate.
 For event_key, describe the underlying event in a stable compact key so duplicate reports can be clustered.
 Return EVERY candidate exactly once and do not invent facts beyond the supplied metadata."""
         try:
-            response=cerebras.chat.completions.create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":"\n".join(lines)}],response_format={"type":"json_schema","json_schema":{"name":"comics_anime_rank_v1","strict":True,"schema":RANK_SCHEMA}},reasoning_effort="low",temperature=0.0,max_completion_tokens=3600)
+            response=cerebras_create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":"\n".join(lines)}],response_format={"type":"json_schema","json_schema":{"name":"comics_anime_rank_v1","strict":True,"schema":RANK_SCHEMA}},reasoning_effort="low",temperature=0.0,max_completion_tokens=RANKING_MAX_COMPLETION_TOKENS)
             data=json.loads(safe_text(response.choices[0].message.content)); by_id={i:x for i,x in enumerate(batch,1)}; returned=set(); scored=[]
             for r in data.get("ranked",[]):
                 idx=int(r.get("id",0))
@@ -2051,7 +2134,7 @@ Return EVERY candidate exactly once and do not invent facts beyond the supplied 
                     "topic":canonical_topic(r.get("topic") or r.get("priority_type"),region),
                     "institution":safe_text(r.get("institution")),
                     "event_key":safe_text(r.get("event_key")),
-                    "rank_reason":trim_source_text(r.get("reason"),500),
+                    "rank_reason":trim_source_text(r.get("reason"),300),
                     "priority_type":safe_text(r.get("priority_type")) or infer_priority_type(item),
                 })
                 rows.append(item)
@@ -2497,11 +2580,11 @@ Return only valid JSON."""
         f"TITLE: {item['title']}\n"
         f"DATE: {item['published_date']}\n"
         f"CATEGORY HINT: {sector}\n"
-        f"ARTICLE:\n{article_text[:15000]}"
+        f"ARTICLE:\n{article_text[:10000]}"
     )
-    for attempt in range(3):
+    for attempt in range(2):
         try:
-            response=cerebras.chat.completions.create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":user}],response_format={"type":"json_schema","json_schema":{"name":"comics_anime_story_v2","strict":True,"schema":STORY_SCHEMA}},reasoning_effort="low",temperature=0.15,max_completion_tokens=1800)
+            response=cerebras_create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":user}],response_format={"type":"json_schema","json_schema":{"name":"comics_anime_story_v2","strict":True,"schema":STORY_SCHEMA}},reasoning_effort="low",temperature=0.15,max_completion_tokens=STORY_MAX_COMPLETION_TOKENS)
             data=json.loads(safe_text(response.choices[0].message.content))
             title=clean_generated_text(data.get("title")); summary=first_sentence(data.get("summary"))
             highlights=[clean_generated_text(x) for x in data.get("highlights",[]) if clean_generated_text(x)]
@@ -2524,7 +2607,10 @@ Return only valid JSON."""
             return story
         except Exception as exc:
             logger.warning("Story generation attempt %d failed: %s",attempt+1,exc)
-            if attempt<2: time.sleep(1)
+            if "429" in str(exc) or "rate limit" in str(exc).lower():
+                return None
+            if attempt<1:
+                time.sleep(0.5)
     return None
 
 
@@ -2983,9 +3069,17 @@ def dynamic_rich_html(story):
         lines.append(f"<p>💡 <b>Why fans care:</b> {bold_terms_html(why,terms)}</p>")
 
     video=safe_text(story.get("official_video_url"))
-    if video and safe_text(story.get("official_video_platform")):
-        label="▶ WATCH OFFICIAL TRAILER" if safe_text(story.get("priority_type"))=="Major Trailer / PV" else "▶ WATCH OFFICIAL VIDEO"
-        lines.append(f"<p>🎥 <a href=\"{html.escape(video,quote=True)}\"><b>{escape_rich_html(label)}</b></a> · {escape_rich_html(story.get('official_video_platform'))}</p>")
+    platform=safe_text(story.get("official_video_platform"))
+    if video and platform:
+        safe_video=html.escape(video,quote=True)
+        if safe_text(story.get("priority_type"))=="Major Trailer / PV":
+            lines.append(
+                f"<h2>Watch Trailer 👉 <a href=\"{safe_video}\">{escape_rich_html(platform)}</a></h2>"
+            )
+        else:
+            lines.append(
+                f"<p>▶ <a href=\"{safe_video}\"><b>Watch Official Video</b></a> · {escape_rich_html(platform)}</p>"
+            )
 
     spoiler=safe_text(story.get("spoiler"))
     if spoiler:
@@ -3414,6 +3508,7 @@ def store_event(story, published=False, message_id=None):
         "headline":story.get("headline",story.get("title","")),
         "summary":story.get("summary",""),
         "highlights":story.get("highlights",[]),
+        "why_it_matters":story.get("why_it_matters", ""),
         "concepts":story.get("concepts",[]),
         "key_numbers":story.get("key_numbers",[]),
         "priority_type":story.get("priority_type",infer_priority_type(story)),
@@ -3422,6 +3517,7 @@ def store_event(story, published=False, message_id=None):
         "published_at":story.get("published_date",now_iso()),
         "selected_at":now_iso(),
         "status":"published" if published else "selected",
+        "event_kind":story.get("event_kind", "news"),
         "message_id":message_id,
     }
     STATE["events"][event_id]=event
@@ -3480,7 +3576,7 @@ Return only the JSON schema.
     )
 
     try:
-        response = cerebras.chat.completions.create(
+        response = cerebras_create(
             model=CEREBRAS_MODEL,
             messages=[
                 {"role": "system", "content": prompt},
@@ -3513,7 +3609,7 @@ def event_status_verified(story,article_text):
     schema={"type":"object","properties":{"supported":{"type":"boolean"},"unsupported_claims":{"type":"array","items":{"type":"string"},"maxItems":3}},"required":["supported","unsupported_claims"],"additionalProperties":False}
     prompt="You are a strict entertainment status verifier. Check whether status claims in the generated story are directly supported by the source article. Reject upgrades from speculation to confirmation and misstatements of release, renewal, cancellation, production, rights, platform availability or theatrical status. Return only JSON."
     try:
-        r=cerebras.chat.completions.create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":"SOURCE ARTICLE:\n"+article_text[:12000]+"\n\nSTATUS CLAIMS:\n- "+"\n- ".join(status_terms)}],response_format={"type":"json_schema","json_schema":{"name":"entertainment_status_check","strict":True,"schema":schema}},reasoning_effort="low",temperature=0.0,max_completion_tokens=350)
+        r=cerebras_create(model=CEREBRAS_MODEL,messages=[{"role":"system","content":prompt},{"role":"user","content":"SOURCE ARTICLE:\n"+article_text[:12000]+"\n\nSTATUS CLAIMS:\n- "+"\n- ".join(status_terms)}],response_format={"type":"json_schema","json_schema":{"name":"entertainment_status_check","strict":True,"schema":schema}},reasoning_effort="low",temperature=0.0,max_completion_tokens=350)
         d=json.loads(safe_text(r.choices[0].message.content));return bool(d.get("supported")),d.get("unsupported_claims",[])
     except Exception as exc:
         logger.warning("Event-status verification failed: %s",exc);return False,["verification infrastructure failure"]
@@ -3521,176 +3617,173 @@ def event_status_verified(story,article_text):
 
 def process_story_candidate(item):
     """
-    Extract, generate, ground and normalize one candidate.
-    Returns a publishable story or None.
+    Extract and generate one candidate. Expensive fact checking is performed
+    once in a batched verification pass after parallel generation.
     """
     article_text, image_url = extract_article(item)
 
     if not article_text:
-        logger.warning(
-            "DROP extraction: %s",
-            item.get("title"),
-        )
+        logger.warning("DROP extraction: %s", item.get("title"))
         return None
 
-    story = generate_story(
-        item,
-        article_text,
-    )
-
+    story = generate_story(item, article_text)
     if not story:
-        logger.warning(
-            "DROP generation: %s",
-            item.get("title"),
-        )
+        logger.warning("DROP generation: %s", item.get("title"))
         return None
 
-    region = item.get(
-        "region",
-        "Entertainment",
-    )
+    region = item.get("region", REGION)
+    story["topic"] = canonical_topic(story.get("topic") or item.get("topic"), region)
+    story["image_url"] = image_url or item.get("image")
 
-    story["topic"] = canonical_topic(
-        story.get("topic") or item.get("topic"),
-        region,
-    )
-
-    story["image_url"] = (
-        image_url
-        or item.get("image")
-    )
-
-    grounded, bad_number = numeric_grounded(
-        story,
-        article_text,
-    )
-
+    grounded, bad_number = numeric_grounded(story, article_text)
     if not grounded:
-        logger.warning(
-            "Numeric grounding failed: %s (%s)",
-            story.get("headline"),
-            bad_number,
-        )
-
-        retry_story = generate_story(
-            {
-                **item,
-                "grounding_warning": bad_number,
-            },
-            article_text,
-        )
-
-        if not retry_story:
-            return None
-
-        retry_story["topic"] = canonical_topic(
-            retry_story.get("topic") or item.get("topic"),
-            region,
-        )
-        retry_story["image_url"] = (
-            image_url
-            or item.get("image")
-        )
-
-        grounded_retry, _ = numeric_grounded(
-            retry_story,
-            article_text,
-        )
-
-        if not grounded_retry:
-            logger.warning(
-                "DROP numeric grounding: %s",
-                story.get("headline"),
-            )
-            return None
-
-        story = retry_story
-
-    verified, unsupported_claims = claims_grounded(story, article_text)
-    if not verified:
-        logger.warning(
-            "Claim verification failed: %s | claims=%s",
-            story.get("headline"),
-            unsupported_claims,
-        )
-
-        retry_story = generate_story(
-            {**item, "grounding_warning": ", ".join(unsupported_claims[:3])},
-            article_text,
-        )
-        if not retry_story:
-            return None
-
-        retry_story["topic"] = canonical_topic(
-            retry_story.get("topic") or item.get("topic"),
-            region,
-        )
-        retry_story["image_url"] = image_url or item.get("image")
-
-        grounded_retry, _ = numeric_grounded(retry_story, article_text)
-        if not grounded_retry:
-            return None
-
-        verified_retry, _ = claims_grounded(retry_story, article_text)
-        if not verified_retry:
-            logger.warning("DROP claim grounding: %s", story.get("headline"))
-            return None
-        story = retry_story
-
-    status_verified, status_claims = event_status_verified(story, article_text)
-    if not status_verified:
-        logger.warning("DROP event-status verification: %s | claims=%s", story.get("headline"), status_claims)
+        logger.warning("DROP numeric grounding: %s (%s)", story.get("headline"), bad_number)
         return None
 
-    story["topic"] = canonical_topic(
-        story.get("topic") or item.get("topic"),
-        region,
-    )
-    story["institution"] = item.get(
-        "institution",
-        "",
-    )
-    story["event_key"] = item.get(
-        "event_key",
-        "",
-    )
-    story["event_cluster_id"] = item.get(
-        "event_cluster_id",
-        "",
-    )
-    story["event_confidence"] = item.get(
-        "event_confidence",
-        0,
-    )
-    story["event_source_count"] = item.get(
-        "event_source_count",
-        0,
-    )
-    # Never trust an LLM-generated URL. Use a link found on the source page, then a constrained Exa search.
+    story["institution"] = item.get("institution", "")
+    story["event_key"] = item.get("event_key", "")
+    story["event_cluster_id"] = item.get("event_cluster_id", "")
+    story["event_confidence"] = item.get("event_confidence", 0)
+    story["event_source_count"] = item.get("event_source_count", 0)
+
+    # Video discovery is deterministic and source-constrained. No LLM URL is trusted.
     story["official_video_url"] = ""
     story["official_video_platform"] = ""
     story["official_video_title"] = ""
+
     if safe_text(story.get("priority_type")) == "Major Trailer / PV":
         for candidate_url in item.get("video_candidates", [])[:8]:
-            ok, platform, video_title = verify_video_url(candidate_url, story.get("title", ""))
-            if ok and video_title_relevant(video_title or story.get("title", ""), story.get("title", "")):
+            ok, platform, video_title = verify_video_url(
+                candidate_url, story.get("title", "")
+            )
+            if ok and video_title_relevant(
+                video_title or story.get("title", ""),
+                story.get("title", "")
+            ):
                 story["official_video_url"] = candidate_url
                 story["official_video_platform"] = platform
                 story["official_video_title"] = video_title or story.get("title", "")
                 break
+
         if not story.get("official_video_url"):
-            found=exa_video_search(story.get("title", ""))
+            found = exa_video_search(story.get("title", ""))
             if found:
                 story["official_video_url"] = found["url"]
                 story["official_video_platform"] = found["platform"]
                 story["official_video_title"] = found["title"]
+
         if story.get("official_video_url") and not story.get("image_url"):
-            thumb=youtube_thumbnail(story.get("official_video_url"))
+            thumb = youtube_thumbnail(story.get("official_video_url"))
             if thumb:
                 story["image_url"] = thumb
+
     story["category_hashtags"] = category_hashtags(story)
 
+    # Keep source text only until the batch verification pass completes.
+    story["_source_article_text"] = article_text
     return story
+
+
+VERIFY_BATCH_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "results": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer"},
+                    "supported": {"type": "boolean"},
+                    "unsupported_claims": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "maxItems": 3,
+                    },
+                },
+                "required": ["id", "supported", "unsupported_claims"],
+                "additionalProperties": False,
+            },
+        }
+    },
+    "required": ["results"],
+    "additionalProperties": False,
+}
+
+
+def verify_stories_batch(stories):
+    """
+    Verify the material claims of multiple generated stories in ONE Cerebras call.
+    This replaces 2–3 sequential LLM verification calls per story.
+    """
+    if not stories:
+        return []
+
+    records = []
+    for idx, story in enumerate(stories, 1):
+        claims = [
+            story.get("headline", ""),
+            story.get("summary", ""),
+            *story.get("highlights", []),
+        ]
+        records.append(
+            f"ID: {idx}\n"
+            f"TITLE: {story.get('headline', '')}\n"
+            f"CLAIMS:\n- " + "\n- ".join(safe_text(x) for x in claims if safe_text(x)) +
+            f"\nSOURCE ARTICLE:\n{trim_source_text(story.get('_source_article_text', ''), 6500)}"
+        )
+
+    prompt = """You are the final fact-checking editor for @ComicsNewsroom.
+For each story, mark supported=true only when every material claim in its headline,
+summary and highlights is directly supported by the supplied source article.
+Accept faithful paraphrases. Reject invented facts, unsupported dates, people,
+studios, platforms, figures, release status, production status, or stronger wording
+than the source supports. A rumor must not be upgraded to a confirmation.
+Return one result for every ID and do not add facts."""
+    try:
+        response = cerebras_create(
+            model=CEREBRAS_MODEL,
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": "\n\n".join(records)},
+            ],
+            response_format={
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "comics_story_batch_verification",
+                    "strict": True,
+                    "schema": VERIFY_BATCH_SCHEMA,
+                },
+            },
+            reasoning_effort="low",
+            temperature=0.0,
+            max_completion_tokens=VERIFY_MAX_COMPLETION_TOKENS,
+        )
+        data = json.loads(safe_text(response.choices[0].message.content))
+        by_id = {int(r.get("id", 0)): r for r in data.get("results", [])}
+        verified = []
+        for idx, story in enumerate(stories, 1):
+            result = by_id.get(idx)
+            if result and bool(result.get("supported")):
+                verified.append(story)
+            else:
+                logger.warning(
+                    "DROP batch claim verification: %s | claims=%s",
+                    story.get("headline", story.get("title", "")),
+                    (result or {}).get("unsupported_claims", ["missing verification result"]),
+                )
+        return verified
+    except Exception as exc:
+        logger.warning("Batch verification failed; withholding batch: %s", exc)
+        return []
+
+
+def update_category_coverage(story):
+    metrics = STATE.setdefault("category_coverage", {})
+    sector = safe_text(story.get("sector")) or "Other"
+    topic = safe_text(story.get("priority_type")) or safe_text(story.get("topic")) or "Other"
+    metrics[sector] = int(metrics.get(sector, 0)) + 1
+    topics = STATE.setdefault("topic_coverage", {})
+    topics[topic] = int(topics.get(topic, 0)) + 1
 
 
 # ============================================================
@@ -3776,15 +3869,348 @@ def prepare_ranked_region(region, candidates):
     return ranked
 
 
-def process_ranked_region(region,ranked):
-    pool=build_candidate_pool(ranked); valid=[]; attempted=0; rejected=0
-    for item in pool:
-        attempted+=1; story=process_story_candidate(item)
-        if not story:rejected+=1; continue
-        if is_already_published_candidate({**item,"title":story.get("headline",item.get("title"))}):rejected+=1; continue
-        story["sector"]=normalize_sector(story.get("sector") or item.get("sector")); story["topic"]=canonical_topic(story.get("topic") or item.get("topic"),region); story["category_hashtags"]=category_hashtags(story); valid.append(story)
-    logger.info("FINAL VALID: %d | threshold=%d/100 | pool=%d attempted=%d rejected=%d",len(valid),PUBLISH_THRESHOLD,len(pool),attempted,rejected)
+
+def published_sector_counts_24h():
+    counts = {sector: 0 for sector in SECTORS}
+    cutoff = NOW_BD - timedelta(hours=SECTOR_BALANCE_LOOKBACK_HOURS)
+    for event in STATE.get("events", {}).values():
+        if event.get("status") != "published":
+            continue
+        if event.get("event_kind") == "reader_extra":
+            continue
+        dt = parse_datetime(event.get("published_at"))
+        if not dt or dt < cutoff:
+            continue
+        sector = normalize_sector(event.get("sector"))
+        counts[sector] = counts.get(sector, 0) + 1
+    return counts
+
+
+def balanced_news_selection(ranked):
+    """Select news with equal sector opportunity while never forcing weak stories."""
+    eligible = [
+        dict(item) for item in ranked
+        if int(item.get("importance_score", 0)) >= PUBLISH_THRESHOLD
+        and bool(item.get("important"))
+        and normalize_sector(item.get("sector")) in SECTORS
+    ]
+    if not eligible:
+        return []
+
+    by_sector = {sector: [] for sector in SECTORS}
+    for item in sorted(eligible, key=lambda x: (-int(x.get("importance_score", 0)), int(x.get("editor_rank", 9999)))):
+        by_sector[normalize_sector(item.get("sector"))].append(item)
+
+    # First pass: one strong story from every populated sector.
+    selected = []
+    used = set()
+    for sector in SECTORS:
+        if by_sector[sector]:
+            item = by_sector[sector][0]
+            selected.append(item)
+            used.add(item.get("canonical"))
+
+    # Second pass: fill remaining slots by adjusted quality. Under-covered sectors
+    # get a small deterministic boost, but no story below the hard editorial gate enters.
+    counts = published_sector_counts_24h()
+    while len(selected) < NEWS_POST_MAX_PER_RUN:
+        pool = []
+        for sector in SECTORS:
+            sector_selected = sum(1 for x in selected if normalize_sector(x.get("sector")) == sector)
+            if sector_selected >= NEWS_POST_MAX_PER_SECTOR:
+                continue
+            for item in by_sector[sector]:
+                key = item.get("canonical")
+                if key in used:
+                    continue
+                deficit = max(counts.values(), default=0) - counts.get(sector, 0)
+                boost = min(7, deficit * 1.5)
+                adjusted = int(item.get("importance_score", 0)) + boost
+                pool.append((adjusted, int(item.get("importance_score", 0)), item))
+        if not pool:
+            break
+        pool.sort(key=lambda x: (-x[0], -x[1], int(x[2].get("editor_rank", 9999))))
+        _, _, winner = pool[0]
+        selected.append(winner)
+        used.add(winner.get("canonical"))
+
+    # Publish strongest selected stories first, while preserving representation already chosen.
+    selected.sort(key=lambda x: (-int(x.get("importance_score", 0)), int(x.get("editor_rank", 9999))))
+    for item in selected:
+        item["sector_balance_24h"] = counts.copy()
+    return selected
+
+
+def reader_extra_type():
+    history = STATE.get("reader_extra_type_history", [])[-8:]
+    counts = {kind: history.count(kind) for kind in READER_EXTRA_TYPES}
+    lowest = min(counts.values(), default=0)
+    candidates = [kind for kind in READER_EXTRA_TYPES if counts[kind] == lowest]
+    # Stable rotation among equally unused types.
+    cursor = len(STATE.get("reader_extra_type_history", [])) % max(1, len(candidates))
+    return candidates[cursor]
+
+
+def reader_extra_work_recent(work_key):
+    work_key = normalize_title(work_key)
+    if not work_key:
+        return False
+    cutoff = NOW_BD - timedelta(days=READER_EXTRA_AVOID_WORK_DAYS)
+    for item in STATE.get("reader_extra_history", []):
+        dt = parse_datetime(item.get("published_at"))
+        if dt and dt >= cutoff and normalize_title(item.get("work")) == work_key:
+            return True
+    return False
+
+
+READER_EXTRA_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "extra_type": {"type": "string", "enum": READER_EXTRA_TYPES},
+        "title": {"type": "string"},
+        "work": {"type": "string"},
+        "sector": {"type": "string", "enum": SECTORS},
+        "intro": {"type": "string"},
+        "points": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 4},
+        "takeaway": {"type": "string"},
+        "source_url": {"type": "string"},
+        "source_name": {"type": "string"},
+        "bold_terms": {"type": "array", "items": {"type": "string"}, "maxItems": 8},
+    },
+    "required": ["extra_type", "title", "work", "sector", "intro", "points", "takeaway", "source_url", "source_name", "bold_terms"],
+    "additionalProperties": False,
+}
+
+
+def generate_reader_extra(seed_story):
+    """Create one source-grounded reader-value post from a verified/current newsroom story."""
+    if not seed_story:
+        return None
+    work = safe_text(seed_story.get("title") or seed_story.get("headline"))
+    if not work or reader_extra_work_recent(work):
+        return None
+    extra_kind = reader_extra_type()
+    article_text = safe_text(seed_story.get("_source_article_text")) or safe_text(seed_story.get("reader_context"))
+    if not article_text:
+        article_text = "\n".join([
+            safe_text(seed_story.get("summary")),
+            *[safe_text(x) for x in seed_story.get("highlights", [])],
+            safe_text(seed_story.get("why_it_matters")),
+        ])
+    if len(article_text.strip()) < 150:
+        return None
+
+    prompt = f"""You are the reader-value editor for @ComicsNewsroom. Create ONE compact non-news FAN EXTRA based only on the supplied evidence.
+This is not another news report. It should give the reader something interesting they can enjoy or learn in under 15 seconds.
+Chosen format: {extra_kind}
+Allowed formats: {', '.join(READER_EXTRA_TYPES)}.
+Rules:
+- Use only facts directly supported by the evidence. Do not rely on unstated memory.
+- Do not invent trivia, dates, sales, creator biography, chronology or behind-the-scenes details.
+- The title should be curiosity-driven but factual and not clickbait.
+- intro: one concise setup sentence.
+- points: 2-4 genuinely interesting facts or context points.
+- takeaway: one concise reader-friendly closing thought.
+- source_url must be copied EXACTLY from the supplied source URL. Do not invent URLs.
+- source_name must be copied from the supplied source name.
+- sector must be Anime, Manga or Comics. Marvel/DC stories use Comics.
+- No Markdown or HTML.
+Return only the JSON schema."""
+    user = (
+        f"WORK: {work}\n"
+        f"SECTOR: {normalize_sector(seed_story.get('sector'))}\n"
+        f"SOURCE NAME: {safe_text(seed_story.get('source'))}\n"
+        f"SOURCE URL: {safe_text(seed_story.get('url'))}\n"
+        f"RECENT STORY: {safe_text(seed_story.get('headline') or seed_story.get('title'))}\n"
+        f"EVIDENCE:\n{article_text[:11000]}"
+    )
+    try:
+        response = cerebras_create(
+            model=CEREBRAS_MODEL,
+            messages=[{"role": "system", "content": prompt}, {"role": "user", "content": user}],
+            response_format={"type": "json_schema", "json_schema": {"name": "comics_reader_extra_v1", "strict": True, "schema": READER_EXTRA_SCHEMA}},
+            reasoning_effort="low",
+            temperature=0.25,
+            max_completion_tokens=READER_EXTRA_MAX_COMPLETION_TOKENS,
+        )
+        data = json.loads(safe_text(response.choices[0].message.content))
+        source_url = safe_text(data.get("source_url"))
+        if source_url != safe_text(seed_story.get("url")):
+            source_url = safe_text(seed_story.get("url"))
+        points = [trim_source_text(clean_generated_text(x), 170) for x in data.get("points", []) if clean_generated_text(x)]
+        extra = {
+            "event_kind": "reader_extra",
+            "extra_type": safe_text(data.get("extra_type")) if safe_text(data.get("extra_type")) in READER_EXTRA_TYPES else extra_kind,
+            "title": trim_source_text(clean_generated_text(data.get("title")), 110),
+            "work": trim_source_text(clean_generated_text(data.get("work")) or work, 110),
+            "sector": normalize_sector(data.get("sector")),
+            "intro": trim_source_text(clean_generated_text(data.get("intro")), 250),
+            "points": points[:4],
+            "takeaway": trim_source_text(clean_generated_text(data.get("takeaway")), 220),
+            "source_url": source_url,
+            "source_name": trim_source_text(clean_generated_text(data.get("source_name")) or seed_story.get("source"), 90),
+            "bold_terms": [safe_text(x) for x in data.get("bold_terms", []) if safe_text(x)][:8],
+            "image_url": safe_text(seed_story.get("image_url")),
+            "url": source_url,
+            "canonical": canonical_url(source_url) or safe_text(seed_story.get("canonical")),
+            "importance_score": int(seed_story.get("importance_score", 0) or 0),
+        }
+        if not extra["title"] or not extra["intro"] or len(extra["points"]) < 2 or not extra["source_url"]:
+            return None
+        return extra
+    except Exception as exc:
+        logger.warning("Reader extra generation failed: %s", exc)
+        return None
+
+
+def dynamic_reader_extra_html(extra):
+    kind = escape_rich_html(extra.get("extra_type") or "FAN EXTRA")
+    work = escape_rich_html(extra.get("work") or "")
+    title = escape_rich_html(extra.get("title") or "")
+    terms = extra.get("bold_terms", [])
+    lines = [add_media_reference(), f"<p><b>💎 FAN EXTRA · {kind}</b></p>", f"<h1><b>✦ {title}</b></h1>"]
+    if work:
+        lines.append(f"<p><b>{work}</b></p>")
+    intro = bold_terms_html(extra.get("intro", ""), terms)
+    if intro:
+        lines.append(f"<blockquote>✨ {intro}</blockquote>")
+    for point in extra.get("points", [])[:4]:
+        lines.append(f"<p>✦ {bold_terms_html(point, terms)}</p>")
+    takeaway = bold_terms_html(extra.get("takeaway", ""), terms)
+    if takeaway:
+        lines.append(f"<p>💡 <b>Takeaway:</b> {takeaway}</p>")
+    footer = " ".join([CHANNEL_TAG, "#Fans", "#AnimeNews" if normalize_sector(extra.get("sector")) == "Anime" else ("#Manga" if normalize_sector(extra.get("sector")) == "Manga" else "#Comics")])
+    lines.append(f"<p>{escape_rich_html(footer)}</p>")
+    source = escape_rich_html(extra.get("source_name") or "Source")
+    url = html.escape(safe_text(extra.get("source_url")), quote=True)
+    if url:
+        lines.append(f"<footer><b>Source:</b> <a href=\"{url}\">{source}</a></footer>")
+    else:
+        lines.append(f"<footer><b>Source:</b> {source}</footer>")
+    return "\n".join(lines)
+
+
+def fit_reader_extra_html(extra):
+    variants = [
+        dict(extra),
+        dict(extra, takeaway="", intro=trim_source_text(extra.get("intro", ""), 190), points=[trim_source_text(x, 130) for x in extra.get("points", [])[:3]]),
+        dict(extra, takeaway="", intro=trim_source_text(extra.get("intro", ""), 160), points=[trim_source_text(x, 100) for x in extra.get("points", [])[:2]]),
+    ]
+    for candidate in variants:
+        rendered = dynamic_reader_extra_html(candidate)
+        if rich_visible_length(rendered) <= MAX_RICH_CHARACTERS:
+            return rendered
+    raise ValueError("Unable to fit reader extra Rich Message")
+
+
+def store_reader_extra(extra, message_id=None):
+    now = now_iso()
+    record = {
+        "id": hashlib.sha1(f"{extra.get('work')}|{extra.get('title')}|{now}".encode("utf-8")).hexdigest()[:16],
+        "event_kind": "reader_extra",
+        "extra_type": extra.get("extra_type", ""),
+        "title": extra.get("title", ""),
+        "work": extra.get("work", ""),
+        "sector": normalize_sector(extra.get("sector")),
+        "source": extra.get("source_name", ""),
+        "source_url": extra.get("source_url", ""),
+        "published_at": now,
+        "message_id": message_id,
+        "status": "published",
+    }
+    STATE.setdefault("reader_extra_history", []).append(record)
+    STATE["reader_extra_history"] = STATE["reader_extra_history"][-READER_EXTRA_HISTORY_LIMIT:]
+    STATE.setdefault("reader_extra_type_history", []).append(extra.get("extra_type", ""))
+    STATE["reader_extra_type_history"] = STATE["reader_extra_type_history"][-12:]
+    STATE.setdefault("reader_extra_work_history", []).append(extra.get("work", ""))
+    STATE["reader_extra_work_history"] = STATE["reader_extra_work_history"][-30:]
+
+
+def choose_reader_extra_seed(stories, ranked):
+    candidates = []
+    for story in stories:
+        if int(story.get("importance_score", 0) or 0) >= PUBLISH_THRESHOLD:
+            candidates.append(story)
+    if not candidates:
+        for item in ranked:
+            if int(item.get("importance_score", 0) or 0) >= PUBLISH_THRESHOLD:
+                candidates.append(item)
+    candidates = [x for x in candidates if not reader_extra_work_recent(x.get("title") or x.get("headline"))]
+    if not candidates:
+        # Fall back to a previously published event with enough stored context.
+        old = []
+        for event in reversed(list(STATE.get("events", {}).values())):
+            if event.get("status") != "published" or event.get("event_kind") == "reader_extra":
+                continue
+            work = safe_text(event.get("headline"))
+            if work and not reader_extra_work_recent(work):
+                old.append(event)
+        if old:
+            event = old[0]
+            return {
+                "title": event.get("headline", ""),
+                "headline": event.get("headline", ""),
+                "sector": normalize_sector(event.get("sector")),
+                "summary": event.get("summary", ""),
+                "highlights": event.get("highlights", []),
+                "why_it_matters": event.get("why_it_matters", ""),
+                "source": event.get("source", ""),
+                "url": event.get("original_url", ""),
+                "image_url": "",
+                "importance_score": 82,
+                "canonical": event.get("canonical_url", ""),
+            }
+    return candidates[0] if candidates else None
+
+def process_ranked_region(region, ranked):
+    pool = balanced_news_selection(ranked)[:NEWS_POST_MAX_PER_RUN]
+    if not pool:
+        logger.info("STORY GENERATION: no candidates above editorial gate")
+        return []
+
+    stories = []
+    with ThreadPoolExecutor(max_workers=STORY_CONCURRENCY) as executor:
+        futures = {executor.submit(process_story_candidate, item): item for item in pool}
+        for future in as_completed(futures):
+            item = futures[future]
+            try:
+                story = future.result()
+                if story:
+                    stories.append(story)
+            except Exception as exc:
+                logger.warning(
+                    "Parallel story processing failed for %s: %s",
+                    item.get("title", ""),
+                    exc,
+                )
+
+    stories.sort(
+        key=lambda x: (
+            -int(x.get("importance_score", 0)),
+            int(x.get("editor_rank", 9999)),
+        )
+    )
+    valid = verify_stories_batch(stories)
+
+    # Remove internal source text before rendering or persistence.
+    for story in valid:
+        story["reader_context"] = trim_source_text(story.get("_source_article_text", ""), 5000)
+        story.pop("_source_article_text", None)
+        story["sector"] = normalize_sector(story.get("sector") or "")
+        story["topic"] = canonical_topic(
+            story.get("topic") or "",
+            region,
+        )
+        story["category_hashtags"] = category_hashtags(story)
+
+    sector_counts = {sector: sum(1 for x in valid if normalize_sector(x.get("sector")) == sector) for sector in SECTORS}
+    logger.info(
+        "FINAL VALID: %d | threshold=%d/100 | balanced_pool=%d generated=%d sectors=%s",
+        len(valid), PUBLISH_THRESHOLD, len(pool), len(stories), sector_counts
+    )
     return valid
+
+
 
 
 def publication_duplicate_reason(story, reserved):
@@ -3800,7 +4226,7 @@ def publication_duplicate_reason(story, reserved):
 
 
 def run():
-    logger.info("COMICSNEWSROOM V2 QUALITY-FIRST RUN")
+    logger.info("COMICSNEWSROOM V2.2 QUALITY-FIRST RUN")
     logger.info("Channel=%s Mode=%s Threshold=%d/100",TELEGRAM_CHANNEL,NEWS_MODE,PUBLISH_THRESHOLD)
     logger.info("24H WINDOW | %s -> %s",DISCOVERY_START.isoformat(),DISCOVERY_END.isoformat())
 
@@ -3817,7 +4243,7 @@ def run():
     metrics=STATE.setdefault("adaptive_metrics",{})
     metrics["raw_discovered"]=len(STATE.get("queue",{}))
     logger.info("PRE-CEREBRAS: rejected=%d hard=%d duplicate=%d learned=%d passed=%d",int(metrics.get("pre_cerebras_rejected",0)),int(metrics.get("hard_rejected",0)),int(metrics.get("duplicate_rejected",0)),int(metrics.get("learned_rejected",0)),int(metrics.get("passed_to_cerebras",0)))
-    logger.info("CANDIDATES AFTER FILTER: %d",len(candidates))
+    logger.info("CANDIDATES AFTER FILTER: %d | RANK CAP=%d | RUN AI BUDGET=%d | CONCURRENCY=%d",len(candidates),MAX_RANK_CANDIDATES,CEREBRAS_MAX_REQUESTS_PER_RUN,CEREBRAS_MAX_CONCURRENCY)
 
     ranked=prepare_ranked_region(REGION,candidates)
     logger.info("RANKED ABOVE GATE: %d",len(ranked))
@@ -3865,10 +4291,40 @@ def run():
         save_state(STATE)
         time.sleep(POST_DELAY_SECONDS)
 
+    # One compact reader-value post per run, separate from the three-sector news quota.
+    extra_published = 0
+    if READER_EXTRA_ENABLED and READER_EXTRA_MAX_PER_RUN:
+        seed = choose_reader_extra_seed(stories, ranked)
+        if seed and not reader_extra_work_recent(seed.get("title") or seed.get("headline")):
+            # Current-run stories retain their source article text until this point.
+            extra = generate_reader_extra(seed)
+            if extra:
+                try:
+                    extra_html = fit_reader_extra_html(extra)
+                    image_path = prepare_image(seed, "fan_extra")
+                    result = send_rich_photo(image_path, extra_html)
+                    if not result.get("ok"):
+                        description = safe_text(result.get("description")).lower()
+                        status = int(result.get("http_status", 0) or 0)
+                        can_fallback = status in {400, 404, 405} and ("rich" in description or "method" in description or "not found" in description)
+                        if can_fallback:
+                            result = send_bot_api_fallback(image_path, extra_html)
+                        else:
+                            raise RuntimeError(result.get("description") or "Reader extra publish failed")
+                    if result.get("ok"):
+                        message = result.get("result", {})
+                        message_id = message.get("message_id") if isinstance(message, dict) else None
+                        store_reader_extra(extra, message_id=message_id)
+                        store_event(extra, published=True, message_id=message_id)
+                        metrics["reader_extra_published"] = int(metrics.get("reader_extra_published", 0)) + 1
+                        extra_published = 1
+                        logger.info("Published FAN EXTRA: type=%s sector=%s work=%s", extra.get("extra_type"), extra.get("sector"), extra.get("work"))
+                except Exception as exc:
+                    logger.warning("FAN EXTRA skipped: %s", exc)
     metrics["published"]=int(metrics.get("published",0))+published_count
     metrics["estimated_candidates_avoided"]=int(metrics.get("pre_cerebras_rejected",0))
     save_state(STATE)
-    logger.info("FINISHED | published=%d | candidates=%d",published_count,len(candidates))
+    logger.info("FINISHED | news_published=%d | fan_extra=%d | candidates=%d",published_count,extra_published,len(candidates))
 
 
 # ============================================================
@@ -3878,7 +4334,7 @@ def run():
 def self_test():
     sample={
         "title":"Example Anime","year":"2026","summary":"The anime's new season has been officially confirmed.",
-        "sector":"Anime","format":"Anime","news_type":"Season / Sequel","priority_type":"New Season / Sequel",
+        "sector":"Anime","format":"Anime","news_type":"Trailer","priority_type":"Major Trailer / PV",
         "highlights":["The next season has been officially confirmed.","More production details are expected later."],
         "why_it_matters":"It confirms the franchise will continue.","platform":"Crunchyroll","episodes":"12","chapters":"","languages":"Japanese, English","status":"Coming Soon","release_date":"2026",
         "official_video_url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ","official_video_platform":"YouTube","official_video_title":"Official Trailer","spoiler":"","note":"","bold_terms":["Example Anime","Crunchyroll"],
@@ -3886,14 +4342,31 @@ def self_test():
     }
     rendered=dynamic_rich_html(sample)
     assert "@ComicsNewsroom" in rendered
-    assert "WATCH OFFICIAL VIDEO" in rendered
+    assert "Watch Trailer 👉" in rendered and "<h2>" in rendered and '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">YouTube</a>' in rendered
     assert "What to Know" not in rendered and "Vocabulary" not in rendered
     assert NEWS_PRIORITY["Major Trailer / PV"] < NEWS_PRIORITY["Major Comic Storyline / Event"]
     assert rank_score({"fan_interest":25,"significance":20,"franchise_reach":15,"freshness":15,"novelty":10,"source_authority":10,"visual_value":5,"source_class":"official"})==100
     assert rank_score({"fan_interest":25,"significance":20,"franchise_reach":15,"freshness":15,"novelty":10,"source_authority":10,"visual_value":5,"source_class":"rumor"})==69
     assert canonical_topic("trailer")=="Major Trailer / PV"
     assert canonical_topic("manga to anime")=="Manga → Anime Adaptation"
-    assert normalize_sector("DC")=="DC"
+    assert normalize_sector("DC")=="Comics"
+    assert normalize_sector("Marvel")=="Comics"
+    assert update_category_coverage is not None
+    assert set(SECTORS)=={"Anime","Manga","Comics"}
+    balanced = balanced_news_selection([
+        {"importance_score":95,"important":True,"sector":"Anime","editor_rank":1,"canonical":"a"},
+        {"importance_score":94,"important":True,"sector":"Anime","editor_rank":2,"canonical":"b"},
+        {"importance_score":93,"important":True,"sector":"Manga","editor_rank":3,"canonical":"c"},
+        {"importance_score":92,"important":True,"sector":"Comics","editor_rank":4,"canonical":"d"},
+    ])
+    assert {normalize_sector(x.get("sector")) for x in balanced} == {"Anime","Manga","Comics"}
+    assert len([x for x in balanced if normalize_sector(x.get("sector")) == "Anime"]) <= 2
+    extra = {"extra_type":"Quick Fact","title":"Example Fact","work":"Example Anime","sector":"Anime","intro":"A useful fact.","points":["Fact one","Fact two"],"takeaway":"Now you know.","source_url":"https://example.com/fact","source_name":"Example Source","bold_terms":["Example Anime"]}
+    extra_html = dynamic_reader_extra_html(extra)
+    assert "FAN EXTRA" in extra_html and "Example Fact" in extra_html and '<a href="https://example.com/fact">Example Source</a>' in extra_html
+    assert CEREBRAS_MAX_CONCURRENCY == 6
+    assert CEREBRAS_MAX_REQUESTS_PER_RUN <= 30
+    assert MAX_STORY_CANDIDATES == 6
     assert infer_priority_type({"title":"Popular manga gets an anime adaptation","excerpt":"officially confirmed"})=="Manga → Anime Adaptation"
     assert infer_priority_type({"title":"Official trailer released","excerpt":"new trailer"})=="Major Trailer / PV"
     hit,reason=pre_cerebras_filter({"title":"Anime theory and review","excerpt":"anime review","url":"https://animecorner.me/x","canonical":"animecorner.me/x"})

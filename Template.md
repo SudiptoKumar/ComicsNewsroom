@@ -1,4 +1,4 @@
-# ComicsNewsroom Telegram Dynamic Template System
+# ComicsNewsroom Telegram Dynamic Template System V2.2
 
 Channel: **@ComicsNewsroom**
 
@@ -61,7 +61,7 @@ Source: [clickable publication]
 ✦ [Release information]
 ✦ [Important reveal]
 
-🎥 WATCH OFFICIAL TRAILER · [YouTube / Crunchyroll]
+<h2>Watch Trailer 👉 <a href="[verified video URL]">[YouTube / Crunchyroll]</a></h2>
 
 @ComicsNewsroom #Anime #Trailer
 
@@ -241,3 +241,64 @@ Source: [clickable publication]
 - Hashtags are limited to a small relevant set.
 - Empty or unsupported fields are removed.
 - Posters and comic covers preserve their original aspect ratio.
+
+
+## Trailer action rule
+
+For a verified trailer/PV, place the H2 action **immediately under the title**:
+
+```html
+<h2>Watch Trailer 👉 <a href="https://www.youtube.com/watch?v=...">YouTube</a></h2>
+```
+
+Never expose the raw URL. Never use a third-party re-upload when an official YouTube or Crunchyroll upload can be verified.
+
+## Template 11: FAN EXTRA
+
+Every scheduled run may include **one** compact reader-value post separate from breaking news.
+
+The renderer rotates among:
+
+```text
+Quick Fact
+Hidden Detail
+Franchise Timeline
+Creator Spotlight
+Fan Guide
+Origin Story
+Why It Matters
+Did You Know
+```
+
+Example:
+
+```text
+[ART / KEY VISUAL]
+
+💎 FAN EXTRA · QUICK FACT
+
+✦ [Curiosity-driven factual title]
+
+[One short setup sentence]
+
+✦ [Interesting fact]
+✦ [Interesting fact]
+✦ [Useful context]
+
+💡 Takeaway: [one short closing thought]
+
+@ComicsNewsroom #Fans #Anime
+
+Source: [clickable source]
+```
+
+### FAN EXTRA rules
+
+- It is not a duplicate news report.
+- It must use source-supported facts only.
+- No invented trivia or unsupported biography.
+- One extra maximum per run.
+- Avoid the same work for 14 days where possible.
+- Avoid repeating the same extra format in the recent rotation.
+- The extra does not count toward the Anime/Manga/Comics news balance.
+- The source URL is hidden behind the clickable source name.
