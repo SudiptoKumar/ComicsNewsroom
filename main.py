@@ -1085,13 +1085,13 @@ HARD_OFF_TOPIC_RE = re.compile(
     r"video game|gaming|gameplay|game review|playstation|xbox|steam|nintendo|persona 4|metroid)\b", re.I,
 )
 POSITIVE_TERMS = {
-    "anime","manga","manhwa","manhua","comic","comics","graphic novel","one piece","naruto",
+    "anime","manga","manhwa","manhua","webtoon","webcomic","web comics","digital comic","comic","comics","graphic novel","one piece","naruto",
     "dragon ball","bleach","jujutsu kaisen","demon slayer","chainsaw man","my hero academia",
     "solo leveling","pokemon","marvel","dc comics","batman","superman","spider-man","x-men",
     "avengers","trailer","teaser","pv","anime adaptation","manga adaptation","season 2","season 3",
     "new season","sequel","release date","key visual","visual","cast","voice actor","studio",
     "production","hiatus","returns","final chapter","ending","chapter","volume","publisher",
-    "marvel","dc","comic book","crossover","event","storyline","greenlit","announced","confirmed",
+    "marvel","dc","comic book","crossover","event","storyline","greenlit","announced","confirmed","webtoon adaptation","manhwa adaptation","manhua adaptation",
 }
 
 JAPANESE_POSITIVE_TERMS = {"アニメ","漫画","マンガ","コミック","第2期","第3期","第4期","第2弾","制作決定","放送","公開","特報","予告","PV","メインPV","劇場版","映画化","アニメ化","声優","キャスト","新作","連載","休載","再開","最終回","新刊"}
@@ -1373,7 +1373,7 @@ def pre_cerebras_filter(item):
     lower = blob.lower()
     if GENERIC_SOURCE_PAGE_RE.search(title) and not re.search(r"\b(?:announc|confirm|trailer|event|series|comic|manga|anime)\b", lower, re.I):
         return False, "generic_source_page"
-    has_core_context = bool(re.search(r"\b(?:anime|manga|manhwa|manhua|comic|comics|graphic novel|marvel|dc|batman|superman|x-men|spider-man|avengers)\b", lower, re.I))
+    has_core_context = bool(re.search(r"\b(?:anime|manga|manhwa|manhua|webtoon|webcomic|web\s+comics|digital\s+comic|comic|comics|graphic novel|marvel|dc|batman|superman|x-men|spider-man|avengers)\b", lower, re.I))
     has_multilingual_context = any(term in blob for term in (*JAPANESE_POSITIVE_TERMS, *KOREAN_POSITIVE_TERMS))
     if HARD_OFF_TOPIC_RE.search(blob) and not has_core_context and not has_multilingual_context:
         return False, "off_topic"

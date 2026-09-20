@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## V4.1.1 Editorial Coverage Patch
+
+- Expanded Manga-side relevance detection for Webtoon, webcomic, digital comic, manhwa and manhua stories.
+- Webtoon/manhwa/manhua adaptation signals now survive the cheap pre-Cerebras filter and reach editorial ranking.
+- Preserved the existing quality gate so weak Webtoon/manhwa/manhua stories can still be rejected later.
+- Added an executable editorial regression test for these signals.
+
 ## V4.1 Production Reliability Release
 
 - Replaced six-way story concurrency with serial expensive processing, matching the stable reference newsroom pattern.

@@ -1,4 +1,4 @@
-# ComicsNewsroom V4.0 Production
+# ComicsNewsroom V4.1.1.0 Production
 
 Automated editorial newsroom for **@ComicsNewsroom** covering only high-value Anime, Manga and Comics developments.
 
@@ -113,3 +113,7 @@ python main.py --rate-limit-test
 ```
 
 The rate-limit test simulates 429 responses and proves that retries happen through one centralized Cerebras gate rather than through concurrent worker bursts.
+
+## V4.1.1 editorial patch
+
+The Manga relevance filter now recognizes Webtoon, webcomic, digital comic, manhwa and manhua terminology. These signals only allow a story into editorial ranking; they do not force publication.

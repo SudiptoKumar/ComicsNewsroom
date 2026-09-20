@@ -5,6 +5,7 @@ checks=[
  ('py_compile',[sys.executable,'-m','py_compile',str(ROOT/'main.py')]),
  ('self_test',[sys.executable,str(ROOT/'main.py'),'--self-test']),
  ('fixture_test',[sys.executable,str(ROOT/'main.py'),'--fixture-test']),
+ ('editorial_webtoon',[sys.executable,str(ROOT/'tests/editorial_webtoon.py')]),
  ('schema_contract',[sys.executable,str(ROOT/'tests/schema_contract.py')]),
  ('fault_injection',[sys.executable,str(ROOT/'tests/fault_injection.py')]),
  ('partial_rate_limit',[sys.executable,str(ROOT/'tests/partial_rate_limit.py')]),
