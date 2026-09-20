@@ -1,0 +1,25 @@
+{
+  "feeds": {},
+  "queue": {},
+  "events": {},
+  "event_clusters": {},
+  "posted_event_ids": [],
+  "recent_titles": [],
+  "work_memory": {},
+  "publication_fingerprints": [],
+  "fresh_start_at": "",
+  "learned_rejections": {},
+  "score_history": [],
+  "adaptive_metrics": {
+    "raw_discovered": 0,
+    "pre_cerebras_rejected": 0,
+    "hard_rejected": 0,
+    "duplicate_rejected": 0,
+    "learned_rejected": 0,
+    "passed_to_cerebras": 0,
+    "cerebras_ranked": 0,
+    "published": 0,
+    "estimated_candidates_avoided": 0
+  },
+  "source_quality": {}
+}
