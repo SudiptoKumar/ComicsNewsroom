@@ -4726,7 +4726,10 @@ def self_test():
         "source":"Anime News Network", "url":"https://www.animenewsnetwork.com/example/story", "region":REGION, "topic":"Major Trailer / PV", "institution":"", "importance_score":90, "important":True, "event_key":"example_anime_season_2", "source_class":"reported", "image_url":"", "image_candidates":[], "canonical":"animenewsnetwork.com/example/story"
     }
     rendered = dynamic_rich_html(sample)
-    assert "@ComicsNewsroom" in rendered and "Watch Trailer 👉" in rendered and "<h2>" in rendered
+    assert "Watch Trailer 👉" in rendered and "<h2>" in rendered
+    # Private Telegram channels do not expose a public @username; the footer may therefore omit CHANNEL_TAG.
+    if CHANNEL_TAG:
+        assert CHANNEL_TAG in rendered
     assert set(SECTORS) == {"Anime", "Manga", "Comics"}
     assert normalize_sector("DC") == "Comics" and normalize_sector("Marvel") == "Comics"
     assert normalize_sector("unknown") == ""
