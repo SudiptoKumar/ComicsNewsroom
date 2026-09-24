@@ -246,7 +246,7 @@ OFFICIAL_SOURCE_DOMAINS = {
 def source_class_for_url(url):
     return "official" if normalized_domain(url) in OFFICIAL_SOURCE_DOMAINS else "reported"
 
-# RSS-first. Google News + Exa fill coverage gaps using the same source allow-list.
+# RSS-first discovery. Google News RSS is a free secondary RSS gap-fill. Exa is a last-resort discovery fallback only.
 RSS_FEEDS = [
     {"name":"Anime News Network","region":REGION,"url":"https://www.animenewsnetwork.com/all/rss.xml","source_class":"reported"},
     {"name":"Anime Corner","region":REGION,"url":"https://animecorner.me/feed/","source_class":"reported"},
@@ -275,6 +275,7 @@ STORY_CONCURRENCY = 1
 NEWS_RESEARCH_TARGET = 11
 NEWS_POST_TARGET_MIN = 7
 NEWS_POST_MAX_PER_RUN = 10
+DISCOVERY_MIN_VALID = max(1, int(os.environ.get("DISCOVERY_MIN_VALID", str(NEWS_POST_TARGET_MIN))))
 DEEP_RESEARCH_MAX_URLS = 2
 SECTOR_BALANCE_LOOKBACK_HOURS = 24
 READER_EXTRA_ENABLED = True
@@ -305,14 +306,14 @@ ROLLING_DISCOVERY_HOURS = 24
 QUEUE_RETENTION_DAYS = 3
 EVENT_RETENTION_DAYS = 21
 MAX_RSS_CANDIDATES = 500
-MAX_EXA_CANDIDATES = 140
+MAX_EXA_CANDIDATES = 40
 MAX_GOOGLE_NEWS_CANDIDATES = 120
 THIN_EXCERPT_CHARS = 180
 MAX_EXCERPT_ENRICH = 10
 POST_DELAY_SECONDS = 0.8
 # Conservative, configurable AI/search pacing. The reference working bot uses
 # sequential expensive processing; ComicsNewsroom follows the same model.
-CEREBRAS_REQUESTS_PER_MINUTE = max(1, int(os.environ.get("CEREBRAS_REQUESTS_PER_MINUTE", "6")))
+CEREBRAS_REQUESTS_PER_MINUTE = max(1, int(os.environ.get("CEREBRAS_REQUESTS_PER_MINUTE", "3")))
 CEREBRAS_REQUEST_INTERVAL_SECONDS = 60.0 / CEREBRAS_REQUESTS_PER_MINUTE
 CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN = max(1, int(os.environ.get("CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN", "17")))
 CEREBRAS_MAX_ATTEMPTS_PER_RUN = max(CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN, int(os.environ.get("CEREBRAS_MAX_ATTEMPTS_PER_RUN", "26")))
@@ -1879,8 +1880,9 @@ def google_news_gap_fill(
     existing_count,
     needed,
 ):
-    # Same thin-coverage trigger as Exa, tried first because it is free.
-    if existing_count >= 80:
+    # Free RSS gap-fill only. Never fetch more than the number of candidates actually needed.
+    needed = max(0, int(needed or 0))
+    if needed <= 0 or existing_count >= DISCOVERY_MIN_VALID:
         return 0
 
     queries = GOOGLE_NEWS_QUERIES.get(REGION, [])
@@ -1987,7 +1989,7 @@ def google_news_gap_fill(
                 )
                 added += 1
 
-                if added >= MAX_GOOGLE_NEWS_CANDIDATES:
+                if added >= min(MAX_GOOGLE_NEWS_CANDIDATES, needed):
                     return added
 
         except Exception as exc:
@@ -2000,8 +2002,14 @@ def google_news_gap_fill(
     return added
 
 
+class ExaCreditsExhausted(RuntimeError):
+    """Exa account has no remaining credits for this run."""
+
+
 _exa_lock = Lock()
 _exa_next_allowed_at = 0.0
+_exa_disabled_for_run = False
+_exa_disable_logged = False
 
 def _reserve_exa_slot():
     global _exa_next_allowed_at
@@ -2013,6 +2021,9 @@ def _reserve_exa_slot():
         time.sleep(wait)
 
 def _exa_call(method, *args, **kwargs):
+    global _exa_disabled_for_run, _exa_disable_logged
+    if _exa_disabled_for_run:
+        raise ExaCreditsExhausted("Exa disabled for this run: credits exhausted")
     last_exc = None
     for attempt in range(1, EXA_MAX_RETRY_ATTEMPTS + 2):
         try:
@@ -2021,6 +2032,12 @@ def _exa_call(method, *args, **kwargs):
         except Exception as exc:
             last_exc = exc
             text_exc = safe_text(exc).lower()
+            if "402" in text_exc or "no_more_credits" in text_exc or "exceeded your credits limit" in text_exc:
+                _exa_disabled_for_run = True
+                if not _exa_disable_logged:
+                    logger.warning("Exa disabled for remainder of run: account credits exhausted; using RSS/Google/source evidence fallback")
+                    _exa_disable_logged = True
+                raise ExaCreditsExhausted("Exa account credits exhausted") from exc
             if ("429" in text_exc or "rate limit" in text_exc or "too many requests" in text_exc) and attempt <= EXA_MAX_RETRY_ATTEMPTS:
                 delay = min(8.0, 1.5 * attempt + random.uniform(0.1, 0.5))
                 logger.warning("Exa rate limit | attempt=%d/%d | retry_in=%.1fs", attempt, EXA_MAX_RETRY_ATTEMPTS + 1, delay)
@@ -2057,6 +2074,11 @@ def _exa_highlights(result):
 
 
 def exa_gap_fill(region, existing_count, needed, fallback=False):
+    # Exa is an explicit last-resort discovery fallback. Callers should only invoke
+    # this after RSS/Google RSS produce fewer than DISCOVERY_MIN_VALID valid candidates.
+    needed = max(0, int(needed or 0))
+    if needed <= 0 or existing_count >= DISCOVERY_MIN_VALID:
+        return 0
     domains = FALLBACK_DOMAINS if fallback else PRIMARY_DOMAINS
     if not domains:
         return 0
@@ -2070,6 +2092,8 @@ def exa_gap_fill(region, existing_count, needed, fallback=False):
     ]
     added = 0
     for query in queries:
+        if _exa_disabled_for_run:
+            break
         try:
             results = _exa_search(query, domains=domains, num_results=12)
             for result in getattr(results, "results", []) or []:
@@ -2102,8 +2126,10 @@ def exa_gap_fill(region, existing_count, needed, fallback=False):
                     continue
                 queue_candidate(item)
                 added += 1
-                if added >= MAX_EXA_CANDIDATES:
+                if added >= min(MAX_EXA_CANDIDATES, needed):
                     return added
+        except ExaCreditsExhausted:
+            break
         except Exception as exc:
             logger.warning("Exa %s discovery failed: %s", "fallback" if fallback else "primary", exc)
     return added
@@ -2916,6 +2942,8 @@ def video_title_relevant(video_title, work_title):
 
 def exa_video_search(work_title):
     """Find a likely official YouTube/Crunchyroll video for a major trailer story."""
+    if _exa_disabled_for_run:
+        return None
     for domain in ("youtube.com", "crunchyroll.com"):
         for query in (
             f'"{work_title}" official trailer',
@@ -4608,22 +4636,54 @@ def publication_duplicate_reason(story, reserved):
     return ""
 
 
+def should_use_exa_discovery(valid_count):
+    """Exa discovery is allowed only when the RSS-derived valid pool is below the minimum target."""
+    return int(valid_count or 0) < DISCOVERY_MIN_VALID
+
+
 def run():
-    logger.info("COMICSNEWSROOM V4.0 PRODUCTION RUN")
+    logger.info("COMICSNEWSROOM V4.2 RSS-FIRST PRODUCTION RUN")
     logger.info("Channel=%s Mode=%s Threshold=%d/100",TELEGRAM_CHANNEL,NEWS_MODE,PUBLISH_THRESHOLD)
     logger.info("24H WINDOW | %s -> %s",DISCOVERY_START.isoformat(),DISCOVERY_END.isoformat())
 
     prune_state()
     bootstrap_learning_from_queue()
-    collect_rss()
 
-    count=queue_candidates_for_region(REGION)
-    google_added=google_news_gap_fill(REGION,count,MAX_GOOGLE_NEWS_CANDIDATES)
-    exa_added=exa_gap_fill(REGION,count+google_added,MAX_EXA_CANDIDATES)
-    logger.info("DISCOVERY GAP FILL: google_added=%d exa_added=%d",google_added,exa_added)
+    # ========================================================
+    # DISCOVERY POLICY: RSS FIRST, EXA LAST RESORT
+    # ========================================================
+    # 1) Always ingest the configured publisher/specialist RSS feeds first.
+    rss_added = collect_rss()
+    rss_candidates = available_candidates(REGION, source_pool="primary")
+    rss_valid = len(rss_candidates)
+    google_added = 0
+    exa_added = 0
+    exa_discovery_used = False
+
+    logger.info("DISCOVERY RSS-FIRST: rss_added=%d rss_valid=%d min_valid=%d", rss_added, rss_valid, DISCOVERY_MIN_VALID)
+
+    # 2) If RSS is thin, use Google News RSS as a free secondary RSS source.
+    if rss_valid < DISCOVERY_MIN_VALID:
+        google_needed = DISCOVERY_MIN_VALID - rss_valid
+        google_added = google_news_gap_fill(REGION, rss_valid, google_needed)
+
+    candidates = available_candidates(REGION, source_pool="primary")
+    post_rss_valid = len(candidates)
+    logger.info("DISCOVERY AFTER RSS+GOOGLE-RSS: valid=%d google_added=%d", post_rss_valid, google_added)
+
+    # 3) Exa discovery is NOT a normal source. It is called only when the
+    # RSS-derived pool is still below the minimum valid-news target.
+    if should_use_exa_discovery(post_rss_valid):
+        exa_needed = DISCOVERY_MIN_VALID - post_rss_valid
+        exa_discovery_used = True
+        exa_added = exa_gap_fill(REGION, post_rss_valid, exa_needed)
+        logger.info("DISCOVERY EXA FALLBACK: needed=%d added=%d", exa_needed, exa_added)
+    else:
+        logger.info("DISCOVERY EXA SKIPPED: RSS-derived valid news=%d", post_rss_valid)
+
     save_state(STATE)
 
-    candidates=available_candidates(REGION,source_pool="primary")
+    candidates = available_candidates(REGION, source_pool="primary")
     metrics=STATE.setdefault("adaptive_metrics",{})
     metrics["raw_discovered"]=len(STATE.get("queue",{}))
     logger.info("PRE-CEREBRAS: rejected=%d hard=%d duplicate=%d learned=%d passed=%d",int(metrics.get("pre_cerebras_rejected",0)),int(metrics.get("hard_rejected",0)),int(metrics.get("duplicate_rejected",0)),int(metrics.get("learned_rejected",0)),int(metrics.get("passed_to_cerebras",0)))
@@ -4631,6 +4691,23 @@ def run():
 
     ranked=prepare_ranked_region(REGION,candidates)
     logger.info("RANKED ABOVE GATE: %d",len(ranked))
+
+    # 4) A candidate pool can still become thin after editorial ranking. Only
+    # then, and only if Exa was not already used, perform one small Exa fallback.
+    if len(ranked) < DISCOVERY_MIN_VALID and not exa_discovery_used:
+        exa_needed = DISCOVERY_MIN_VALID - len(ranked)
+        exa_discovery_used = True
+        exa_added += exa_gap_fill(REGION, len(ranked), exa_needed)
+        if exa_added:
+            save_state(STATE)
+            candidates = available_candidates(REGION, source_pool="primary")
+            ranked = prepare_ranked_region(REGION, candidates)
+            logger.info("DISCOVERY EXA POST-RANK FALLBACK: added=%d ranked_above_gate=%d",exa_added, len(ranked))
+        else:
+            logger.info("DISCOVERY EXA POST-RANK FALLBACK: no candidates added")
+
+    logger.info("DISCOVERY SUMMARY: rss_added=%d google_added=%d exa_added=%d exa_used=%s final_valid=%d final_ranked=%d",rss_added,google_added,exa_added,exa_discovery_used,len(candidates),len(ranked))
+
     stories=process_ranked_region(REGION,ranked)
 
     # Dynamic quality-first publication. No daily or per-run quota.
@@ -4765,7 +4842,9 @@ def self_test():
     assert STORY_CONCURRENCY == 1
     assert CEREBRAS_REQUESTS_PER_MINUTE >= 1 and CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN >= 10
     assert NEWS_POST_TARGET_MIN == 7 and NEWS_POST_MAX_PER_RUN == 10
-    logger.info("SELF-TEST: PASS | serialized AI, multilingual filter, retryable state, numeric grounding")
+    assert should_use_exa_discovery(DISCOVERY_MIN_VALID) is False
+    assert should_use_exa_discovery(max(0, DISCOVERY_MIN_VALID - 1)) is True
+    logger.info("SELF-TEST: PASS | RSS-first discovery routing, serialized AI, multilingual filter, retryable state, numeric grounding")
 
 
 def rate_limit_test():
