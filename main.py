@@ -3347,12 +3347,42 @@ def _rich_template(story, badge, icon, *, meta=True, include_why=True, max_highl
     year = safe_text(story.get("year"))
     lines = [add_media_reference(), f"<p><b>{escape_rich_html(badge)}</b></p>"]
     lines.append(f"<h1><b>{escape_rich_html(icon)} {title}" + (f" ({escape_rich_html(year)})" if year else "") + "</b></h1>")
+
+    # POSTCARD FORMAT (network standard, Karn's pick 2026-10-30): badge and
+    # headline, the whole story in one bold line, then every detail (meta
+    # rows, highlights, why, note) inside a single tap-to-expand FULL STORY
+    # block. Watch links and spoilers stay visible — they are actions.
+    summary = bold_terms_html(story.get("summary", "") or "", terms)
+    if summary:
+        lines.append(f"<p><b>{summary}</b></p>")
+
+    def _strip_p(line):
+        return line.removeprefix("<p>").removesuffix("</p>")
+
+    story_bits = []
     if meta:
-        lines.extend(_rich_story_meta(story))
-    lines.extend(_rich_content(story, max_highlights=max_highlights, include_why=include_why))
+        story_bits.extend(_strip_p(x) for x in _rich_story_meta(story))
+    for line in _rich_content(story, max_highlights=max_highlights, include_why=include_why):
+        if line.startswith("<blockquote>"):
+            continue  # the old summary blockquote — the essence line replaces it
+        story_bits.append(_strip_p(line))
+    optional = _rich_optional_blocks(story, terms)
+    for line in optional:
+        if line.startswith("<details>"):
+            note = safe_text(story.get("note"))
+            if note:
+                story_bits.append(bold_terms_html(note, terms))
+    if story_bits:
+        lines.append(
+            "<blockquote expandable><b>FULL STORY</b><br>"
+            + "<br>".join(story_bits)
+            + "</blockquote>"
+        )
     if watch:
         lines.extend(_rich_watch_block(story))
-    lines.extend(_rich_optional_blocks(story, terms))
+    for line in optional:
+        if "tg-spoiler" in line:
+            lines.append(line)
     lines.extend(_rich_source_footer(story))
     return "\n".join(lines)
 
