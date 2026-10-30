@@ -29,6 +29,8 @@ from exa_py import Exa
 from cerebras.cloud.sdk import Cerebras
 
 
+
+import cerebras_keys
 # ============================================================
 # CONFIGURATION
 # ============================================================
@@ -953,6 +955,15 @@ cerebras = Cerebras(
     timeout=30.0,
 )
 
+
+def _reset_cerebras_client():
+    global cerebras
+    cerebras = Cerebras(
+        api_key=cerebras_keys.active_key() or CEREBRAS_API_KEY,
+        max_retries=0,
+        timeout=30.0,
+    )
+
 # One global clock for every Cerebras call: ranking, story generation,
 # verification and FAN EXTRA all share the same budget.
 _cerebras_lock = Lock()
@@ -1026,7 +1037,14 @@ def _reserve_cerebras_attempt():
         time.sleep(wait)
 
 def cerebras_create(**kwargs):
-    """Centralized, paced, retry-aware Cerebras request. All stages use it."""
+    """Centralized, paced, retry-aware Cerebras request. All stages use it.
+
+    Multi-key failover (2026-10-31): when a call dies on a quota/auth status
+    (401/402/403, or 429 after the pacing retries are exhausted), the active
+    key is retired for the run (owner alerted via the Newsroom bot), the
+    client is rebuilt on the next key, and the logical call retries. The
+    per-run logical-call budget is charged once, before the first attempt.
+    """
     global _cerebras_logical_calls, _cerebras_rate_limited
     with _cerebras_lock:
         if _cerebras_logical_calls >= CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN:
@@ -1034,6 +1052,23 @@ def cerebras_create(**kwargs):
                 f"Cerebras logical-call budget exhausted ({CEREBRAS_MAX_LOGICAL_CALLS_PER_RUN})"
             )
         _cerebras_logical_calls += 1
+
+    while True:
+        try:
+            return _cerebras_create_attempts(kwargs)
+        except Exception as exc:
+            status = getattr(exc, "status_code", None)
+            if status is None and isinstance(exc, CerebrasRateLimitError):
+                status = 429
+            if cerebras_keys.is_quota_status(status) and cerebras_keys.failover(status):
+                _reset_cerebras_client()
+                _cerebras_rate_limited = False
+                continue
+            raise
+
+
+def _cerebras_create_attempts(kwargs):
+    global _cerebras_logical_calls, _cerebras_rate_limited
 
     last_exc = None
     for attempt in range(1, CEREBRAS_MAX_RETRY_ATTEMPTS + 2):
