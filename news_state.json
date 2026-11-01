@@ -2,92 +2,92 @@
   "feeds": {
     "https://www.animenewsnetwork.com/all/rss.xml": {
       "etag": null,
-      "last_modified": "Sat, 31 Oct 2026 20:51:17 GMT",
-      "last_checked": "2026-11-01T02:57:54.140446+06:00",
+      "last_modified": "Sat, 31 Oct 2026 23:49:50 GMT",
+      "last_checked": "2026-11-01T05:58:32.354366+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://animecorner.me/feed/": {
       "etag": "W/\"3f5f18c5532e2051f7ed5d633b3ab319\"",
       "last_modified": "Sat, 31 Oct 2026 20:53:32 GMT",
-      "last_checked": "2026-11-01T02:57:57.305796+06:00",
+      "last_checked": "2026-11-01T05:58:33.430716+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://myanimelist.net/rss/news.xml": {
       "etag": null,
       "last_modified": null,
-      "last_checked": "2026-11-01T02:57:58.012172+06:00",
+      "last_checked": "2026-11-01T05:58:33.789656+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.animehunch.com/feed/": {
       "etag": "W/\"26936f4283b053d4e2aaf0e8d05a1c63\"",
       "last_modified": "Fri, 30 Oct 2026 13:41:02 GMT",
-      "last_checked": "2026-11-01T02:57:59.286095+06:00",
+      "last_checked": "2026-11-01T05:58:34.695158+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://animeuknews.net/feed/": {
       "etag": "\"d81f8070f0e36e6080a9dbee9ec416e3\"",
       "last_modified": "Fri, 23 Oct 2026 10:15:43 GMT",
-      "last_checked": "2026-11-01T02:57:59.703475+06:00",
-      "fail_count": 30,
+      "last_checked": "2026-11-01T05:58:34.968893+06:00",
+      "fail_count": 31,
       "alerted": true
     },
     "https://www.otakuusamagazine.com/feed/": {
       "etag": "W/\"bb76aff7643fb0671a5e221e6ef25b9a\"",
       "last_modified": "Tue, 02 Sep 2025 11:00:25 GMT",
-      "last_checked": "2026-11-01T02:58:00.400135+06:00",
+      "last_checked": "2026-11-01T05:58:35.801685+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://comicbook.com/feed/": {
-      "etag": "W/\"0ccce2d12d8a57c7790052702ac0f6f6\"",
-      "last_modified": "Sat, 31 Oct 2026 20:47:32 GMT",
-      "last_checked": "2026-11-01T02:58:00.676802+06:00",
+      "etag": "W/\"bf9a64888005dd16aae894fa6fca6f71\"",
+      "last_modified": "Sat, 31 Oct 2026 03:53:10 GMT",
+      "last_checked": "2026-11-01T05:58:36.011440+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://bleedingcool.com/comics/feed/": {
-      "etag": "W/\"6ae64f8a-6695\"",
-      "last_modified": "Sat, 31 Oct 2026 20:28:58 GMT",
-      "last_checked": "2026-11-01T02:58:04.551803+06:00",
+      "etag": "W/\"6ae67723-668c\"",
+      "last_modified": "Sat, 31 Oct 2026 23:17:55 GMT",
+      "last_checked": "2026-11-01T05:58:38.369919+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.comicsbeat.com/feed/": {
       "etag": "W/\"422793891366b435bedca0e9171677f4\"",
       "last_modified": "Sat, 31 Oct 2026 19:40:30 GMT",
-      "last_checked": "2026-11-01T02:58:06.336187+06:00",
+      "last_checked": "2026-11-01T05:58:39.452852+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://aiptcomics.com/feed/": {
       "etag": "W/\"a1bbf14ce31d3d535906564abb92722a\"",
       "last_modified": "Sat, 31 Oct 2026 15:33:52 GMT",
-      "last_checked": "2026-11-01T02:58:07.454781+06:00",
+      "last_checked": "2026-11-01T05:58:40.083840+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.cbr.com/feed/": {
       "etag": null,
       "last_modified": null,
-      "last_checked": "2026-11-01T02:58:07.936275+06:00",
+      "last_checked": "2026-11-01T05:58:40.535777+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.superherohype.com/feed": {
       "etag": "W/\"e2313379574b7fd8e252e0ea925b6911\"",
       "last_modified": "Fri, 30 Oct 2026 22:57:01 GMT",
-      "last_checked": "2026-11-01T02:58:08.503333+06:00",
+      "last_checked": "2026-11-01T05:58:40.971696+06:00",
       "fail_count": 0,
       "alerted": false
     },
     "https://www.toei-animation.com/news/feed/": {
       "etag": "\"ed050bd4588bad44e2192a9b23093af4\"",
       "last_modified": "Tue, 27 Oct 2026 15:00:21 GMT",
-      "last_checked": "2026-11-01T02:58:09.531042+06:00",
+      "last_checked": "2026-11-01T05:58:42.303015+06:00",
       "fail_count": 0,
       "alerted": false
     }
@@ -3126,7 +3126,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-29T23:59:46.549324+06:00",
-      "last_seen": "2026-11-01T02:57:55.495692+06:00"
+      "last_seen": "2026-11-01T05:58:33.106991+06:00"
     },
     "animenewsnetwork.com/news/2026-10-29/the-remarried-empress-webtoon-launches-side-stories-ahead-of-disney-live-action-series/.243306": {
       "title": "The Remarried Empress Webtoon Launches Side Stories Ahead of Disney+ Live-Action Series",
@@ -9209,7 +9209,7 @@
       "priority_rank": 6,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.538378+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.135343+06:00",
       "learning_pattern": "",
       "event_key": "cult classic sci fi movies that 90s kids still have memorized years later|Major Anime Movie|1997 science fiction one the biggest genres with franchises like the mcu the dcu and star wars belonging but this trend isn unique the modern day has been popular for decades and when comes the best year for the genre one the strongest candidates",
       "event_status": "reported"
@@ -9577,13 +9577,13 @@
       "status": "pending",
       "first_seen": "2026-10-31T06:21:50.085840+06:00",
       "last_seen": "2026-10-31T06:21:50.085854+06:00",
-      "importance_score": 75,
+      "importance_score": 70,
       "priority_type": "Major Manga Return / Hiatus",
       "priority_tier": 2,
       "priority_rank": 11,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-10-31T15:18:00.218231+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.135643+06:00",
       "learning_pattern": "",
       "event_key": "interpol officially expanding antics album comic book|Major Manga Return / Hiatus|returns with magnum opus receives the treatment",
       "event_status": "reported"
@@ -9803,17 +9803,17 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T15:15:40.499400+06:00",
-      "last_seen": "2026-11-01T02:57:55.099866+06:00",
-      "importance_score": 68,
+      "last_seen": "2026-11-01T05:58:32.937846+06:00",
+      "importance_score": 69,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
       "priority_rank": 8,
       "sector": "Anime",
-      "rank_reason": "Supports the upcoming Jan 2027 premiere with new supporting cast details.",
-      "last_ranked_at": "2026-10-31T22:49:27.438661+06:00",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.135836+06:00",
       "learning_pattern": "",
-      "event_key": "inherit_winds_cast_20261031",
-      "event_status": "announced",
+      "event_key": "inherit the winds anime reveals more members new visual|Major Cast / Staff Reveal|franchise also gets short story novel japanese",
+      "event_status": "reported",
       "processing_at": "2026-10-31T15:20:19.463012+06:00",
       "processing_rank": 8,
       "content_retry_count": 1,
@@ -9866,19 +9866,23 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-10-31T15:15:40.714803+06:00",
-      "last_seen": "2026-11-01T02:57:55.189757+06:00",
-      "importance_score": 80,
-      "priority_type": "Major Anime Announcement",
+      "last_seen": "2026-11-01T05:58:32.988153+06:00",
+      "importance_score": 88,
+      "priority_type": "Major Anime Movie",
       "priority_tier": 1,
-      "priority_rank": 1,
+      "priority_rank": 6,
       "sector": "Anime",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.531578+06:00",
+      "rank_reason": "First Kuromi feature film announced for 2027, a notable franchise expansion.",
+      "last_ranked_at": "2026-11-01T06:00:01.129002+06:00",
       "learning_pattern": "",
-      "event_key": "sanrio s kuromi character gets 1st film|Major Anime Announcement|2027 birthday halloween after net anime",
-      "event_status": "reported"
+      "event_key": "anime_movie_kuromi_2027",
+      "event_status": "announced",
+      "processing_at": "2026-11-01T06:01:21.029596+06:00",
+      "processing_rank": 5,
+      "selected_at": "2026-11-01T06:01:41.043878+06:00",
+      "posted_at": "2026-11-01T06:04:11.456821+06:00"
     },
     "myanimelist.net/news/74888954": {
       "title": "Supporting Cast for 'Kaze wo Tsugumono' Announced",
@@ -9895,7 +9899,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T15:15:41.887200+06:00",
-      "last_seen": "2026-11-01T02:57:58.093226+06:00",
+      "last_seen": "2026-11-01T05:58:33.834964+06:00",
       "importance_score": 73,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
@@ -9951,19 +9955,23 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-10-31T15:15:43.607520+06:00",
-      "last_seen": "2026-11-01T02:57:59.528908+06:00",
-      "importance_score": 73,
-      "priority_type": "Major Trailer / PV",
+      "last_seen": "2026-11-01T05:58:34.826207+06:00",
+      "importance_score": 90,
+      "priority_type": "New Season / Sequel",
       "priority_tier": 1,
-      "priority_rank": 3,
+      "priority_rank": 2,
       "sector": "Anime",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.537967+06:00",
+      "rank_reason": "Crunchyroll announced season 3 streaming Jan 2027, a major continuation for a hit series.",
+      "last_ranked_at": "2026-11-01T06:00:01.128632+06:00",
       "learning_pattern": "",
-      "event_key": "mashle magic and muscles air crunchyroll beginning january|Major Trailer / PV|2027 october 2026 that the tri magicathlon divine visionary final exam arc the third the hit anime will stream its platforms 2027 check out the here the will worldwide excluding japan china the read more",
-      "event_status": "reported"
+      "event_key": "mashle_s3_2027",
+      "event_status": "announced",
+      "processing_at": "2026-11-01T06:00:01.439633+06:00",
+      "processing_rank": 1,
+      "selected_at": "2026-11-01T06:00:21.130869+06:00",
+      "posted_at": "2026-11-01T06:04:03.534747+06:00"
     },
     "comicbook.com/movies/list/4-marvel-villains-connor-storrie-could-be-in-the-mcu-ghost-rider-movie": {
       "title": "4 Marvel Villains Connor Storrie Could Be in the MCU Ghost Rider Movie",
@@ -10018,7 +10026,7 @@
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.536246+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.134567+06:00",
       "learning_pattern": "",
       "event_key": "excellent patrick stewart performances that aren t professor x or captain picard|Major Marvel News|has spent almost years playing two science fiction most recognizable characters jean luc star trek and charles xavier the men movies they both made good use the british authoritative voice and shakespearean training but they barely scratched the surface what was capable",
       "event_status": "reported"
@@ -10045,7 +10053,7 @@
       "priority_rank": 1,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.535236+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.133894+06:00",
       "learning_pattern": "",
       "event_key": "every new anime netflix november|Major Anime Announcement|coming 2026 image courtesy shaft the fall 2026 kicked off last month and all major platforms have exciting shows for fans across the globe crunchyroll far has the largest lineup just like other quarter with weekly releases keep fans busy for the rest the year the largest platform the",
       "event_status": "reported"
@@ -10083,13 +10091,13 @@
       "status": "pending",
       "first_seen": "2026-10-31T15:15:45.009282+06:00",
       "last_seen": "2026-10-31T22:47:32.397394+06:00",
-      "importance_score": 76,
+      "importance_score": 71,
       "priority_type": "Major Manga Ending",
       "priority_tier": 2,
       "priority_rank": 12,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-10-31T15:18:00.217810+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.135524+06:00",
       "learning_pattern": "",
       "event_key": "bleach s creator almost killed off orihime the manga s original ending|Major Manga Ending|courtesy viz media would had tragic for inoue tite kubo had taken initial route had mind for her but things turned out for better anime more than years after its anime debut has finally reached its conclusion with thousand year blood war arc this month anime",
       "event_status": "reported"
@@ -10116,7 +10124,7 @@
       "priority_rank": 2,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.534138+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.133025+06:00",
       "learning_pattern": "",
       "event_key": "dragon ball super artist new look original villain amid hiatus|New Season / Sequel|returns with bird studio shueisha toei animation toyotaro returns with another stunning visual for fans while the manga continues remain the manga went indefinite following akira toriyama death march 2024 written toriyama and illustrated toyotaro the manga was 2015 sequel the and immediately became",
       "event_status": "reported"
@@ -10143,7 +10151,7 @@
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.536482+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.134685+06:00",
       "learning_pattern": "",
       "event_key": "marvel comics mind controllers who give jean grey a run the money is already the mcu|Major Marvel News|for image courtesy has its fair share controlling heroes and villains and almost always sits near top any lists concerning most powerful these characters while she very powerful and her connection phoenix force makes her even stronger there are several other characters",
       "event_status": "reported"
@@ -10170,7 +10178,7 @@
       "priority_rank": 5,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.533802+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.132840+06:00",
       "learning_pattern": "",
       "event_key": "after years legendary action series return new spinoff ahead anime reboot|Major Release Date|for yoshitomi akihito mediaworks bandai visual while fans await the eat man the franchise going continue its legacy with brand spin off manga the original creator akihito yoshitomi crunchyroll earlier this month that the will the platform while fans await the date and other details the titled eat man",
       "event_status": "reported"
@@ -10197,7 +10205,7 @@
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.536745+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.134830+06:00",
       "learning_pattern": "",
       "event_key": "avengers doomsday theory casts doctor strange as an agent doom since infinity war|Major Marvel News|getting closer and closer which means more and more theories continue pour out from longtime fans the marvel cinematic universe have already heard many ideas what could possibly happen the blockbuster from steve rogers actually being loki disguise tobey maguire appearance",
       "event_status": "reported"
@@ -10224,7 +10232,7 @@
       "priority_rank": 3,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.533166+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.132449+06:00",
       "learning_pattern": "",
       "event_key": "death stranding disney brand new anime watch|Major Trailer / PV|coming with image courtesy the industry keeps expanding with exciting releases which all the more reason why all the platforms are trying their best house old and shows and movies part their library while crunchyroll and hidive are exclusively dedicated services such netflix hulu and prime video",
       "event_status": "reported",
@@ -10254,7 +10262,7 @@
       "priority_rank": 6,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.538141+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.135225+06:00",
       "learning_pattern": "",
       "event_key": "jennifer lawrence has a surprising response as mystique a future mcu movie|Major Anime Movie|returning with avengers doomsday bringing the men into the this fall marvel fans have been excited about the familiar faces they will get see the iconic heroes the big screen again but have also wondered about few including the hunger games star making her position",
       "event_status": "reported"
@@ -10274,14 +10282,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T15:15:48.060826+06:00",
-      "last_seen": "2026-11-01T02:58:05.554146+06:00",
+      "last_seen": "2026-11-01T05:58:38.976011+06:00",
       "importance_score": 74,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.536144+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.134508+06:00",
       "learning_pattern": "",
       "event_key": "dnx preview time travel plans go hilariously wrong|Major Marvel News|hits stores wednesday the men and fantastic four discover that even the best laid schemes mice and evil chairmen often awry",
       "event_status": "reported"
@@ -10301,14 +10309,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T15:15:48.171203+06:00",
-      "last_seen": "2026-11-01T02:58:05.665152+06:00",
+      "last_seen": "2026-11-01T05:58:39.037775+06:00",
       "importance_score": 71,
       "priority_type": "Major Manga Return / Hiatus",
       "priority_tier": 2,
       "priority_rank": 11,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-10-31T22:49:27.438589+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.135472+06:00",
       "learning_pattern": "",
       "event_key": "absolute green lantern preview strange homecoming awaits|Major Manga Return / Hiatus|finds mullein returning from space discover earth has changed ways the lanterns never expected",
       "event_status": "reported"
@@ -10328,7 +10336,7 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T15:15:48.280821+06:00",
-      "last_seen": "2026-11-01T02:58:05.775731+06:00",
+      "last_seen": "2026-11-01T05:58:39.099430+06:00",
       "importance_score": 88,
       "priority_type": "Manga → Anime Adaptation",
       "priority_tier": 1,
@@ -10363,14 +10371,14 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T15:15:48.409841+06:00",
-      "last_seen": "2026-11-01T02:58:05.903112+06:00",
+      "last_seen": "2026-11-01T05:58:39.170024+06:00",
       "importance_score": 74,
       "priority_type": "Major DC News",
       "priority_tier": 1,
       "priority_rank": 16,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.536963+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.134945+06:00",
       "learning_pattern": "",
       "event_key": "mark brooks dexter soy s absolute batman foil cover that isn t|Major DC News|wasn least not yet",
       "event_status": "reported",
@@ -10397,7 +10405,7 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T15:15:48.513282+06:00",
-      "last_seen": "2026-11-01T02:58:06.005886+06:00",
+      "last_seen": "2026-11-01T05:58:39.225285+06:00",
       "importance_score": 90,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
@@ -10432,15 +10440,15 @@
       "status": "pending",
       "first_seen": "2026-10-31T15:15:50.747744+06:00",
       "last_seen": "2026-10-31T15:15:50.747750+06:00",
-      "importance_score": 79,
+      "importance_score": 69,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-10-31T15:18:00.215483+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.135884+06:00",
       "learning_pattern": "",
-      "event_key": "greatest hard sci fi anime series since|Major Anime Announcement|2000 science fiction spotlights some most imaginative and fascinating stories opening doors speculative worlds mind blowing scientific discoveries technological miracles and gripping futuristic developments the scenarios explores usually lean more towards fantasy than any kind realism however that doesn mean the medium doesn have any excellent entries defined favoring grounded believable science and plausible futuristic plots which aren easy come nonetheless just the 21st century has already giv",
+      "event_key": "greatest hard sci fi anime series since|Major Anime Announcement|2000 like planetes and starship operators are the best exemplars the medium has seen this century",
       "event_status": "reported"
     },
     "cbr.com/jennifer-lawrence-x-men-mystique-return": {
@@ -10475,7 +10483,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:26.698976+06:00",
-      "last_seen": "2026-11-01T02:57:54.305994+06:00"
+      "last_seen": "2026-11-01T05:58:32.488821+06:00"
     },
     "animenewsnetwork.com/interest/2026-10-31/happy-halloween-2026-from-around-the-anime-world-part-iii/.243391": {
       "title": "Happy Halloween 2026 From Around the Anime World, Part III",
@@ -10492,16 +10500,16 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T22:47:26.780171+06:00",
-      "last_seen": "2026-11-01T02:57:54.408861+06:00",
-      "importance_score": 85,
+      "last_seen": "2026-11-01T05:58:32.546882+06:00",
+      "importance_score": 80,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-10-31T22:49:27.430403+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.131716+06:00",
       "learning_pattern": "",
-      "event_key": "happy halloween around the anime world part iii|Major Anime Announcement|2026 from interest 2026 from posted ken iikura time curl blanket turn off all lights and put some scary themed movies better yet watch some spooky while viewing greetings from across and manga worlds alya sometimes hides her feelings russian chibi godzilla raids again chopper dara san reiwa https 70axzhskhl darasan october 2026 today dara san reiwa dara san tries all sorts costumes hope you continue enjoying days with stepsister https 4h6hu9xspu gimaiseikatsu october 2026 daydream digimon happyh",
+      "event_key": "happy halloween around the anime world part iii|Major Anime Announcement|2026 from featuring pok mon chopper zero alya sometimes hides her feelings russian dara san reiwa pui pui molcar mappa tatsunoko more",
       "event_status": "reported",
       "processing_at": "2026-10-31T22:51:27.106921+06:00",
       "processing_rank": 7,
@@ -10526,7 +10534,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:26.858361+06:00",
-      "last_seen": "2026-11-01T02:57:54.506997+06:00",
+      "last_seen": "2026-11-01T05:58:32.601655+06:00",
       "importance_score": 85,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
@@ -10553,7 +10561,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:26.909590+06:00",
-      "last_seen": "2026-11-01T02:57:54.572276+06:00"
+      "last_seen": "2026-11-01T05:58:32.638625+06:00"
     },
     "animenewsnetwork.com/news/2026-10-31/romelia-war-chronicle-anime-2nd-part-unveils-april-2027-debut-ending-song-artist/.243390": {
       "title": "Romelia War Chronicle Anime's 2nd Part Unveils April 2027 Debut, Ending Song's Artist",
@@ -10601,7 +10609,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:27.105545+06:00",
-      "last_seen": "2026-11-01T02:57:54.670549+06:00"
+      "last_seen": "2026-11-01T05:58:32.694870+06:00"
     },
     "animenewsnetwork.com/review/steel-ball-run-jojo-bizarre-adventure/episode-6/.243386": {
       "title": "STEEL BALL RUN JoJo's Bizarre Adventure ‒ Episode 6",
@@ -10618,7 +10626,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:27.178101+06:00",
-      "last_seen": "2026-11-01T02:57:54.761882+06:00"
+      "last_seen": "2026-11-01T05:58:32.748028+06:00"
     },
     "animenewsnetwork.com/review/fx-fighter-kurumi-chan/episode-5/.243348": {
       "title": "FX Fighter Kurumi-chan ‒ Episode 5",
@@ -10635,7 +10643,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:27.225814+06:00",
-      "last_seen": "2026-11-01T02:57:54.821956+06:00"
+      "last_seen": "2026-11-01T05:58:32.782472+06:00"
     },
     "animenewsnetwork.com/review/suikoden-the-anime/episode-4/.243347": {
       "title": "Suikoden: The Anime ‒ Episode 4",
@@ -10652,7 +10660,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:27.269163+06:00",
-      "last_seen": "2026-11-01T02:57:54.876922+06:00"
+      "last_seen": "2026-11-01T05:58:32.814006+06:00"
     },
     "animenewsnetwork.com/news/2026-10-31/comisma-sumitomo-mitsui-trust-bank-establish-anime-production-fund/.243384": {
       "title": "Comisma, Sumitomo Mitsui Trust Bank Establish Anime Production Fund",
@@ -10667,19 +10675,23 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-10-31T22:47:27.356316+06:00",
-      "last_seen": "2026-11-01T02:57:54.986930+06:00",
-      "importance_score": 75,
+      "last_seen": "2026-11-01T05:58:32.875621+06:00",
+      "importance_score": 85,
       "priority_type": "Major Production News",
       "priority_tier": 2,
       "priority_rank": 9,
       "sector": "Anime",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.535138+06:00",
+      "rank_reason": "New anime production fund created, significant industry financing development.",
+      "last_ranked_at": "2026-11-01T06:00:01.129476+06:00",
       "learning_pattern": "",
-      "event_key": "comisma sumitomo mitsui trust bank establish anime fund|Major Production News|offer investment opportunities companies that have previously found difficult enter business",
-      "event_status": "reported"
+      "event_key": "comisma_sumitomo_anime_fund",
+      "event_status": "announced",
+      "processing_at": "2026-11-01T06:02:21.052557+06:00",
+      "processing_rank": 8,
+      "selected_at": "2026-11-01T06:02:41.094885+06:00",
+      "posted_at": "2026-11-01T06:04:15.590386+06:00"
     },
     "animecorner.me/hiragi-sans-house-of-vampires-gets-anime": {
       "title": "Hiragi-san's House of Vampires Gets Anime",
@@ -10694,19 +10706,22 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "selected",
       "first_seen": "2026-10-31T22:47:27.968020+06:00",
       "last_seen": "2026-11-01T02:57:57.524281+06:00",
-      "importance_score": 74,
-      "priority_type": "Major Anime Announcement",
+      "importance_score": 88,
+      "priority_type": "Manga → Anime Adaptation",
       "priority_tier": 1,
-      "priority_rank": 1,
+      "priority_rank": 4,
       "sector": "Anime",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.536054+06:00",
+      "rank_reason": "Manga by Miki Yoshikawa confirmed for anime adaptation, notable creator and genre shift.",
+      "last_ranked_at": "2026-11-01T06:00:01.128952+06:00",
       "learning_pattern": "",
-      "event_key": "hiragi san s house vampires gets anime|Major Anime Announcement|manga miki yoshikawa couple cuckoos getting",
-      "event_status": "reported"
+      "event_key": "hiragi_house_vampires_adapt",
+      "event_status": "announced",
+      "processing_at": "2026-11-01T06:01:01.156428+06:00",
+      "processing_rank": 4,
+      "selected_at": "2026-11-01T06:01:20.971349+06:00"
     },
     "comicbook.com/movies/news/original-fantastic-four-actor-ready-to-return-if-marvel-calls-him-be-there-in-a-heartbeat": {
       "title": "Original Fantastic Four Actor Ready to Return if Marvel Calls Him: “Be There In a Heartbeat”",
@@ -10723,7 +10738,7 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:30.568967+06:00",
-      "last_seen": "2026-11-01T02:58:02.514382+06:00",
+      "last_seen": "2026-11-01T05:58:37.385497+06:00",
       "importance_score": 71,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
@@ -10750,14 +10765,14 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T22:47:30.679769+06:00",
-      "last_seen": "2026-11-01T02:58:02.655719+06:00",
-      "importance_score": 87,
+      "last_seen": "2026-11-01T05:58:37.465593+06:00",
+      "importance_score": 82,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
       "priority_rank": 2,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-10-31T22:49:27.429185+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.131151+06:00",
       "learning_pattern": "",
       "event_key": "demon slayer drops cute new look the coolest hashira ahead infinity castle|New Season / Sequel|part courtesy ufotable kimetsu yaiba fans are still waiting next but franchise has dropped sound tengen uzui help celebrate his birthday meantime has been having strong year with",
       "event_status": "reported",
@@ -10784,14 +10799,14 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T22:47:30.788764+06:00",
-      "last_seen": "2026-11-01T02:58:02.794669+06:00",
-      "importance_score": 84,
+      "last_seen": "2026-11-01T05:58:37.542933+06:00",
+      "importance_score": 79,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
       "priority_rank": 8,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-10-31T22:49:27.431012+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.131783+06:00",
       "learning_pattern": "",
       "event_key": "master crime drama director whose work tarantino described as fabulous dead|Major Cast / Staff Reveal|image courtesy bollywood pictures sanjay gupta whom quentin called has died the age gupta was indian who was best known for his dramas kaante and zinda his death was one his friends milap zaveri fellow according gupta died following",
       "event_status": "reported",
@@ -10818,14 +10833,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:30.917032+06:00",
-      "last_seen": "2026-11-01T02:58:02.958478+06:00",
-      "importance_score": 84,
+      "last_seen": "2026-11-01T05:58:37.631915+06:00",
+      "importance_score": 79,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.529833+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.131912+06:00",
       "learning_pattern": "",
       "event_key": "one marvel s best movies is actually a disney film you don t realize is based a comic|Major Marvel News|have been treated some truly incredible comics over the past couple decades the mcu has given black panther avengers infinity war spider man way home thunderbolts captain america the winter soldier and more there are also great films outside that franchise like men days future",
       "event_status": "reported"
@@ -10845,14 +10860,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:31.046707+06:00",
-      "last_seen": "2026-11-01T02:58:03.127355+06:00",
-      "importance_score": 79,
+      "last_seen": "2026-11-01T05:58:37.729752+06:00",
+      "importance_score": 74,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
       "priority_rank": 8,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.531661+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.134170+06:00",
       "learning_pattern": "",
       "event_key": "new x men actor s take professor x s iconic look has fans worried he seems against the role|Major Cast / Staff Reveal|image courtesy sony marvel been pretty good about its superheroes over years but one member recent comments have about movies christopher abbott was play charles xavier reboot for mcu abbott big play and will even",
       "event_status": "reported"
@@ -10870,19 +10885,23 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-10-31T22:47:31.156944+06:00",
-      "last_seen": "2026-11-01T02:58:03.270720+06:00",
-      "importance_score": 84,
-      "priority_type": "Major DC News",
+      "last_seen": "2026-11-01T05:58:37.810454+06:00",
+      "importance_score": 85,
+      "priority_type": "Major Comic Announcement",
       "priority_tier": 1,
-      "priority_rank": 16,
+      "priority_rank": 17,
       "sector": "Comics",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.530186+06:00",
+      "rank_reason": "DC Studios confirms new Green Lantern animated series and episode count, a key franchise update.",
+      "last_ranked_at": "2026-11-01T06:00:01.129353+06:00",
       "learning_pattern": "",
-      "event_key": "dc studios new green lantern animated series confirms count promising update|Major DC News|with courtesy warner bros animation and are the works set the same universe adventures with superman and peter safran has shared how all coming along with how long debut outing going adventures",
-      "event_status": "reported"
+      "event_key": "dc_green_lantern_animated_series_2026_10_31",
+      "event_status": "announced",
+      "processing_at": "2026-11-01T06:02:00.974091+06:00",
+      "processing_rank": 7,
+      "selected_at": "2026-11-01T06:02:20.999496+06:00",
+      "posted_at": "2026-11-01T06:04:13.553477+06:00"
     },
     "comicbook.com/anime/news/avatar-seven-havens-confirms-its-certified-fresh-on-rotten-tomatoes-with-perfect-score-after-finale": {
       "title": "Avatar: Seven Havens Confirms It’s Certified Fresh on Rotten Tomatoes With Perfect Score After Finale",
@@ -10899,14 +10918,14 @@
       "source_class": "reported",
       "status": "selected",
       "first_seen": "2026-10-31T22:47:31.292145+06:00",
-      "last_seen": "2026-11-01T02:58:03.442840+06:00",
+      "last_seen": "2026-11-01T05:58:37.905287+06:00",
       "importance_score": 82,
       "priority_type": "Major Franchise Update",
       "priority_tier": 1,
       "priority_rank": 7,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.530498+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.131274+06:00",
       "learning_pattern": "",
       "event_key": "avatar seven havens confirms it s certified fresh rotten tomatoes perfect score after finale|Major Franchise Update|with courtesy paramount has officially its debut with paramount and the has been with rare among critics made its long awaited debut earlier this month and takes the extended the last airbender franchise forward hundreds years",
       "event_status": "reported",
@@ -10929,14 +10948,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:31.422302+06:00",
-      "last_seen": "2026-11-01T02:58:03.608926+06:00",
+      "last_seen": "2026-11-01T05:58:37.998119+06:00",
       "importance_score": 79,
       "priority_type": "Major DC News",
       "priority_tier": 1,
       "priority_rank": 16,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.532017+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.132049+06:00",
       "learning_pattern": "",
       "event_key": "dc s answer ghost rider finally gets an origin story and it could make him a breakout hero|Major DC News|image courtesy comics comics keeps adding characters its expansive roster superheroes when justice league unlimited formed practically every superhero the company had ever created was brought together unstoppable team protect the universe the league roster less than hundred heroes only grew when they allied with the legion",
       "event_status": "reported"
@@ -10956,14 +10975,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:31.536950+06:00",
-      "last_seen": "2026-11-01T02:58:03.757861+06:00",
+      "last_seen": "2026-11-01T05:58:38.080205+06:00",
       "importance_score": 79,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.532286+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.132186+06:00",
       "learning_pattern": "",
       "event_key": "classic spider man moments that changed everything including one the mcu messed up|Major Marvel News|image courtesy marvel comics most iconic superheroes all and today looking five massive and influential spidey comics were fundamentally different after these are mix images have become synonymous with these types stories public zeitgeist and story beats have altered",
       "event_status": "reported"
@@ -10983,14 +11002,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:31.676032+06:00",
-      "last_seen": "2026-11-01T02:58:03.940442+06:00",
+      "last_seen": "2026-11-01T05:58:38.180259+06:00",
       "importance_score": 79,
       "priority_type": "Major DC News",
       "priority_tier": 1,
       "priority_rank": 16,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.532537+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.132313+06:00",
       "learning_pattern": "",
       "event_key": "absolute batman s next big introduction could change everything and the joker s endgame just got very dark|Major DC News|image courtesy comics revolutionary for knight reimagining all his iconic mythos into bolder darker versions nowhere that clearer than with instead killer clown literal demon that stays young injecting orphan blood landmark twenty fifth issue saw finally take fight",
       "event_status": "reported"
@@ -11042,13 +11061,13 @@
       "status": "pending",
       "first_seen": "2026-10-31T22:47:31.855118+06:00",
       "last_seen": "2026-11-01T02:58:04.010111+06:00",
-      "importance_score": 80,
+      "importance_score": 75,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.531389+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.133794+06:00",
       "learning_pattern": "",
       "event_key": "recasting the original jaws|Major Anime Announcement|for 2026 image courtesy universal before steven spielberg made summer blockbusters peter benchley wrote novel about small resort town with some very big problems adultery organized crime crooked real estate deals and mayor who sell out just about anyone keep tourists spending money and there was giant shark",
       "event_status": "reported"
@@ -11069,13 +11088,13 @@
       "status": "pending",
       "first_seen": "2026-10-31T22:47:31.991773+06:00",
       "last_seen": "2026-11-01T02:58:04.187553+06:00",
-      "importance_score": 79,
+      "importance_score": 74,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.532907+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.134370+06:00",
       "learning_pattern": "",
       "event_key": "x men the animated series changed marvel history years ago but sidelined its best character episodes|Major Marvel News|for debuted october 31st 1992 giving generation their taste merry mutants and one greatest theme songs television opening credits had charging into battle against magneto and his brotherhood mutants flexing their powers sequence that instantly",
       "event_status": "reported"
@@ -11095,17 +11114,17 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T22:47:33.432806+06:00",
-      "last_seen": "2026-11-01T02:58:04.886357+06:00",
-      "importance_score": 85,
-      "priority_type": "Major Marvel News",
+      "last_seen": "2026-11-01T05:58:38.619051+06:00",
+      "importance_score": 80,
+      "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
-      "priority_rank": 15,
-      "sector": "Comics",
-      "rank_reason": "First issue of Ghost Rider: Kushala set for Nov 4, a notable Marvel release.",
-      "last_ranked_at": "2026-10-31T22:49:27.430037+06:00",
+      "priority_rank": 1,
+      "sector": "",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.131659+06:00",
       "learning_pattern": "",
-      "event_key": "ghost_rider_kushala_issue1_preview",
-      "event_status": "announced",
+      "event_key": "ghost rider kushala preview spirit rider tames vengeance|Major Marvel News|celebrates native american heritage month the faces threat her ancestral line across time itself",
+      "event_status": "reported",
       "processing_at": "2026-10-31T22:51:07.101397+06:00",
       "processing_rank": 6,
       "content_retry_count": 1,
@@ -11129,17 +11148,17 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:33.510014+06:00",
-      "last_seen": "2026-11-01T02:58:04.985872+06:00",
-      "importance_score": 79,
-      "priority_type": "Major DC News",
+      "last_seen": "2026-11-01T05:58:38.671901+06:00",
+      "importance_score": 84,
+      "priority_type": "Major Comic Announcement",
       "priority_tier": 1,
-      "priority_rank": 16,
+      "priority_rank": 17,
       "sector": "Comics",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.531925+06:00",
+      "rank_reason": "Frank Miller unveils a new comic collaboration with Peach Momoko at Lucca, notable creator news.",
+      "last_ranked_at": "2026-11-01T06:00:01.130812+06:00",
       "learning_pattern": "",
-      "event_key": "absolute superman preview superman s brain hurts|Major Manga Ending|brings the get brainiac finale faces his longtime tormentor confrontation that will change everything forever",
-      "event_status": "reported"
+      "event_key": "frank_miller_peach_momoko_lucca_2026_10_31",
+      "event_status": "announced"
     },
     "bleedingcool.com/comics/lucca-comics-museum-fumetti-to-be-established-in-a-tobacco-factory": {
       "title": "Lucca Comics Museum \"Fumetti\" To Be Established In A Tobacco Factory",
@@ -11156,17 +11175,17 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-10-31T22:47:33.602286+06:00",
-      "last_seen": "2026-11-01T02:58:05.104396+06:00",
-      "importance_score": 85,
-      "priority_type": "Major Anime Announcement",
+      "last_seen": "2026-11-01T05:58:38.736280+06:00",
+      "importance_score": 84,
+      "priority_type": "Major Comic Announcement",
       "priority_tier": 1,
-      "priority_rank": 1,
-      "sector": "",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-10-31T22:49:27.430780+06:00",
+      "priority_rank": 17,
+      "sector": "Comics",
+      "rank_reason": "Italian government to open permanent Lucca Comics Museum in former tobacco factory.",
+      "last_ranked_at": "2026-11-01T06:00:01.130866+06:00",
       "learning_pattern": "",
-      "event_key": "lucca comics museum fumetti be established a tobacco factory|Major Anime Announcement|the italian government establishing permanent for former",
-      "event_status": "reported",
+      "event_key": "lucca_comics_museum_fumetti",
+      "event_status": "announced",
       "processing_at": "2026-10-31T22:51:47.103816+06:00",
       "processing_rank": 8,
       "content_retry_count": 1,
@@ -11190,14 +11209,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:33.690717+06:00",
-      "last_seen": "2026-11-01T02:58:05.218720+06:00",
+      "last_seen": "2026-11-01T05:58:38.797341+06:00",
       "importance_score": 77,
       "priority_type": "Major Comic Announcement",
       "priority_tier": 1,
       "priority_rank": 17,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.534048+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.132972+06:00",
       "learning_pattern": "",
       "event_key": "lucca frank miller announces a new comic book peach momoko|Major Comic Announcement|with with comics and games 2026",
       "event_status": "reported"
@@ -11248,14 +11267,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:33.861924+06:00",
-      "last_seen": "2026-11-01T02:58:05.327593+06:00",
+      "last_seen": "2026-11-01T05:58:38.855594+06:00",
       "importance_score": 75,
       "priority_type": "Major Production News",
       "priority_tier": 2,
       "priority_rank": 9,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.535040+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.133733+06:00",
       "learning_pattern": "",
       "event_key": "friendly neighborhood mary jane preview mj gets producing|Major Production News|watson launches her company but chameleon has other plans for opening night",
       "event_status": "reported"
@@ -11275,14 +11294,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:33.958756+06:00",
-      "last_seen": "2026-11-01T02:58:05.451780+06:00",
-      "importance_score": 79,
+      "last_seen": "2026-11-01T05:58:38.921226+06:00",
+      "importance_score": 74,
       "priority_type": "Major Comic Adaptation",
       "priority_tier": 1,
       "priority_rank": 19,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.532798+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.134308+06:00",
       "learning_pattern": "",
       "event_key": "lucca frank miller says invasive species is based covid paranoia|Major Comic Adaptation|tells bleeding cool his comic book with ryan benjamin around",
       "event_status": "reported"
@@ -11333,14 +11352,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-10-31T22:47:35.946561+06:00",
-      "last_seen": "2026-11-01T02:58:07.659568+06:00",
-      "importance_score": 74,
+      "last_seen": "2026-11-01T05:58:40.193485+06:00",
+      "importance_score": 69,
       "priority_type": "Major Anime Announcement",
       "priority_tier": 1,
       "priority_rank": 1,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.535891+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.135743+06:00",
       "learning_pattern": "",
       "event_key": "aipt comics podcast ep halloween horrors archie hell creators patrick horvath and tyler crook|Major Anime Announcement|402 with our special discuss cosmic horror gruesome surprises which riverdale residents would survive haunted house",
       "event_status": "reported"
@@ -11395,13 +11414,13 @@
       "status": "pending",
       "first_seen": "2026-10-31T22:47:36.870827+06:00",
       "last_seen": "2026-10-31T22:47:36.870842+06:00",
-      "importance_score": 83,
+      "importance_score": 78,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.530425+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.132799+06:00",
       "learning_pattern": "",
       "event_key": "godzilla officially replaced new monster stronger than the classic kaiju|Major Marvel News|has met his match marvel universe",
       "event_status": "reported"
@@ -11446,19 +11465,23 @@
       "discovery": "rss",
       "date_estimated": false,
       "source_class": "reported",
-      "status": "pending",
+      "status": "posted",
       "first_seen": "2026-10-31T22:47:37.046424+06:00",
       "last_seen": "2026-10-31T22:47:37.046436+06:00",
-      "importance_score": 84,
-      "priority_type": "Major Anime Announcement",
+      "importance_score": 88,
+      "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
-      "priority_rank": 1,
-      "sector": "",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.530093+06:00",
+      "priority_rank": 3,
+      "sector": "Anime",
+      "rank_reason": "First‑look trailer reveals new Death Stranding anime on Disney+, a major cross‑media event.",
+      "last_ranked_at": "2026-11-01T06:00:01.128894+06:00",
       "learning_pattern": "",
-      "event_key": "final fantasy evercold officially delayed february|Major Anime Announcement|2027 square enix has that the expansion has been further into 2027 putting closer ff7 revelation",
-      "event_status": "reported"
+      "event_key": "death_stranding_anime_trailer_2026_10_31",
+      "event_status": "announced",
+      "processing_at": "2026-11-01T06:00:41.252479+06:00",
+      "processing_rank": 3,
+      "selected_at": "2026-11-01T06:01:01.099170+06:00",
+      "posted_at": "2026-11-01T06:04:09.204069+06:00"
     },
     "animecorner.me/jujutsu-kaisen-reveals-12-new-culling-game-character-posters-ahead-of-season-4": {
       "title": "Jujutsu Kaisen Reveals 12 New Culling Game Character Posters Ahead of Season 4",
@@ -11510,14 +11533,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-11-01T02:58:01.033944+06:00",
-      "last_seen": "2026-11-01T02:58:01.033959+06:00",
+      "last_seen": "2026-11-01T05:58:36.567729+06:00",
       "importance_score": 84,
       "priority_type": "Major Cast / Staff Reveal",
       "priority_tier": 2,
       "priority_rank": 8,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.528681+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.130185+06:00",
       "learning_pattern": "",
       "event_key": "batman part ii accident details revealed following batmobile member collision|Major Cast / Staff Reveal|set image courtesy warner bros involving the happened during the making the and the hit the vehicle ended being hospitalized the happened during action scene and one the members was run over the the person who was hit ended hospitalized however that",
       "event_status": "reported"
@@ -11537,7 +11560,7 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-11-01T02:58:01.202466+06:00",
-      "last_seen": "2026-11-01T02:58:01.202482+06:00",
+      "last_seen": "2026-11-01T05:58:36.660227+06:00",
       "importance_score": 87,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
@@ -11571,14 +11594,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-11-01T02:58:01.333951+06:00",
-      "last_seen": "2026-11-01T02:58:01.333970+06:00",
+      "last_seen": "2026-11-01T05:58:36.734121+06:00",
       "importance_score": 84,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.529316+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.130534+06:00",
       "learning_pattern": "",
       "event_key": "mcu alum explains how marvel studios will won t use ai make movies|Major Marvel News|image courtesy anyone should worried about since one their major avengers villains ultron literally one granted visionquest appears setting him for turn toward less evilness and introduced more characters who are good but that comic book when used what the real",
       "event_status": "reported"
@@ -11598,7 +11621,7 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-11-01T02:58:01.497860+06:00",
-      "last_seen": "2026-11-01T02:58:01.497875+06:00",
+      "last_seen": "2026-11-01T05:58:36.826315+06:00",
       "importance_score": 92,
       "priority_type": "Major Creator / Publisher News",
       "priority_tier": 2,
@@ -11633,14 +11656,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-11-01T02:58:01.696230+06:00",
-      "last_seen": "2026-11-01T02:58:01.696249+06:00",
+      "last_seen": "2026-11-01T05:58:36.939003+06:00",
       "importance_score": 84,
       "priority_type": "Major DC News",
       "priority_tier": 1,
       "priority_rank": 16,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.529553+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.130659+06:00",
       "learning_pattern": "",
       "event_key": "dc just made the new s most forgotten character central darkseid s plans and it s bringing a familiar crisis|Major DC News|back image courtesy comics comics known for quite few things 21st century but one factor that has defined over years multiversal reboot while fans would say that time happened was classic infinite earths you can make argument that 1956 showcase was",
       "event_status": "reported"
@@ -11660,7 +11683,17 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-11-01T02:58:01.812540+06:00",
-      "last_seen": "2026-11-01T02:58:01.812554+06:00"
+      "last_seen": "2026-11-01T05:58:37.004352+06:00",
+      "importance_score": 69,
+      "priority_type": "New Season / Sequel",
+      "priority_tier": 1,
+      "priority_rank": 2,
+      "sector": "Anime",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.135682+06:00",
+      "learning_pattern": "routine_review",
+      "event_key": "jujutsu kaisen highlights culling game roster new ahead|New Season / Sequel|with posters image courtesy toho animation gearing for return the with fun recap the fighters from its half with some cool posters the anime next really took over the world earlier this year when hit screens with the anime third",
+      "event_status": "reported"
     },
     "comicbook.com/anime/news/my-hero-academia-frieren-more-anime-return-for-spooky-new-halloween-makeovers": {
       "title": "My Hero Academia, Frieren & More Anime Return for Spooky New Halloween Makeovers",
@@ -11677,14 +11710,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-11-01T02:58:01.950173+06:00",
-      "last_seen": "2026-11-01T02:58:01.950186+06:00",
-      "importance_score": 80,
+      "last_seen": "2026-11-01T05:58:37.080124+06:00",
+      "importance_score": 75,
       "priority_type": "Major Production News",
       "priority_tier": 2,
       "priority_rank": 9,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.531155+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.133614+06:00",
       "learning_pattern": "",
       "event_key": "my hero academia frieren more anime return spooky new halloween makeovers|Major Production News|for image courtesy toho animation beyond journey end oshi and have gone all out for with some for the holiday the holiday pretty big deal the world allows the team for each franchise play around bit with the characters and",
       "event_status": "reported"
@@ -11704,7 +11737,7 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-11-01T02:58:02.074889+06:00",
-      "last_seen": "2026-11-01T02:58:02.074906+06:00",
+      "last_seen": "2026-11-01T05:58:37.147954+06:00",
       "importance_score": 87,
       "priority_type": "Major Franchise Update",
       "priority_tier": 1,
@@ -11738,7 +11771,7 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-11-01T02:58:02.232524+06:00",
-      "last_seen": "2026-11-01T02:58:02.232540+06:00",
+      "last_seen": "2026-11-01T05:58:37.232656+06:00",
       "importance_score": 89,
       "priority_type": "Major Trailer / PV",
       "priority_tier": 1,
@@ -11772,7 +11805,7 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-11-01T02:58:02.361338+06:00",
-      "last_seen": "2026-11-01T02:58:02.361351+06:00",
+      "last_seen": "2026-11-01T05:58:37.302282+06:00",
       "importance_score": 92,
       "priority_type": "Major Anime Movie",
       "priority_tier": 1,
@@ -11807,14 +11840,14 @@
       "source_class": "reported",
       "status": "pending",
       "first_seen": "2026-11-01T02:58:04.680840+06:00",
-      "last_seen": "2026-11-01T02:58:04.680859+06:00",
+      "last_seen": "2026-11-01T05:58:38.505673+06:00",
       "importance_score": 84,
       "priority_type": "Major Marvel News",
       "priority_tier": 1,
       "priority_rank": 15,
       "sector": "Comics",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.528912+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.130308+06:00",
       "learning_pattern": "",
       "event_key": "infernal hulk vs spider man preview spidey s suicide mission|Major Marvel News|posted comics marvel comics tagged defies orders save the richards kids while the avengers need weapon stop the rampage article summary arrives wednesday november 4th the penultimate chapter marvel war event storyline defies avengers orders rescue the richards kids from corrupted baxter building the issue promises deliver crucial weapon needed stop corruption and prevent the prophesied age monsters loltron corruption code will transform all smart devices into army seizing tech headquarters and h",
       "event_status": "reported"
@@ -11834,7 +11867,7 @@
       "source_class": "reported",
       "status": "retryable",
       "first_seen": "2026-11-01T02:58:04.776758+06:00",
-      "last_seen": "2026-11-01T02:58:04.776771+06:00",
+      "last_seen": "2026-11-01T05:58:38.559208+06:00",
       "importance_score": 87,
       "priority_type": "New Season / Sequel",
       "priority_tier": 1,
@@ -11910,7 +11943,7 @@
       "priority_rank": 11,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.534608+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.133370+06:00",
       "learning_pattern": "",
       "event_key": "season adult animated sitcom as a ahead special|Major Manga Return / Hiatus|returns hit sitcoms are staple television from the simpsons and south park family guy rick and morty and more these shows have loyal fans and rank among the funniest television and fan favorite has returned one the most watched shows bob burgers per nielsen data bob burgers the most watched hulu for the week between oct and accruing 610 minutes watched bob burgers known for having some the funniest halloween makes sense that the rising during the spooky and bob burgers about bob burgers has some",
       "event_status": "reported"
@@ -11937,7 +11970,7 @@
       "priority_rank": 8,
       "sector": "",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.533410+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.132573+06:00",
       "learning_pattern": "",
       "event_key": "digimon officially new global|Major Cast / Staff Reveal|returns with 2026 the franchise continues expand with brand game launching this year alysion free play mobile game based the card game scheduled for 2026 bandai has that alysion coming ios and android countries and regions with pre registration open the mobile game set the world liberator webcomic and light novel read for free the card game website additionally alysion features star studded japanese voice actors whose credits include love live nijigasaki high school idol club and dragon ball dai",
       "event_status": "reported"
@@ -11958,16 +11991,16 @@
       "status": "pending",
       "first_seen": "2026-11-01T02:58:08.255196+06:00",
       "last_seen": "2026-11-01T02:58:08.255207+06:00",
-      "importance_score": 81,
+      "importance_score": 82,
       "priority_type": "Major Comic Announcement",
       "priority_tier": 1,
       "priority_rank": 17,
       "sector": "Comics",
-      "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.530757+06:00",
+      "rank_reason": "Bulletproof Coffin returns with new entry slated for 2027, a rare indie comeback.",
+      "last_ranked_at": "2026-11-01T06:00:01.130925+06:00",
       "learning_pattern": "",
-      "event_key": "a forgotten sci fi classic officially confirms modern reboot|Major Comic Announcement|david hine and shaky kane bulletproof coffin set for major comeback 2027 thanks another fan favorite indie publisher oni press has unveiled the next entry one the most mind bending comic book sagas the past decade bulletproof coffin giant cease exist already shaping the breakout indie hit 2027 written indie legend david hine and featuring the instantly iconic art shaky kane michael coulthard bulletproof coffin giant cease exist slated drop readers into the middle bizarre and fascinating world re",
-      "event_status": "reported"
+      "event_key": "bulletproof_coffin_comeback_2027",
+      "event_status": "announced"
     },
     "cbr.com/sci-fi-anime-masterpieces-1010": {
       "title": "10 Sci-Fi Anime That Are 10/10 Masterpieces",
@@ -11991,40 +12024,282 @@
       "priority_rank": 8,
       "sector": "Anime",
       "rank_reason": "AI ranking omitted candidate",
-      "last_ranked_at": "2026-11-01T03:00:04.537383+06:00",
+      "last_ranked_at": "2026-11-01T06:00:01.135004+06:00",
       "learning_pattern": "",
       "event_key": "sci fi anime that are masterpieces|Major Cast / Staff Reveal|science fiction can come all shapes and sizes some set world similar earth while others set worlds entirely unrecognizable considered science fiction general needs kinds science and technology don currently exist earth these technologies can ancient futuristic alien and everything between considered masterpiece however needs more than the basics needs take the science fiction genre heights exploring dangerous realms introducing alluring technology and creating world fans can get enough out every",
+      "event_status": "reported"
+    },
+    "comicbook.com/movies/news/jurassic-parks-cancelled-cartoon-trailer-finally-found-after-33-years-it-looked-great-watch": {
+      "title": "Jurassic Park’s Cancelled Cartoon Trailer Finally Found After 33 Years & It Looked Great – Watch",
+      "url": "https://comicbook.com/movies/news/jurassic-parks-cancelled-cartoon-trailer-finally-found-after-33-years-it-looked-great-watch/",
+      "canonical": "comicbook.com/movies/news/jurassic-parks-cancelled-cartoon-trailer-finally-found-after-33-years-it-looked-great-watch",
+      "published_dt": "2026-11-01T05:10:25+06:00",
+      "published_date": "2026-11-01T05:10:25+06:00",
+      "source": "ComicBook.com",
+      "region": "ComicAnime",
+      "excerpt": "A mosquito has been found in amber, and this one has the DNA of a lost Jurassic Park animated series. An internal pitch trailer for the proposed cartoon Escape from Jurassic Park, which was developed after Steven Spielberg’s 1993 blockbuster, has resurfaced. Life did find a way. It comes along with internal Kenner documents that […]",
+      "image": "",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "posted",
+      "first_seen": "2026-11-01T05:58:36.211559+06:00",
+      "last_seen": "2026-11-01T05:58:36.211566+06:00",
+      "importance_score": 88,
+      "priority_type": "Major Trailer / PV",
+      "priority_tier": 1,
+      "priority_rank": 3,
+      "sector": "Anime",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.128756+06:00",
+      "learning_pattern": "",
+      "event_key": "jurassic park s cancelled cartoon finally found after years it looked great watch|Major Trailer / PV|mosquito has been amber and this one has the dna lost animated internal pitch for the proposed escape from which was developed steven spielberg 1993 blockbuster has resurfaced life did find way comes along with internal kenner documents that",
+      "event_status": "reported",
+      "processing_at": "2026-11-01T06:00:21.188574+06:00",
+      "processing_rank": 2,
+      "selected_at": "2026-11-01T06:00:41.198629+06:00",
+      "posted_at": "2026-11-01T06:04:06.148152+06:00"
+    },
+    "comicbook.com/tv-shows/news/visionquest-star-reveals-the-crazy-aftermath-of-overacting-marvel-had-to-cgi-out-of-his-performance": {
+      "title": "VisionQuest Star Reveals The Crazy Aftermath of “Overacting” Marvel Had to CGI Out of His Performance",
+      "url": "https://comicbook.com/tv-shows/news/visionquest-star-reveals-the-crazy-aftermath-of-overacting-marvel-had-to-cgi-out-of-his-performance/",
+      "canonical": "comicbook.com/tv-shows/news/visionquest-star-reveals-the-crazy-aftermath-of-overacting-marvel-had-to-cgi-out-of-his-performance",
+      "published_dt": "2026-11-01T04:09:51+06:00",
+      "published_date": "2026-11-01T04:09:51+06:00",
+      "source": "ComicBook.com",
+      "region": "ComicAnime",
+      "excerpt": "Image Courtesy of Marvel VisionQuest star Paul Bettany described an injury that he suffered while filming the streaming series for the MCU. According to the actor who has played Vision since he debuted in Avengers: Age of Ultron, the injury happened when he was “wildly overacting” for the Marvel series. The injury was gruesome, as Bettany popped 10 blood […]",
+      "image": "",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "posted",
+      "first_seen": "2026-11-01T05:58:36.301830+06:00",
+      "last_seen": "2026-11-01T05:58:36.301849+06:00",
+      "importance_score": 84,
+      "priority_type": "Major Marvel News",
+      "priority_tier": 1,
+      "priority_rank": 15,
+      "sector": "Comics",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.129775+06:00",
+      "learning_pattern": "",
+      "event_key": "visionquest star reveals the crazy aftermath overacting marvel had cgi out his performance|Major Marvel News|image courtesy paul bettany described injury that suffered while for mcu according who has played vision since debuted avengers age ultron injury happened when was wildly for injury was gruesome bettany popped blood",
+      "event_status": "reported",
+      "processing_at": "2026-11-01T06:03:01.137845+06:00",
+      "processing_rank": 10,
+      "selected_at": "2026-11-01T06:03:20.979968+06:00",
+      "posted_at": "2026-11-01T06:04:21.163963+06:00"
+    },
+    "comicbook.com/comics/list/5-reformed-marvel-villains-who-became-fan-favorites-including-one-of-comics-most-complex-characters": {
+      "title": "5 Reformed Marvel Villains Who Became Fan Favorites, Including One of Comics’ Most Complex Characters",
+      "url": "https://comicbook.com/comics/list/5-reformed-marvel-villains-who-became-fan-favorites-including-one-of-comics-most-complex-characters/",
+      "canonical": "comicbook.com/comics/list/5-reformed-marvel-villains-who-became-fan-favorites-including-one-of-comics-most-complex-characters",
+      "published_dt": "2026-11-01T04:09:00+06:00",
+      "published_date": "2026-11-01T04:09:00+06:00",
+      "source": "ComicBook.com",
+      "region": "ComicAnime",
+      "excerpt": "Image Courtesy of Marvel Comics Marvel Comics did something unique with their heroes, making them more human their distinguished competition. This extended to their villains as well. While Marvel has its share of inhuman killing machines and monsters cloaked in flesh, there are loads of extremely complex villains out there. They’re bad guys, but they aren’t always bad guys. When […]",
+      "image": "",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "retryable",
+      "first_seen": "2026-11-01T05:58:36.387719+06:00",
+      "last_seen": "2026-11-01T05:58:36.387732+06:00",
+      "importance_score": 84,
+      "priority_type": "Major Marvel News",
+      "priority_tier": 1,
+      "priority_rank": 15,
+      "sector": "Comics",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.129915+06:00",
+      "learning_pattern": "",
+      "event_key": "reformed marvel villains who fan favorites including one comics most complex characters|Major Marvel News|became image courtesy did something unique with their heroes making them more human their distinguished competition this extended their well while has its share inhuman killing machines and monsters cloaked flesh there are loads extremely out there they bad guys but they aren always bad guys when",
+      "event_status": "reported",
+      "processing_at": "2026-11-01T06:03:21.035864+06:00",
+      "processing_rank": 11,
+      "content_retry_count": 1,
+      "failure_stage": "generation",
+      "failure_reason": "generation failed",
+      "retry_at": "2026-11-01T12:03:40.935669+06:00",
+      "retry_exhausted": false
+    },
+    "comicbook.com/collectibles/news/this-rare-original-piece-of-asterix-comic-art-just-sold-for-more-than-even-spider-mans-first-appearance": {
+      "title": "This Rare Original Piece of Asterix Comic Art Just Sold For More Than Even Spider-Man’s First Appearance",
+      "url": "https://comicbook.com/collectibles/news/this-rare-original-piece-of-asterix-comic-art-just-sold-for-more-than-even-spider-mans-first-appearance/",
+      "canonical": "comicbook.com/collectibles/news/this-rare-original-piece-of-asterix-comic-art-just-sold-for-more-than-even-spider-mans-first-appearance",
+      "published_dt": "2026-11-01T03:00:00+06:00",
+      "published_date": "2026-11-01T03:00:00+06:00",
+      "source": "ComicBook.com",
+      "region": "ComicAnime",
+      "excerpt": "Courtesy of Gaumond International Everyone knows that certain issues of Marvel Comics can command huge amounts at auction, but there are other sometimes overlooked comics that can be just as much of a draw in the right auction. Yet one thing guaranteed to push prices higher than a rare, well-kept vintage comic is a piece of original artwork by […]",
+      "image": "",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-11-01T05:58:36.487341+06:00",
+      "last_seen": "2026-11-01T05:58:36.487352+06:00",
+      "importance_score": 84,
+      "priority_type": "Major Marvel News",
+      "priority_tier": 1,
+      "priority_rank": 15,
+      "sector": "Comics",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.130048+06:00",
+      "learning_pattern": "",
+      "event_key": "this rare original piece asterix comic art just sold more than even spider man s first appearance|Major Marvel News|for courtesy gaumond international everyone knows that certain issues marvel comics can command huge amounts auction but there are other sometimes overlooked comics that can much draw the right auction yet one thing guaranteed push prices higher well kept vintage artwork",
+      "event_status": "reported"
+    },
+    "bleedingcool.com/comics/daredevils-batman-inspired-debut-silver-streak-comics-6-at-auction": {
+      "title": "Daredevil's Batman-Inspired Debut, Silver Streak Comics #6 at Auction",
+      "url": "https://bleedingcool.com/comics/daredevils-batman-inspired-debut-silver-streak-comics-6-at-auction/",
+      "canonical": "bleedingcool.com/comics/daredevils-batman-inspired-debut-silver-streak-comics-6-at-auction",
+      "published_dt": "2026-11-01T04:56:09+06:00",
+      "published_date": "2026-11-01T04:56:09+06:00",
+      "source": "Bleeding Cool",
+      "region": "ComicAnime",
+      "excerpt": "The debut of the Golden Age Daredevil in Silver Streak Comics #6 borrows elements from Batman stories in Detective Comics #38, #33 and #27.",
+      "image": "",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "posted",
+      "first_seen": "2026-11-01T05:58:38.442714+06:00",
+      "last_seen": "2026-11-01T05:58:38.442723+06:00",
+      "importance_score": 84,
+      "priority_type": "Major DC News",
+      "priority_tier": 1,
+      "priority_rank": 16,
+      "sector": "Comics",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.129533+06:00",
+      "learning_pattern": "",
+      "event_key": "daredevil s batman inspired debut silver streak comics auction|Major DC News|posted heritage sponsored vintage paper tagged don rico jack binder jack cole lev gleason the the golden age borrows elements from stories detective and rarity among golden age titles that was launched with villain the cover feature that villain the claw was both obvious example war era propaganda and based blatant racial stereotype publisher lev gleason was intent focusing this wartime enemies theme that the claw was cover featured for the two issues the title with the character meeting with ad",
+      "event_status": "reported",
+      "processing_at": "2026-11-01T06:02:41.148025+06:00",
+      "processing_rank": 9,
+      "selected_at": "2026-11-01T06:03:01.085397+06:00",
+      "posted_at": "2026-11-01T06:04:19.155541+06:00"
+    },
+    "cbr.com/classic-toonami-anime-flawless-start-to-finish": {
+      "title": "10 Classic Toonami Anime Shows That Are Flawless From Start To Finish",
+      "url": "https://www.cbr.com/classic-toonami-anime-flawless-start-to-finish/",
+      "canonical": "cbr.com/classic-toonami-anime-flawless-start-to-finish",
+      "published_dt": "2026-11-01T05:45:11+06:00",
+      "published_date": "2026-11-01T05:45:11+06:00",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "excerpt": "These Toonami classics are among the most flawless anime ever.",
+      "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2026/07/cowboy-bebop-spike-makes-a-finger-gun.jpg",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-11-01T05:58:40.606709+06:00",
+      "last_seen": "2026-11-01T05:58:40.606726+06:00",
+      "importance_score": 75,
+      "priority_type": "Major Manga Ending",
+      "priority_tier": 2,
+      "priority_rank": 12,
+      "sector": "Anime",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.133147+06:00",
+      "learning_pattern": "",
+      "event_key": "classic toonami anime shows that are flawless start finish|Major Manga Ending|from has had all from thrilling and ambitious ones which weird and emotional the best know their strengths early and play them without losing sight what makes them compelling great ending matters but cannot carry entire its own the truly stories make their openings meaningful develop ideas and bring their characters journeys earned conclusions from the the final scene consistency what matters igpx makes every race count igpx became original november 5th 2005 the transforms mech racing into sport",
+      "event_status": "reported"
+    },
+    "cbr.com/big-little-lies-season-3-production-timeline": {
+      "title": "HBO's Hit 2-Season Psychological Drama Based on Bestselling Book Finally Returns",
+      "url": "https://www.cbr.com/big-little-lies-season-3-production-timeline/",
+      "canonical": "cbr.com/big-little-lies-season-3-production-timeline",
+      "published_dt": "2026-11-01T04:41:02+06:00",
+      "published_date": "2026-11-01T04:41:02+06:00",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "excerpt": "One of HBO's hottest psychological dramas is officially returning for Season 3, and fans may already know exactly where it's heading.",
+      "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2025/03/mixcollage-22-mar-2025-09-31-pm-7645.jpg",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "retryable",
+      "first_seen": "2026-11-01T05:58:40.675414+06:00",
+      "last_seen": "2026-11-01T05:58:40.675424+06:00",
+      "importance_score": 86,
+      "priority_type": "New Season / Sequel",
+      "priority_tier": 1,
+      "priority_rank": 2,
+      "sector": "Anime",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.129050+06:00",
+      "learning_pattern": "",
+      "event_key": "hbo s season psychological drama based bestselling book finally|New Season / Sequel|hit returns big little lies officially returning better yet fans might already have figured out what expect from per deadline big little lies has officially begun least part reportedly star merrin dungey appeared set for single day order for the maintain its current california tax credit all while works behind the scenes align the schedules the big little lies other leading stars that can kick off full why big little lies taking long fans have been waiting more than seven years for big little li",
+      "event_status": "reported",
+      "processing_at": "2026-11-01T06:01:41.094567+06:00",
+      "processing_rank": 6,
+      "content_retry_count": 1,
+      "failure_stage": "generation",
+      "failure_reason": "generation failed",
+      "retry_at": "2026-11-01T12:02:00.924874+06:00",
+      "retry_exhausted": false
+    },
+    "cbr.com/james-cameron-aliens-sci-fi-hulu-november-2026": {
+      "title": "James Cameron's Greatest Sci-Fi Sequel Secures New Streaming Home as the Franchise Keeps Thriving",
+      "url": "https://www.cbr.com/james-cameron-aliens-sci-fi-hulu-november-2026/",
+      "canonical": "cbr.com/james-cameron-aliens-sci-fi-hulu-november-2026",
+      "published_dt": "2026-11-01T04:30:11+06:00",
+      "published_date": "2026-11-01T04:30:11+06:00",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "excerpt": "One of the greatest sci-fi horror movies of all time is officially coming to a streaming platform soon.",
+      "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2025/08/aliens-3.jpeg",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-11-01T05:58:40.762093+06:00",
+      "last_seen": "2026-11-01T05:58:40.762107+06:00",
+      "importance_score": 81,
+      "priority_type": "New Season / Sequel",
+      "priority_tier": 1,
+      "priority_rank": 2,
+      "sector": "",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.131405+06:00",
+      "learning_pattern": "",
+      "event_key": "james cameron s greatest sci fi sequel secures new home as the franchise keeps thriving|New Season / Sequel|one earliest directorial efforts was one biggest horror movies ever much like xenomorphs his 1986 hit aliens finding form platform aliens one many big movies coming hulu beginning next month 1979 hit alien will arrive hulu nov aliens one rare sequels that beloved original written and directed story aliens bit complicated one despite alien finding massive success development took almost full years 1983 was hired write story for after scripts for his projects terminator and rambo blood part were w",
+      "event_status": "reported"
+    },
+    "cbr.com/honkai-star-rail-4-7-planarcadia-finale-aeon-aha": {
+      "title": "It's the End of an Era for PlayStation's Hit Space Opera on November 11",
+      "url": "https://www.cbr.com/honkai-star-rail-4-7-planarcadia-finale-aeon-aha/",
+      "canonical": "cbr.com/honkai-star-rail-4-7-planarcadia-finale-aeon-aha",
+      "published_dt": "2026-11-01T04:00:11+06:00",
+      "published_date": "2026-11-01T04:00:11+06:00",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "excerpt": "It's the end of an era for PlayStation's hit anime space opera Honkai: Star Rail as its final Planarcadia update introduces a playable 5-star Aeon.",
+      "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2020/04/PlayStation-Network.jpg",
+      "discovery": "rss",
+      "date_estimated": false,
+      "source_class": "reported",
+      "status": "pending",
+      "first_seen": "2026-11-01T05:58:40.832764+06:00",
+      "last_seen": "2026-11-01T05:58:40.832779+06:00",
+      "importance_score": 74,
+      "priority_type": "Major Production News",
+      "priority_tier": 2,
+      "priority_rank": 9,
+      "sector": "Anime",
+      "rank_reason": "AI ranking omitted candidate",
+      "last_ranked_at": "2026-11-01T06:00:01.134002+06:00",
+      "learning_pattern": "",
+      "event_key": "it s the end an era playstation s space opera november|Major Production News|for hit leo reyna entertainment journalist and editor with extensive experience covering anime manga and gaming before joining cbr contributed major entertainment outlets including static media and ranker where developed reputation for insightful industry coverage and deep understanding fan culture cbr leo key developments within anime industry examining topics such challenges studio practices and creative communities while also spotlighting passion and artistry fandoms worldwide nearly year aft",
       "event_status": "reported"
     }
   },
   "events": {
-    "bleedingcool.com/comics/nycc-marvel-announces-miles-morales-peter-parker-spider-man-crossover": {
-      "event_id": "bleedingcool.com/comics/nycc-marvel-announces-miles-morales-peter-parker-spider-man-crossover",
-      "canonical_url": "bleedingcool.com/comics/nycc-marvel-announces-miles-morales-peter-parker-spider-man-crossover",
-      "original_url": "https://bleedingcool.com/comics/nycc-marvel-announces-miles-morales-peter-parker-spider-man-crossover/",
-      "source": "",
-      "region": "ComicAnime",
-      "sector": "Comics",
-      "topic": "",
-      "institution": "",
-      "event_cluster_id": "bleedingcool.com/comics/nycc-marvel-announces-miles-morales-peter-parker-spider-man-crossover",
-      "event_confidence": 0,
-      "event_source_count": 0,
-      "headline": "What’s the Next Big Spider‑Man Showdown?",
-      "summary": "",
-      "highlights": [],
-      "why_it_matters": "",
-      "concepts": [],
-      "key_numbers": [],
-      "priority_type": "Major Marvel News",
-      "source_class": "reported",
-      "official_video_url": "",
-      "published_at": "2026-10-11T03:14:35.753710+06:00",
-      "selected_at": "2026-10-11T03:14:35.753714+06:00",
-      "status": "published",
-      "event_kind": "reader_extra",
-      "message_id": 430
-    },
     "naruto_shadow_rising": {
       "event_id": "naruto_shadow_rising",
       "canonical_url": "myanimelist.net/news/74809691",
@@ -12055,37 +12330,6 @@
       "status": "published",
       "event_kind": "news",
       "message_id": 431
-    },
-    "dcu_green_hero_show": {
-      "event_id": "dcu_green_hero_show",
-      "canonical_url": "comicbook.com/dc/news/after-lanterns-success-dcu-report-claims-another-green-hero-to-get-his-own-show-and-hes-bringing-a-friend",
-      "original_url": "https://comicbook.com/dc/news/after-lanterns-success-dcu-report-claims-another-green-hero-to-get-his-own-show-and-hes-bringing-a-friend/",
-      "source": "ComicBook.com",
-      "region": "ComicAnime",
-      "sector": "Comics",
-      "topic": "Major Anime Announcement",
-      "institution": "",
-      "event_cluster_id": "evt_1e8a42d6e3",
-      "event_confidence": 0.6,
-      "event_source_count": 1,
-      "headline": "Green Arrow & Black Canary Series in Development",
-      "summary": "DC Studios is reportedly developing a Green Arrow and Black Canary series for the DCU following the success of the Lanterns project.",
-      "highlights": [
-        "Report from Fortress of DC cites DC Studios developing the series",
-        "The project could explore the long‑standing romance between Oliver Queen and Dinah Lance",
-        "No official details on platform, creative team, or release timeline have been released"
-      ],
-      "why_it_matters": "A dedicated series would finally give fans a proper on‑screen portrayal of one of DC's most iconic superhero couples.",
-      "concepts": [],
-      "key_numbers": [],
-      "priority_type": "Major Anime Movie",
-      "source_class": "reported",
-      "official_video_url": "",
-      "published_at": "2026-10-11T05:47:37+06:00",
-      "selected_at": "2026-10-11T10:00:00.854523+06:00",
-      "status": "published",
-      "event_kind": "news",
-      "message_id": 432
     },
     "marvel_kadokawa_venom_lethal_protector": {
       "event_id": "marvel_kadokawa_venom_lethal_protector",
@@ -12118,70 +12362,6 @@
       "status": "published",
       "event_kind": "news",
       "message_id": 433
-    },
-    "spider_man_s_coolest_disney_series_confirms_new_look_revealed_new_season_sequel_date_image_courtesy_marvel_the_best_has_finally_its_date_for_the_second_and_even_hinted_some_villains_york_comic_con_nycc_underway_and_there_have_been_plenty_announcements_from_marvel_entertainment_the_most_recent_was_about_the_animated_your_friendly_neighborhood_during_one_marvel": {
-      "event_id": "spider_man_s_coolest_disney_series_confirms_new_look_revealed_new_season_sequel_date_image_courtesy_marvel_the_best_has_finally_its_date_for_the_second_and_even_hinted_some_villains_york_comic_con_nycc_underway_and_there_have_been_plenty_announcements_from_marvel_entertainment_the_most_recent_was_about_the_animated_your_friendly_neighborhood_during_one_marvel",
-      "canonical_url": "comicbook.com/tv-shows/news/spider-mans-coolest-disney-series-confirms-season-2-release-date-new-look-revealed",
-      "original_url": "https://comicbook.com/tv-shows/news/spider-mans-coolest-disney-series-confirms-season-2-release-date-new-look-revealed/",
-      "source": "ComicBook.com",
-      "region": "ComicAnime",
-      "sector": "Comics",
-      "topic": "Major Release Date",
-      "institution": "",
-      "event_cluster_id": "evt_9aa1d27ba6",
-      "event_confidence": 0.6,
-      "event_source_count": 1,
-      "headline": "Your Friendly Neighborhood Spider-Man (Season 2)",
-      "summary": "Marvel announced that the animated series Your Friendly Neighborhood Spider-Man will return for a second season on Disney+ on January 13, 2027.",
-      "highlights": [
-        "Season 2 release date set for January 13, 2027 on Disney+",
-        "New promotional artwork shows Spider-Man in a hybrid red‑blue and black symbiote suit",
-        "Executive producer Jeff Trammell hinted at returning heroes like Daredevil and new villains including Rhino, Venom, the fully transformed Lizard, and Shocker",
-        "The season will continue the staggered episode rollout, with the first two episodes debuting on premiere day"
-      ],
-      "why_it_matters": "The series expands Marvel's animated universe on Disney+ and introduces high‑profile villains such as Venom, boosting fan interest ahead of the MCU’s next phases.",
-      "concepts": [],
-      "key_numbers": [],
-      "priority_type": "New Season / Sequel",
-      "source_class": "reported",
-      "official_video_url": "",
-      "published_at": "2026-10-11T04:56:19+06:00",
-      "selected_at": "2026-10-11T10:00:07.778771+06:00",
-      "status": "published",
-      "event_kind": "news",
-      "message_id": 434
-    },
-    "naruto_mobile_game_get_naruto_card_game_reveals_demo_dates_major_trailer_pv_worldwide_studio_pierrot_produces_for_launching_officially_june_2027": {
-      "event_id": "naruto_mobile_game_get_naruto_card_game_reveals_demo_dates_major_trailer_pv_worldwide_studio_pierrot_produces_for_launching_officially_june_2027",
-      "canonical_url": "animenewsnetwork.com/news/2026-10-10/naruto-mobile-game-to-get-worldwide-release-naruto-card-game-reveals-demo-release-dates/.242694",
-      "original_url": "https://www.animenewsnetwork.com/news/2026-10-10/naruto-mobile-game-to-get-worldwide-release-naruto-card-game-reveals-demo-release-dates/.242694",
-      "source": "Anime News Network",
-      "region": "ComicAnime",
-      "sector": "Anime",
-      "topic": "Major Release Date",
-      "institution": "",
-      "event_cluster_id": "evt_ebbbda9441",
-      "event_confidence": 0.6,
-      "event_source_count": 1,
-      "headline": "Naruto Mobile (worldwide release)",
-      "summary": "The Naruto Mobile game, previously China‑only, will launch globally, and the new Naruto Card Game is set for a June 2027 release.",
-      "highlights": [
-        "Worldwide release of the Naruto Mobile game was announced at New York Comic Con",
-        "Naruto Card Game demos will run in stores from February to March 2027",
-        "The card game will launch in June 2027 with starter decks for Naruto, Sasuke, and Gaara",
-        "Both projects are part of the long‑term \"Project Rasengan\" roadmap"
-      ],
-      "why_it_matters": "Expanding Naruto’s digital and tabletop presence globally strengthens the franchise’s cross‑media growth.",
-      "concepts": [],
-      "key_numbers": [],
-      "priority_type": "Major Trailer / PV",
-      "source_class": "reported",
-      "official_video_url": "https://www.youtube.com/watch?v=G2B8oLsZNeU",
-      "published_at": "2026-10-11T04:37:38+06:00",
-      "selected_at": "2026-10-11T10:00:12.776247+06:00",
-      "status": "published",
-      "event_kind": "news",
-      "message_id": 435
     },
     "apothecary_diaries_movie_trailer": {
       "event_id": "apothecary_diaries_movie_trailer",
@@ -12277,38 +12457,6 @@
       "status": "published",
       "event_kind": "news",
       "message_id": 439
-    },
-    "event_3": {
-      "event_id": "event_3",
-      "canonical_url": "myanimelist.net/news/74809610",
-      "original_url": "https://myanimelist.net/news/74809610?_location=rss",
-      "source": "MyAnimeList News",
-      "region": "ComicAnime",
-      "sector": "Anime",
-      "topic": "Major Anime Announcement",
-      "institution": "",
-      "event_cluster_id": "evt_8bfeb7839d",
-      "event_confidence": 0.6,
-      "event_source_count": 1,
-      "headline": "Naruto x Ninkuu Crossover Anime",
-      "summary": "A four‑episode crossover anime featuring Naruto and Ninkuu was announced at New York Comic Con 2026.",
-      "highlights": [
-        "The project is a collaboration between Masashi Kishimoto’s Naruto and Kouji Kiriyama’s Ninkuu manga",
-        "Studio Pierrot will produce the four‑episode series",
-        "The cast includes Junko Takeuchi as Naruto and Rica Matsumoto as Fuusuke, with Noriyuki Abe directing",
-        "Rock band FLOW will perform both the opening and ending themes"
-      ],
-      "why_it_matters": "It marks the first official crossover between the iconic Naruto franchise and another classic shōnen series, generating high fan interest.",
-      "concepts": [],
-      "key_numbers": [],
-      "priority_type": "Major Trailer / PV",
-      "source_class": "reported",
-      "official_video_url": "",
-      "published_at": "2026-10-11T05:37:52+06:00",
-      "selected_at": "2026-10-11T18:11:48.853995+06:00",
-      "status": "published",
-      "event_kind": "news",
-      "message_id": 440
     },
     "marvel_kadokawa_manga_launch_2026": {
       "event_id": "marvel_kadokawa_manga_launch_2026",
@@ -19303,6 +19451,259 @@
       "status": "published",
       "event_kind": "reader_extra",
       "message_id": 665
+    },
+    "mashle_s3_2027": {
+      "event_id": "mashle_s3_2027",
+      "canonical_url": "animehunch.com/mashle-magic-and-muscles-season-3-to-air-on-crunchyroll-beginning-in-january-2027",
+      "original_url": "https://animehunch.com/mashle-magic-and-muscles-season-3-to-air-on-crunchyroll-beginning-in-january-2027/",
+      "source": "Anime Hunch",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "New Season / Sequel",
+      "institution": "",
+      "event_cluster_id": "evt_e30377fea6",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Mashle: Magic And Muscles Season 3",
+      "summary": "Crunchyroll announced that the third season of Mashle: Magic And Muscles will stream beginning January 2027.",
+      "highlights": [
+        "The third season, titled The Tri-Magicathlon Divine Visionary Final Exam Arc, will stream on Crunchyroll worldwide except Japan and China",
+        "It will be non‑exclusive in Southeast Asia and exclusive in India",
+        "Produced by A‑1 Pictures and directed by Tomonari Tanaka with series composition by Yosuke Kuroda",
+        "The season is scheduled to launch in January 2027"
+      ],
+      "why_it_matters": "The continuation keeps the momentum of a hit series and expands its global streaming reach.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Trailer / PV",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-10-30T13:55:35+06:00",
+      "selected_at": "2026-11-01T06:04:03.534921+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 666
+    },
+    "jurassic_park_s_cancelled_cartoon_finally_found_after_years_it_looked_great_watch_major_trailer_pv_mosquito_has_been_amber_and_this_one_has_the_dna_lost_animated_internal_pitch_for_the_proposed_escape_from_which_was_developed_steven_spielberg_1993_blockbuster_has_resurfaced_life_did_find_way_comes_along_with_internal_kenner_documents_that": {
+      "event_id": "jurassic_park_s_cancelled_cartoon_finally_found_after_years_it_looked_great_watch_major_trailer_pv_mosquito_has_been_amber_and_this_one_has_the_dna_lost_animated_internal_pitch_for_the_proposed_escape_from_which_was_developed_steven_spielberg_1993_blockbuster_has_resurfaced_life_did_find_way_comes_along_with_internal_kenner_documents_that",
+      "canonical_url": "comicbook.com/movies/news/jurassic-parks-cancelled-cartoon-trailer-finally-found-after-33-years-it-looked-great-watch",
+      "original_url": "https://comicbook.com/movies/news/jurassic-parks-cancelled-cartoon-trailer-finally-found-after-33-years-it-looked-great-watch/",
+      "source": "ComicBook.com",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "Major Trailer / PV",
+      "institution": "",
+      "event_cluster_id": "evt_18f0ae2905",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Escape from Jurassic Park",
+      "summary": "An internal pitch trailer for the cancelled 1993 animated series Escape from Jurassic Park has resurfaced.",
+      "highlights": [
+        "The trailer was shared by Jurassic Library on X alongside a June 18, 1993 letter linking the project to Kenner’s second Jurassic Park action‑figure line",
+        "Veteran animator Will Meugniot oversaw development and William Stout contributed character and dinosaur designs",
+        "Universal intended the series as an adult‑oriented, prime‑time show blending traditional animation, CGI, and graphic‑novel aesthetics"
+      ],
+      "why_it_matters": "The find offers fans a rare glimpse of what a mature Jurassic Park cartoon could have looked like and highlights missed franchise opportunities from the early ’90s",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Trailer / PV",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-11-01T05:10:25+06:00",
+      "selected_at": "2026-11-01T06:04:06.148226+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 667
+    },
+    "death_stranding_anime_trailer_2026_10_31": {
+      "event_id": "death_stranding_anime_trailer_2026_10_31",
+      "canonical_url": "cbr.com/final-fantasy-14-evercold-officially-delayed",
+      "original_url": "https://www.cbr.com/final-fantasy-14-evercold-officially-delayed/",
+      "source": "CBR",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "Major Anime Announcement",
+      "institution": "",
+      "event_cluster_id": "evt_999992434c",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Final Fantasy XIV: Evercold Expansion Delayed to February 2027",
+      "summary": "Square Enix announced that the Evercold expansion for Final Fantasy XIV will now launch on February 23, 2027, after being pushed back from its original January date.",
+      "highlights": [
+        "Evercold, the sixth paid expansion for Final Fantasy XIV, is now scheduled for February 23, 2027 with early access on February 19.",
+        "The delay was revealed at Square Enix’s October 2026 Fan Festival in Japan.",
+        "The postponement may affect the timing of the Final Fantasy VII Remake crossover raid series \"Beyond the Lifestream,\" originally expected around April 2027.",
+        "Evercold will explore a new world called The Fourth, featuring frozen environments and floating ship settlements."
+      ],
+      "why_it_matters": "The new release window impacts fans’ planning for upcoming content and cross‑promotional events tied to the expansion.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Release Date",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-10-31T21:20:11+06:00",
+      "selected_at": "2026-11-01T06:04:09.204222+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 668
+    },
+    "anime_movie_kuromi_2027": {
+      "event_id": "anime_movie_kuromi_2027",
+      "canonical_url": "animenewsnetwork.com/news/2026-10-30/sanrio-kuromi-character-gets-1st-film-in-2027/.243372",
+      "original_url": "https://www.animenewsnetwork.com/news/2026-10-30/sanrio-kuromi-character-gets-1st-film-in-2027/.243372",
+      "source": "Anime News Network",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "Major Anime Announcement",
+      "institution": "",
+      "event_cluster_id": "evt_8c2ae4ed37",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Kuromi the Movie",
+      "summary": "Sanrio announced that its Kuromi character will star in her first feature film slated for release in 2027.",
+      "highlights": [
+        "The film, titled \"Kuromi the Movie,\" will be distributed in Japan by GAGA open next year.",
+        "Kuromi’s debut was in the anime Onegai My Melody in 2005, and she has since appeared in multiple shorts and a Netflix stop‑motion feature.",
+        "The announcement was made via an English‑subtitled video message from Kuromi on Halloween, her birthday."
+      ],
+      "why_it_matters": "It marks the first cinematic debut for a beloved Sanrio character, expanding the franchise beyond merchandise and short‑form media.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Anime Movie",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-10-31T06:42:09+06:00",
+      "selected_at": "2026-11-01T06:04:11.456908+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 669
+    },
+    "dc_green_lantern_animated_series_2026_10_31": {
+      "event_id": "dc_green_lantern_animated_series_2026_10_31",
+      "canonical_url": "comicbook.com/anime/news/dc-studios-new-green-lantern-animated-series-confirms-episode-count-with-promising-update",
+      "original_url": "https://comicbook.com/anime/news/dc-studios-new-green-lantern-animated-series-confirms-episode-count-with-promising-update/",
+      "source": "ComicBook.com",
+      "region": "ComicAnime",
+      "sector": "Comics",
+      "topic": "Major Production News",
+      "institution": "",
+      "event_cluster_id": "evt_4d8b36a900",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "My Adventures with Green Lantern",
+      "summary": "Warner Bros.",
+      "highlights": [
+        "The series will feature ten half‑hour episodes, currently in animatics review.",
+        "It is a tonal continuation of My Adventures with Superman but focuses on a different hero, Jessica Cruz.",
+        "Auli’l Cravalho will voice the young Jessica Cruz, who debuted in My Adventures with Superman Season 3.",
+        "Executive producer Jake Wyatt and co‑producer Stephanie Gonzaga from the Superman series are attached to the project."
+      ],
+      "why_it_matters": "The spin‑off expands the shared animated universe, giving fans more content while the main series’ future remains uncertain.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "New Season / Sequel",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-10-31T21:15:23+06:00",
+      "selected_at": "2026-11-01T06:04:13.553661+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 670
+    },
+    "comisma_sumitomo_anime_fund": {
+      "event_id": "comisma_sumitomo_anime_fund",
+      "canonical_url": "animenewsnetwork.com/news/2026-10-31/comisma-sumitomo-mitsui-trust-bank-establish-anime-production-fund/.243384",
+      "original_url": "https://www.animenewsnetwork.com/news/2026-10-31/comisma-sumitomo-mitsui-trust-bank-establish-anime-production-fund/.243384",
+      "source": "Anime News Network",
+      "region": "ComicAnime",
+      "sector": "Anime",
+      "topic": "Major Production News",
+      "institution": "",
+      "event_cluster_id": "evt_cfb8404c0b",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Comisma and Sumitomo Mitsui Trust Bank Establish Anime Production Fund",
+      "summary": "Comisma and Sumitomo Mitsui Trust Bank will jointly create a fund to boost financial support for anime creators and open new investment avenues.",
+      "highlights": [
+        "The fund aims to combine COMISMA’s IP acquisition and Qzil.la’s production expertise with the bank’s investor network",
+        "It seeks to address studio capacity constraints as many major studios are booked years in advance",
+        "The initiative aligns with Japan’s goal to triple the overseas anime market to 6 trillion yen by 2033"
+      ],
+      "why_it_matters": "Increased financing could unlock more anime projects and help meet rising global demand.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Production News",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-10-31T15:04:51+06:00",
+      "selected_at": "2026-11-01T06:04:15.590478+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 671
+    },
+    "daredevil_s_batman_inspired_debut_silver_streak_comics_auction_major_dc_news_posted_heritage_sponsored_vintage_paper_tagged_don_rico_jack_binder_jack_cole_lev_gleason_the_the_golden_age_borrows_elements_from_stories_detective_and_rarity_among_golden_age_titles_that_was_launched_with_villain_the_cover_feature_that_villain_the_claw_was_both_obvious_example_war_era_propaganda_and_based_blatant_racial_stereotype_publisher_lev_gleason_was_intent_focusing_this_wartime_enemies_theme_that_the_claw_was_cover_featured_for_the_two_issues_the_title_with_the_character_meeting_with_ad": {
+      "event_id": "daredevil_s_batman_inspired_debut_silver_streak_comics_auction_major_dc_news_posted_heritage_sponsored_vintage_paper_tagged_don_rico_jack_binder_jack_cole_lev_gleason_the_the_golden_age_borrows_elements_from_stories_detective_and_rarity_among_golden_age_titles_that_was_launched_with_villain_the_cover_feature_that_villain_the_claw_was_both_obvious_example_war_era_propaganda_and_based_blatant_racial_stereotype_publisher_lev_gleason_was_intent_focusing_this_wartime_enemies_theme_that_the_claw_was_cover_featured_for_the_two_issues_the_title_with_the_character_meeting_with_ad",
+      "canonical_url": "bleedingcool.com/comics/daredevils-batman-inspired-debut-silver-streak-comics-6-at-auction",
+      "original_url": "https://bleedingcool.com/comics/daredevils-batman-inspired-debut-silver-streak-comics-6-at-auction/",
+      "source": "Bleeding Cool",
+      "region": "ComicAnime",
+      "sector": "Comics",
+      "topic": "Major Sales / Milestone",
+      "institution": "",
+      "event_cluster_id": "evt_483f87c3b6",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "Silver Streak Comics #6 (Golden Age Daredevil debut) goes to auction",
+      "summary": "The 1940 Silver Streak Comics #6, featuring the first Golden Age Daredevil appearance, is slated for sale at the November 5, 2026 Golden Age Century Comics Showcase Auction VI.",
+      "highlights": [
+        "First appearance of the Golden Age Daredevil, created by Jack Binder and Don Rico, in Silver Streak Comics #6",
+        "Story heavily borrows Batman elements from Detective Comics #27, #33, and #38",
+        "Only 54 CGC‑census copies exist, making it a rare Golden Age key",
+        "Auction listed as CGC Apparent FN 6.0 with moderate restoration, scheduled for November 5, 2026"
+      ],
+      "why_it_matters": "The issue is one of the most important non‑Marvel/DC Golden Age superhero keys and its scarcity drives strong collector interest.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Marvel News",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-11-01T04:56:09+06:00",
+      "selected_at": "2026-11-01T06:04:19.155914+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 672
+    },
+    "visionquest_star_reveals_the_crazy_aftermath_overacting_marvel_had_cgi_out_his_performance_major_marvel_news_image_courtesy_paul_bettany_described_injury_that_suffered_while_for_mcu_according_who_has_played_vision_since_debuted_avengers_age_ultron_injury_happened_when_was_wildly_for_injury_was_gruesome_bettany_popped_blood": {
+      "event_id": "visionquest_star_reveals_the_crazy_aftermath_overacting_marvel_had_cgi_out_his_performance_major_marvel_news_image_courtesy_paul_bettany_described_injury_that_suffered_while_for_mcu_according_who_has_played_vision_since_debuted_avengers_age_ultron_injury_happened_when_was_wildly_for_injury_was_gruesome_bettany_popped_blood",
+      "canonical_url": "comicbook.com/tv-shows/news/visionquest-star-reveals-the-crazy-aftermath-of-overacting-marvel-had-to-cgi-out-of-his-performance",
+      "original_url": "https://comicbook.com/tv-shows/news/visionquest-star-reveals-the-crazy-aftermath-of-overacting-marvel-had-to-cgi-out-of-his-performance/",
+      "source": "ComicBook.com",
+      "region": "ComicAnime",
+      "sector": "Comics",
+      "topic": "Major Production News",
+      "institution": "",
+      "event_cluster_id": "evt_e913fc593e",
+      "event_confidence": 0.6,
+      "event_source_count": 1,
+      "headline": "VisionQuest",
+      "summary": "Paul Bettany revealed he popped ten blood vessels in his eye while overacting on the MCU series VisionQuest, requiring post‑production CGI fixes.",
+      "highlights": [
+        "Bettany’s overacting caused a severe eye injury that left his eye bloody for two weeks",
+        "Marvel Studios had to use CGI in post to correct the visible damage",
+        "The incident occurred during filming of VisionQuest, which is currently airing on Disney+",
+        "VisionQuest is the final installment of the trilogy that began with WandaVision"
+      ],
+      "why_it_matters": "The injury highlights the physical risks actors face and the extra costs of fixing on‑set mishaps in high‑budget MCU productions.",
+      "concepts": [],
+      "key_numbers": [],
+      "priority_type": "Major Production News",
+      "source_class": "reported",
+      "official_video_url": "",
+      "published_at": "2026-11-01T04:09:51+06:00",
+      "selected_at": "2026-11-01T06:04:21.164141+06:00",
+      "status": "published",
+      "event_kind": "news",
+      "message_id": 673
     }
   },
   "event_clusters": {
@@ -58329,7 +58730,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-10-31T22:49:27.865501+06:00",
+      "last_seen": "2026-11-01T06:00:01.439449+06:00",
       "headline": "Demon Slayer Drops Cute New Look at the Coolest Hashira Ahead of Infinity Castle Part 2"
     },
     "evt_756d3a24cc": {
@@ -58341,7 +58742,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-11-01T03:00:05.066879+06:00",
+      "last_seen": "2026-11-01T06:00:01.439452+06:00",
       "headline": "Avatar: Seven Havens Confirms It’s Certified Fresh on Rotten Tomatoes With Perfect Score After Finale"
     },
     "evt_8b8ded68d2": {
@@ -58382,14 +58783,14 @@
     },
     "evt_17ea90d546": {
       "event_id": "evt_17ea90d546",
-      "topic": "Major Anime Announcement",
+      "topic": "Major Comic Announcement",
       "region": "ComicAnime",
       "sources": [
         "Bleeding Cool"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-10-31T22:49:27.865513+06:00",
+      "last_seen": "2026-11-01T06:00:01.439445+06:00",
       "headline": "Lucca Comics Museum \"Fumetti\" To Be Established In A Tobacco Factory"
     },
     "evt_662ed4e93e": {
@@ -58442,14 +58843,14 @@
     },
     "evt_4d8b36a900": {
       "event_id": "evt_4d8b36a900",
-      "topic": "Major DC News",
+      "topic": "Major Comic Announcement",
       "region": "ComicAnime",
       "sources": [
         "ComicBook.com"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-11-01T03:00:05.066871+06:00",
+      "last_seen": "2026-11-01T06:00:01.439421+06:00",
       "headline": "DC Studios’ New Green Lantern Animated Series Confirms Episode Count With Promising Update"
     },
     "evt_79a04373e9": {
@@ -58665,7 +59066,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-11-01T03:00:05.066856+06:00",
+      "last_seen": "2026-11-01T06:00:01.439434+06:00",
       "headline": "Batman Part II On-Set Accident Details Revealed Following Batmobile & Cast Member Collision"
     },
     "evt_ca63e74ee6": {
@@ -58677,7 +59078,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-11-01T03:00:05.066858+06:00",
+      "last_seen": "2026-11-01T06:00:01.439437+06:00",
       "headline": "Infernal Hulk vs. Spider-Man #1 Preview: Spidey's Suicide Mission"
     },
     "evt_46685d8138": {
@@ -58689,7 +59090,7 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-11-01T03:00:05.066861+06:00",
+      "last_seen": "2026-11-01T06:00:01.439439+06:00",
       "headline": "MCU Alum Explains How Marvel Studios Will (& Won’t) Use AI to Make Movies"
     },
     "evt_54824f297e": {
@@ -58701,31 +59102,167 @@
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-11-01T03:00:05.066863+06:00",
+      "last_seen": "2026-11-01T06:00:01.439441+06:00",
       "headline": "DC Just Made the New 52’s Most Forgotten Character Central to Darkseid’s Plans and It’s Bringing Back a Familiar Crisis"
     },
     "evt_999992434c": {
       "event_id": "evt_999992434c",
-      "topic": "Major Anime Announcement",
+      "topic": "Major Trailer / PV",
       "region": "ComicAnime",
       "sources": [
         "CBR"
       ],
       "source_count": 1,
       "confidence": 0.6,
-      "last_seen": "2026-11-01T03:00:05.066868+06:00",
+      "last_seen": "2026-11-01T06:00:01.439412+06:00",
       "headline": "Final Fantasy 14 Evercold Officially Delayed to February 2027"
+    },
+    "evt_e30377fea6": {
+      "event_id": "evt_e30377fea6",
+      "topic": "New Season / Sequel",
+      "region": "ComicAnime",
+      "sources": [
+        "Anime Hunch"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439392+06:00",
+      "headline": "Mashle: Magic And Muscles Season 3 To Air On Crunchyroll Beginning In January 2027"
+    },
+    "evt_18f0ae2905": {
+      "event_id": "evt_18f0ae2905",
+      "topic": "Major Trailer / PV",
+      "region": "ComicAnime",
+      "sources": [
+        "ComicBook.com"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439409+06:00",
+      "headline": "Jurassic Park’s Cancelled Cartoon Trailer Finally Found After 33 Years & It Looked Great – Watch"
+    },
+    "evt_9f0cd270e1": {
+      "event_id": "evt_9f0cd270e1",
+      "topic": "Manga → Anime Adaptation",
+      "region": "ComicAnime",
+      "sources": [
+        "Anime Corner"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439416+06:00",
+      "headline": "Hiragi-san's House of Vampires Gets Anime"
+    },
+    "evt_8c2ae4ed37": {
+      "event_id": "evt_8c2ae4ed37",
+      "topic": "Major Anime Movie",
+      "region": "ComicAnime",
+      "sources": [
+        "Anime News Network"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439418+06:00",
+      "headline": "Sanrio's Kuromi Character Gets 1st Film in 2027"
+    },
+    "evt_e6bf6486a0": {
+      "event_id": "evt_e6bf6486a0",
+      "topic": "New Season / Sequel",
+      "region": "ComicAnime",
+      "sources": [
+        "CBR"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439419+06:00",
+      "headline": "HBO's Hit 2-Season Psychological Drama Based on Bestselling Book Finally Returns"
+    },
+    "evt_cfb8404c0b": {
+      "event_id": "evt_cfb8404c0b",
+      "topic": "Major Production News",
+      "region": "ComicAnime",
+      "sources": [
+        "Anime News Network"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439424+06:00",
+      "headline": "Comisma, Sumitomo Mitsui Trust Bank Establish Anime Production Fund"
+    },
+    "evt_483f87c3b6": {
+      "event_id": "evt_483f87c3b6",
+      "topic": "Major DC News",
+      "region": "ComicAnime",
+      "sources": [
+        "Bleeding Cool"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439426+06:00",
+      "headline": "Daredevil's Batman-Inspired Debut, Silver Streak Comics #6 at Auction"
+    },
+    "evt_e913fc593e": {
+      "event_id": "evt_e913fc593e",
+      "topic": "Major Marvel News",
+      "region": "ComicAnime",
+      "sources": [
+        "ComicBook.com"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439428+06:00",
+      "headline": "VisionQuest Star Reveals The Crazy Aftermath of “Overacting” Marvel Had to CGI Out of His Performance"
+    },
+    "evt_adc295fda3": {
+      "event_id": "evt_adc295fda3",
+      "topic": "Major Marvel News",
+      "region": "ComicAnime",
+      "sources": [
+        "ComicBook.com"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439431+06:00",
+      "headline": "5 Reformed Marvel Villains Who Became Fan Favorites, Including One of Comics’ Most Complex Characters"
+    },
+    "evt_b99cec5e25": {
+      "event_id": "evt_b99cec5e25",
+      "topic": "Major Marvel News",
+      "region": "ComicAnime",
+      "sources": [
+        "ComicBook.com"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439432+06:00",
+      "headline": "This Rare Original Piece of Asterix Comic Art Just Sold For More Than Even Spider-Man’s First Appearance"
+    },
+    "evt_5dddf18a8a": {
+      "event_id": "evt_5dddf18a8a",
+      "topic": "Major Comic Announcement",
+      "region": "ComicAnime",
+      "sources": [
+        "Bleeding Cool"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439443+06:00",
+      "headline": "Absolute Superman #25 Preview: Superman's Brain Hurts"
+    },
+    "evt_f864da4201": {
+      "event_id": "evt_f864da4201",
+      "topic": "Major Comic Announcement",
+      "region": "ComicAnime",
+      "sources": [
+        "CBR"
+      ],
+      "source_count": 1,
+      "confidence": 0.6,
+      "last_seen": "2026-11-01T06:00:01.439448+06:00",
+      "headline": "A Forgotten Sci Fi Classic Officially Confirms Modern Reboot"
     }
   },
   "posted_event_ids": [
-    "evt_757e77926a",
-    "evt_19b5b88012",
-    "evt_0629661b25",
-    "evt_7f081ab8fe",
-    "evt_53ac79500c",
-    "evt_589b12a3a6",
-    "evt_ba68f11ad0",
-    "evt_9ae9a6878c",
     "evt_52986efcf6",
     "evt_fcdb0584d2",
     "evt_e7c177f7a1",
@@ -59217,7 +59754,15 @@
     "evt_4cd0598874",
     "evt_8b8ded68d2",
     "evt_662ed4e93e",
-    "evt_4d986f3098"
+    "evt_4d986f3098",
+    "evt_e30377fea6",
+    "evt_18f0ae2905",
+    "evt_999992434c",
+    "evt_8c2ae4ed37",
+    "evt_4d8b36a900",
+    "evt_cfb8404c0b",
+    "evt_483f87c3b6",
+    "evt_e913fc593e"
   ],
   "recent_titles": [
     "kagurabachi anime casts y ichi nakamura",
@@ -59619,7 +60164,15 @@
     "midnight sons movie reported",
     "romelia war chronicle anime",
     "lucca awards 2026",
-    "lucca comics games renews award for h ctor germ n oesterheld"
+    "lucca comics games renews award for h ctor germ n oesterheld",
+    "mashle magic and muscles season 3",
+    "escape from jurassic park",
+    "final fantasy xiv evercold expansion delayed to february 2027",
+    "kuromi the movie",
+    "my adventures with green lantern",
+    "comisma and sumitomo mitsui trust bank establish anime production fund",
+    "silver streak comics 6 golden age daredevil debut goes to auction",
+    "visionquest"
   ],
   "work_memory": {
     "zenith hc full colour omnibus edition": {
@@ -60548,9 +61101,10 @@
       "sector": "Comics",
       "first_published_at": "2026-09-26T03:10:09.762828+06:00",
       "published_events": {
-        "Major Trailer / PV": "2026-10-08T16:03:46.219648+06:00"
+        "Major Trailer / PV": "2026-10-08T16:03:46.219648+06:00",
+        "Major Production News": "2026-11-01T06:04:21.164172+06:00"
       },
-      "last_published_at": "2026-10-08T16:03:46.219645+06:00"
+      "last_published_at": "2026-11-01T06:04:21.164170+06:00"
     },
     "chainsmoker cat": {
       "title": "Chainsmoker Cat",
@@ -64468,13 +65022,13 @@
       "last_published_at": "2026-10-29T02:12:38.935806+06:00"
     },
     "mashle magic and muscles": {
-      "title": "Mashle: Magic and Muscles Season 3",
+      "title": "Mashle: Magic And Muscles Season 3",
       "sector": "Anime",
       "first_published_at": "2026-10-29T02:12:41.756654+06:00",
       "published_events": {
-        "Major Trailer / PV": "2026-10-29T02:12:41.756662+06:00"
+        "Major Trailer / PV": "2026-11-01T06:04:03.534960+06:00"
       },
-      "last_published_at": "2026-10-29T02:12:41.756659+06:00"
+      "last_published_at": "2026-11-01T06:04:03.534958+06:00"
     },
     "absolute batman": {
       "title": "Absolute Batman #25",
@@ -64898,6 +65452,60 @@
         "Major Cast / Staff Reveal": "2026-10-31T22:53:59.605263+06:00"
       },
       "last_published_at": "2026-10-31T22:53:59.605261+06:00"
+    },
+    "escape jurassic park": {
+      "title": "Escape from Jurassic Park",
+      "sector": "Anime",
+      "first_published_at": "2026-11-01T06:04:06.148258+06:00",
+      "published_events": {
+        "Major Trailer / PV": "2026-11-01T06:04:06.148262+06:00"
+      },
+      "last_published_at": "2026-11-01T06:04:06.148260+06:00"
+    },
+    "final fantasy xiv evercold expansion delayed february": {
+      "title": "Final Fantasy XIV: Evercold Expansion Delayed to February 2027",
+      "sector": "Anime",
+      "first_published_at": "2026-11-01T06:04:09.204263+06:00",
+      "published_events": {
+        "Major Release Date": "2026-11-01T06:04:09.204268+06:00"
+      },
+      "last_published_at": "2026-11-01T06:04:09.204266+06:00"
+    },
+    "kuromi the movie": {
+      "title": "Kuromi the Movie",
+      "sector": "Anime",
+      "first_published_at": "2026-11-01T06:04:11.456945+06:00",
+      "published_events": {
+        "Major Anime Movie": "2026-11-01T06:04:11.456949+06:00"
+      },
+      "last_published_at": "2026-11-01T06:04:11.456947+06:00"
+    },
+    "my adventures green lantern": {
+      "title": "My Adventures with Green Lantern",
+      "sector": "Comics",
+      "first_published_at": "2026-11-01T06:04:13.553694+06:00",
+      "published_events": {
+        "New Season / Sequel": "2026-11-01T06:04:13.553699+06:00"
+      },
+      "last_published_at": "2026-11-01T06:04:13.553697+06:00"
+    },
+    "comisma and sumitomo mitsui trust bank establish anime fund": {
+      "title": "Comisma and Sumitomo Mitsui Trust Bank Establish Anime Production Fund",
+      "sector": "Anime",
+      "first_published_at": "2026-11-01T06:04:15.590519+06:00",
+      "published_events": {
+        "Major Production News": "2026-11-01T06:04:15.590525+06:00"
+      },
+      "last_published_at": "2026-11-01T06:04:15.590523+06:00"
+    },
+    "silver streak comics golden age daredevil debut goes auction": {
+      "title": "Silver Streak Comics #6 (Golden Age Daredevil debut) goes to auction",
+      "sector": "Comics",
+      "first_published_at": "2026-11-01T06:04:19.155960+06:00",
+      "published_events": {
+        "Major Marvel News": "2026-11-01T06:04:19.155964+06:00"
+      },
+      "last_published_at": "2026-11-01T06:04:19.155963+06:00"
     }
   },
   "publication_fingerprints": [
@@ -71709,6 +72317,94 @@
       "event_key": "lucca comics games renews award h ctor germ n oesterheld|Major Anime Announcement|038 for honored author the eternaut with resurrected years after was created",
       "canonical": "bleedingcool.com/pop-culture/lucca-comics-games-renews-award-for-hector-german-oesterheld",
       "published_at": "2026-10-31T22:53:59.605676+06:00"
+    },
+    {
+      "fingerprint": "mashle magic and muscles|Major Trailer / PV|crunchyroll october 2026 that the tri magicathlon divine visionary final exam arc the third the hit anime will stream its platforms beginning january 2027 check out the here the will crunchyroll worldwide excluding japan china the read more crunchyroll that the third will stream beginning january 2027 the third titled the tri magicathlon divine visionary final exam arc will stream crunchyroll worldwide except japan china will non exclusive southeast asia exclusive india produced pictures directe",
+      "work_key": "mashle magic and muscles",
+      "priority_type": "Major Trailer / PV",
+      "headline": "Mashle: Magic And Muscles Season 3",
+      "event_text": "Mashle: Magic And Muscles Season 3 Crunchyroll announced on October 29, 2026, that MASHLE: MAGIC AND MUSCLES The Tri-Magicathlon Divine Visionary Final Exam Arc, the third season of the hit anime series, will stream on its platforms beginning in January 2027. Check out the trailer here: The new season will be available on Crunchyroll worldwide, excluding Japan and China. The series ... Read more Crunchyroll announced that the third season of Mashle: Magic And Muscles will stream beginning January 2027. The third season, titled The Tri-Magicathlon Divine Visionary Final Exam Arc, will stream on Crunchyroll worldwide except Japan and China It will be non‑exclusive in Southeast Asia and exclusive in India Produced by A‑1 Pictures and directed by Tomonari Tanaka with series composition by Yosuke Kuroda Crunchyroll January 2027",
+      "core": "crunchyroll october 2026 that the tri magicathlon divine visionary final exam arc the third the hit anime will stream its platforms beginning january 2027 check out the here the will crunchyroll worldwide excluding japan china the read more crunchyroll that the third will stream beginning january 2027 the third titled the tri magicathlon divine visionary final exam arc will stream crunchyroll worldwide except japan china will non exclusive southeast asia exclusive india produced pictures directe",
+      "event_key": "mashle_s3_2027",
+      "canonical": "animehunch.com/mashle-magic-and-muscles-season-3-to-air-on-crunchyroll-beginning-in-january-2027",
+      "published_at": "2026-11-01T06:04:03.535239+06:00"
+    },
+    {
+      "fingerprint": "escape jurassic park|Major Trailer / PV|from mosquito has been found amber and this one has the dna lost animated internal pitch for the proposed cartoon from which was developed after steven spielberg 1993 blockbuster has resurfaced life did find way comes along with internal kenner documents that internal pitch for the cancelled 1993 animated from has resurfaced the was shared library alongside june 1993 letter linking the project kenner second action figure line veteran animator will meugniot oversaw development and william stout c",
+      "work_key": "escape jurassic park",
+      "priority_type": "Major Trailer / PV",
+      "headline": "Escape from Jurassic Park",
+      "event_text": "Escape from Jurassic Park A mosquito has been found in amber, and this one has the DNA of a lost Jurassic Park animated series. An internal pitch trailer for the proposed cartoon Escape from Jurassic Park, which was developed after Steven Spielberg’s 1993 blockbuster, has resurfaced. Life did find a way. It comes along with internal Kenner documents that […] An internal pitch trailer for the cancelled 1993 animated series Escape from Jurassic Park has resurfaced. The trailer was shared by Jurassic Library on X alongside a June 18, 1993 letter linking the project to Kenner’s second Jurassic Park action‑figure line Veteran animator Will Meugniot oversaw development and William Stout contributed character and dinosaur designs Universal intended the series as an adult‑oriented, prime‑time show blending traditional animation, CGI, and graphic‑novel aesthetics N/A 1993 (original)",
+      "core": "from mosquito has been found amber and this one has the dna lost animated internal pitch for the proposed cartoon from which was developed after steven spielberg 1993 blockbuster has resurfaced life did find way comes along with internal kenner documents that internal pitch for the cancelled 1993 animated from has resurfaced the was shared library alongside june 1993 letter linking the project kenner second action figure line veteran animator will meugniot oversaw development and william stout c",
+      "event_key": "jurassic park s cancelled cartoon finally found after years it looked great watch|Major Trailer / PV|mosquito has been amber and this one has the dna lost animated internal pitch for the proposed escape from which was developed steven spielberg 1993 blockbuster has resurfaced life did find way comes along with internal kenner documents that",
+      "canonical": "comicbook.com/movies/news/jurassic-parks-cancelled-cartoon-trailer-finally-found-after-33-years-it-looked-great-watch",
+      "published_at": "2026-11-01T06:04:06.148543+06:00"
+    },
+    {
+      "fingerprint": "final fantasy xiv evercold expansion delayed february|Major Release Date|2027 square enix has that the has been further into 2027 putting closer ff7 revelation square enix that the for will launch 2027 after being pushed back from its original january date the sixth paid for scheduled for 2027 with early access the delay was revealed square enix october 2026 fan festival japan the postponement may affect the timing the vii remake crossover raid beyond the lifestream originally expected around april 2027 2027",
+      "work_key": "final fantasy xiv evercold expansion delayed february",
+      "priority_type": "Major Release Date",
+      "headline": "Final Fantasy XIV: Evercold Expansion Delayed to February 2027",
+      "event_text": "Final Fantasy XIV: Evercold Expansion Delayed to February 2027 Square Enix has announced that the Final Fantasy 14 Evercold expansion has been delayed further into 2027, putting it closer to FF7 Revelation. Square Enix announced that the Evercold expansion for Final Fantasy XIV will now launch on February 23, 2027, after being pushed back from its original January date. Evercold, the sixth paid expansion for Final Fantasy XIV, is now scheduled for February 23, 2027 with early access on February 19. The delay was revealed at Square Enix’s October 2026 Fan Festival in Japan. The postponement may affect the timing of the Final Fantasy VII Remake crossover raid series \"Beyond the Lifestream,\" originally expected around April 2027.  February 23, 2027",
+      "core": "2027 square enix has that the has been further into 2027 putting closer ff7 revelation square enix that the for will launch 2027 after being pushed back from its original january date the sixth paid for scheduled for 2027 with early access the delay was revealed square enix october 2026 fan festival japan the postponement may affect the timing the vii remake crossover raid beyond the lifestream originally expected around april 2027 2027",
+      "event_key": "death_stranding_anime_trailer_2026_10_31",
+      "canonical": "cbr.com/final-fantasy-14-evercold-officially-delayed",
+      "published_at": "2026-11-01T06:04:09.204710+06:00"
+    },
+    {
+      "fingerprint": "kuromi the movie|Major Anime Movie|birthday halloween after net anime sanrio that its character will star her feature slated for 2027 titled will distributed japan gaga open next year debut was anime onegai melody 2005 and she has since appeared multiple shorts and netflix stop motion feature was made via english subtitled video message from halloween her birthday japan 2027",
+      "work_key": "kuromi the movie",
+      "priority_type": "Major Anime Movie",
+      "headline": "Kuromi the Movie",
+      "event_text": "Kuromi the Movie Announced on Kuromi's birthday, Halloween, after 3 net anime series Sanrio announced that its Kuromi character will star in her first feature film slated for release in 2027. The film, titled \"Kuromi the Movie,\" will be distributed in Japan by GAGA open next year. Kuromi’s debut was in the anime Onegai My Melody in 2005, and she has since appeared in multiple shorts and a Netflix stop‑motion feature. The announcement was made via an English‑subtitled video message from Kuromi on Halloween, her birthday. Theatrical (Japan) 2027",
+      "core": "birthday halloween after net anime sanrio that its character will star her feature slated for 2027 titled will distributed japan gaga open next year debut was anime onegai melody 2005 and she has since appeared multiple shorts and netflix stop motion feature was made via english subtitled video message from halloween her birthday japan 2027",
+      "event_key": "anime_movie_kuromi_2027",
+      "canonical": "animenewsnetwork.com/news/2026-10-30/sanrio-kuromi-character-gets-1st-film-in-2027/.243372",
+      "published_at": "2026-11-01T06:04:11.457180+06:00"
+    },
+    {
+      "fingerprint": "my adventures green lantern|New Season / Sequel|with courtesy studios warner bros animation and studios are the works animated set the same universe with superman and peter safran has shared promising how all coming along with how long debut outing going warner bros the will feature ten half hour currently animatics review tonal continuation with superman but focuses different hero jessica cruz auli cravalho will voice the young jessica cruz who debuted with superman",
+      "work_key": "my adventures green lantern",
+      "priority_type": "New Season / Sequel",
+      "headline": "My Adventures with Green Lantern",
+      "event_text": "My Adventures with Green Lantern Courtesy of DC Studios Warner Bros. Animation and DC Studios are now in the works on a new animated series set in the same universe as My Adventures with Superman, and Peter Safran has shared a promising update on how it’s all coming along with a confirmation of how long it’s debut outing is going to be. My Adventures […] Warner Bros. The series will feature ten half‑hour episodes, currently in animatics review. It is a tonal continuation of My Adventures with Superman but focuses on a different hero, Jessica Cruz. Auli’l Cravalho will voice the young Jessica Cruz, who debuted in My Adventures with Superman Season 3.",
+      "core": "with courtesy studios warner bros animation and studios are the works animated set the same universe with superman and peter safran has shared promising how all coming along with how long debut outing going warner bros the will feature ten half hour currently animatics review tonal continuation with superman but focuses different hero jessica cruz auli cravalho will voice the young jessica cruz who debuted with superman",
+      "event_key": "dc_green_lantern_animated_series_2026_10_31",
+      "canonical": "comicbook.com/anime/news/dc-studios-new-green-lantern-animated-series-confirms-episode-count-with-promising-update",
+      "published_at": "2026-11-01T06:04:13.553980+06:00"
+    },
+    {
+      "fingerprint": "comisma and sumitomo mitsui trust bank establish anime fund|Major Production News|offer investment opportunities companies that have previously found difficult enter business will jointly create boost financial support for creators open investment avenues the aims combine qzil expertise with the investor network seeks address studio capacity constraints many major studios are booked years advance the initiative aligns with japan goal triple the overseas market trillion yen 2033",
+      "work_key": "comisma and sumitomo mitsui trust bank establish anime fund",
+      "priority_type": "Major Production News",
+      "headline": "Comisma and Sumitomo Mitsui Trust Bank Establish Anime Production Fund",
+      "event_text": "Comisma and Sumitomo Mitsui Trust Bank Establish Anime Production Fund Fund to offer investment opportunities to companies that have previously found it difficult to enter anime business Comisma and Sumitomo Mitsui Trust Bank will jointly create a fund to boost financial support for anime creators and open new investment avenues. The fund aims to combine COMISMA’s IP acquisition and Qzil.la’s production expertise with the bank’s investor network It seeks to address studio capacity constraints as many major studios are booked years in advance The initiative aligns with Japan’s goal to triple the overseas anime market to 6 trillion yen by 2033",
+      "core": "offer investment opportunities companies that have previously found difficult enter business will jointly create boost financial support for creators open investment avenues the aims combine qzil expertise with the investor network seeks address studio capacity constraints many major studios are booked years advance the initiative aligns with japan goal triple the overseas market trillion yen 2033",
+      "event_key": "comisma_sumitomo_anime_fund",
+      "canonical": "animenewsnetwork.com/news/2026-10-31/comisma-sumitomo-mitsui-trust-bank-establish-anime-production-fund/.243384",
+      "published_at": "2026-11-01T06:04:15.591002+06:00"
+    },
+    {
+      "fingerprint": "silver streak comics golden age daredevil debut goes auction|Major Marvel News|posted heritage sponsored vintage paper tagged don rico jack binder jack cole lev gleason batman inspired the the borrows elements from batman stories detective and rarity among titles that was launched with villain the cover feature that villain the claw was both obvious example war era propaganda and based blatant racial stereotype publisher lev gleason was intent focusing this wartime enemies theme that the claw was cover featured for the two issues the title with the character meeting with a",
+      "work_key": "silver streak comics golden age daredevil debut goes auction",
+      "priority_type": "Major Marvel News",
+      "headline": "Silver Streak Comics #6 (Golden Age Daredevil debut) goes to auction",
+      "event_text": "Silver Streak Comics #6 (Golden Age Daredevil debut) goes to auction Posted in: Comics, Heritage Sponsored, Vintage Paper | Tagged: Don Rico, Jack Binder, Jack Cole, lev gleason\nDaredevil's Batman-Inspired Debut, Silver Streak Comics #6 at Auction\nThe debut of the Golden Age Daredevil in Silver Streak Comics #6 borrows elements from Batman stories in Detective Comics #38, #33 and #27.\nSilver Streak Comics is a rarity among Golden Age titles in that it was launched with a villain as the cover feature. That villain, The Claw, was both an obvious example of war-era propaganda and based on a blatant racial stereotype. Publisher Lev Gleason was so intent on focusing on this wartime enemies theme that The Claw was cover-featured for the first two issues of the title, with the character meeting with Adolf Hitler in issue #2 and offering to team up with him to conquer the world and split it between them. The title's namesake, the dead-then-resurrected superhero flying speedster character Silver Streak, who himself was named after the futuristic race car in which he was killed, didn't show up until issue #3. But Lev Gleason introduced a hero who would have a big impact on its subsequent history in Silver Streak Comics #6, the first appearance of the Golden A The 1940 Silver Streak Comics #6, featuring the first Golden Age Daredevil appearance, is slated for sale at the November 5, 2026 ",
+      "core": "posted heritage sponsored vintage paper tagged don rico jack binder jack cole lev gleason batman inspired the the borrows elements from batman stories detective and rarity among titles that was launched with villain the cover feature that villain the claw was both obvious example war era propaganda and based blatant racial stereotype publisher lev gleason was intent focusing this wartime enemies theme that the claw was cover featured for the two issues the title with the character meeting with a",
+      "event_key": "daredevil s batman inspired debut silver streak comics auction|Major DC News|posted heritage sponsored vintage paper tagged don rico jack binder jack cole lev gleason the the golden age borrows elements from stories detective and rarity among golden age titles that was launched with villain the cover feature that villain the claw was both obvious example war era propaganda and based blatant racial stereotype publisher lev gleason was intent focusing this wartime enemies theme that the claw was cover featured for the two issues the title with the character meeting with ad",
+      "canonical": "bleedingcool.com/comics/daredevils-batman-inspired-debut-silver-streak-comics-6-at-auction",
+      "published_at": "2026-11-01T06:04:19.156683+06:00"
+    },
+    {
+      "fingerprint": "visionquest|Major Production News|image courtesy marvel star paul bettany described injury that suffered while the for the mcu according the who has played vision since debuted avengers age ultron the injury happened when was wildly overacting for the marvel the injury was gruesome bettany popped blood paul bettany revealed popped ten blood vessels his eye while overacting the mcu requiring post cgi fixes bettany overacting caused severe eye injury that left his eye bloody for two weeks marvel studios had use cgi post correct th",
+      "work_key": "visionquest",
+      "priority_type": "Major Production News",
+      "headline": "VisionQuest",
+      "event_text": "VisionQuest Image Courtesy of Marvel VisionQuest star Paul Bettany described an injury that he suffered while filming the streaming series for the MCU. According to the actor who has played Vision since he debuted in Avengers: Age of Ultron, the injury happened when he was “wildly overacting” for the Marvel series. The injury was gruesome, as Bettany popped 10 blood […] Paul Bettany revealed he popped ten blood vessels in his eye while overacting on the MCU series VisionQuest, requiring post‑production CGI fixes. Bettany’s overacting caused a severe eye injury that left his eye bloody for two weeks Marvel Studios had to use CGI in post to correct the visible damage The incident occurred during filming of VisionQuest, which is currently airing on Disney+ Disney+ N/A",
+      "core": "image courtesy marvel star paul bettany described injury that suffered while the for the mcu according the who has played vision since debuted avengers age ultron the injury happened when was wildly overacting for the marvel the injury was gruesome bettany popped blood paul bettany revealed popped ten blood vessels his eye while overacting the mcu requiring post cgi fixes bettany overacting caused severe eye injury that left his eye bloody for two weeks marvel studios had use cgi post correct th",
+      "event_key": "visionquest star reveals the crazy aftermath overacting marvel had cgi out his performance|Major Marvel News|image courtesy paul bettany described injury that suffered while for mcu according who has played vision since debuted avengers age ultron injury happened when was wildly for injury was gruesome bettany popped blood",
+      "canonical": "comicbook.com/tv-shows/news/visionquest-star-reveals-the-crazy-aftermath-of-overacting-marvel-had-to-cgi-out-of-his-performance",
+      "published_at": "2026-11-01T06:04:21.164324+06:00"
     }
   ],
   "fresh_start_at": "",
@@ -71748,17 +72444,12 @@
       ]
     },
     "routine_review": {
-      "observations": 18,
-      "low_score_count": 18,
-      "total_score": 1151,
-      "avg_score": 63.9,
-      "last_seen": "2026-10-21T18:49:34.093241+06:00",
+      "observations": 19,
+      "low_score_count": 19,
+      "total_score": 1220,
+      "avg_score": 64.2,
+      "last_seen": "2026-11-01T06:00:01.142834+06:00",
       "examples": [
-        {
-          "title": "5 Mutants That Need to Appear in Wolverine’s X-Men Game Sequel",
-          "score": 64,
-          "priority_type": "New Season / Sequel"
-        },
         {
           "title": "New Avengers: Doomsday Tagline Has Fans Convinced Scarlet Witch is Back",
           "score": 69,
@@ -71778,6 +72469,11 @@
           "title": "Josh Brolin Explains Why He Passed on Hal Jordan in the DCU & Whether He’s Seen Lanterns",
           "score": 67,
           "priority_type": "Major Anime Announcement"
+        },
+        {
+          "title": "Jujutsu Kaisen Highlights Culling Game Roster With New Posters Ahead of Season 4",
+          "score": 69,
+          "priority_type": "New Season / Sequel"
         }
       ]
     },
@@ -71879,606 +72575,6 @@
     }
   },
   "score_history": [
-    {
-      "title": "Hotel Inhumans Anime's 2nd Season Casts Mitsuki Saiga",
-      "score": 85,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T04:42:33.063870+06:00"
-    },
-    {
-      "title": "The Future Is&#8230; ****** Goes Silent For Issue #21 Like G.I. Joe Did",
-      "score": 85,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T04:42:33.063938+06:00"
-    },
-    {
-      "title": "Firefly Wedding TV Anime Casts Natsuko Abe",
-      "score": 85,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T04:42:33.063968+06:00"
-    },
-    {
-      "title": "3 Dark-Type Pokémon Card Grails Break Auction Records, Fetch Over $1.6 Million",
-      "score": 85,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.064105+06:00"
-    },
-    {
-      "title": "The Hangman's Solo Series Debut Becomes Special Comics #1, at Auction",
-      "score": 85,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T04:42:33.064163+06:00"
-    },
-    {
-      "title": "6 Alternate Universes That Redefined Marvel and DC, Including 2 X-Men Stories That Changed Everything",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.064289+06:00"
-    },
-    {
-      "title": "Comics Folk React To The News Of The Death Of Sir Patrick Stewart",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T04:42:33.064539+06:00"
-    },
-    {
-      "title": "James Gunn Confirms DCU's Batman Will Be Chosen Soon With Major Casting Change",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Cast / Staff Reveal",
-      "source": "CBR",
-      "seen_at": "2026-10-30T04:42:33.064837+06:00"
-    },
-    {
-      "title": "Iron Fist #14 Is a Major Marvel Key, & Its Value Has Little to Do With Iron Fist",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.064966+06:00"
-    },
-    {
-      "title": "Marvel Confirms Patrick Stewart’s Final On-Screen Performance Will Be in Avengers: Doomsday",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.065092+06:00"
-    },
-    {
-      "title": "CAPTAIN AMERICA #16 may have just undone one of Marvel’s most infamous storylines",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "The Beat",
-      "seen_at": "2026-10-30T04:42:33.065158+06:00"
-    },
-    {
-      "title": "Star Trek, X-Men Actor Patrick Stewart Dies at 86",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T04:42:33.065205+06:00"
-    },
-    {
-      "title": "Waller: James Gunn Finally Gives Update on Viola Davis DCU Show’s Current Status",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.065315+06:00"
-    },
-    {
-      "title": "The Flash’s Superpower Has a Surprising Consequence; Could DC’s Best Hero Turn Into a Villain?",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.065442+06:00"
-    },
-    {
-      "title": "Maximum X-Men, Avengers And Why Marvel Comics Called It Armageddon",
-      "score": 84,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T04:42:33.065488+06:00"
-    },
-    {
-      "title": "Sci-Fi Masterpiece Officially Confirms a Graphic Novel Version Ahead of Blockbuster Movie",
-      "score": 83,
-      "pattern": "",
-      "priority_type": "Major Comic Announcement",
-      "source": "CBR",
-      "seen_at": "2026-10-30T04:42:33.065537+06:00"
-    },
-    {
-      "title": "Obsession Director Just Returned With a Mind-Bending Short Film & You Can Watch It Right Now",
-      "score": 82,
-      "pattern": "",
-      "priority_type": "Major Anime Movie",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.065661+06:00"
-    },
-    {
-      "title": "DCU’s The Suicide Squad Retcons Expose James Gunn’s Biggest Issue as Studio Head",
-      "score": 82,
-      "pattern": "",
-      "priority_type": "Major Release Date",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.065768+06:00"
-    },
-    {
-      "title": "The Best Disney Holiday Special Ever Returns to ABC After 23 Years",
-      "score": 82,
-      "pattern": "",
-      "priority_type": "New Season / Sequel",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.065874+06:00"
-    },
-    {
-      "title": "‘We’re Screwed’: David Ayer’s Suicide Squad DCU Canon Status Gets Brutal James Gunn Response",
-      "score": 81,
-      "pattern": "",
-      "priority_type": "Major Anime Movie",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.066172+06:00"
-    },
-    {
-      "title": "Austin Powers 4: Mike Myers Gives Update on Sequel That Dr. Evil Fans Will Love",
-      "score": 81,
-      "pattern": "",
-      "priority_type": "New Season / Sequel",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.066278+06:00"
-    },
-    {
-      "title": "King Shark’s Creature Commandos Season 2 Role Gets Update DCU Fans Will Love",
-      "score": 81,
-      "pattern": "",
-      "priority_type": "New Season / Sequel",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.066338+06:00"
-    },
-    {
-      "title": "Why Idris Elba Wasn’t Cast as Deadshot or Deathstroke in The Suicide Squad, Explained",
-      "score": 81,
-      "pattern": "",
-      "priority_type": "Major Anime Movie",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.066448+06:00"
-    },
-    {
-      "title": "Daredevil & Sandman Arrive in Your Friendly Neighborhood Spider-Man Preview Ahead of Season 2",
-      "score": 81,
-      "pattern": "",
-      "priority_type": "New Season / Sequel",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.066563+06:00"
-    },
-    {
-      "title": "Lanterns Fans Hoping for Hal Jordan DCU Resurrection Get Bad News From James Gunn",
-      "score": 81,
-      "pattern": "",
-      "priority_type": "Major Franchise Update",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.066670+06:00"
-    },
-    {
-      "title": "Thought Bubble 2026 Preview: Inside a 20th Anniversary Celebration",
-      "score": 81,
-      "pattern": "",
-      "priority_type": "Major Manga Return / Hiatus",
-      "source": "The Beat",
-      "seen_at": "2026-10-30T04:42:33.066719+06:00"
-    },
-    {
-      "title": "Disney Twisted-Wonderland Season 2: Episode of Savanaclaw Reveals New Visual, December 23 Premiere",
-      "score": 81,
-      "pattern": "",
-      "priority_type": "New Season / Sequel",
-      "source": "Anime Corner",
-      "seen_at": "2026-10-30T04:42:33.066781+06:00"
-    },
-    {
-      "title": "James Gunn Reveals Alternate Ending for The Suicide Squad That Was ‘Too Dark’",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Manga Ending",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.066890+06:00"
-    },
-    {
-      "title": "Lustful Domination Novels/Manga Get AnimeFesta Anime",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T04:42:33.066934+06:00"
-    },
-    {
-      "title": "Comics Beat’s super spooky 2026 horror comics reading list",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "The Beat",
-      "seen_at": "2026-10-30T04:42:33.066999+06:00"
-    },
-    {
-      "title": "PUG-W January 2027 Solicits Brian Bendis &#038; Sara Pichelli 3D Spider-Men",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T04:42:33.067063+06:00"
-    },
-    {
-      "title": "Disney Twisted-Wonderland Anime's 'Episode of Savanaclaw' Begins 8-Episode Run on December 23",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T04:42:33.067118+06:00"
-    },
-    {
-      "title": "NIU Fundraiser to Digitize Important Nickel Library Series",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T04:42:33.067162+06:00"
-    },
-    {
-      "title": "This Week in Anime - Going to Another World",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T04:42:33.067208+06:00"
-    },
-    {
-      "title": "Korea Holds 1st AI Creative Contest for Children to Make Webtoons",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T04:42:33.067260+06:00"
-    },
-    {
-      "title": "Polka-Dot Man TV Show Gets Surprising James Gunn Update, But There’s a Catch",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.067325+06:00"
-    },
-    {
-      "title": "Daniela Melchior DCU Return Status Gets Hopeful Update From James Gunn After The Suicide Squad",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.067378+06:00"
-    },
-    {
-      "title": "James Gunn Says Beloved The Suicide Squad Character Will Need a DCU Recast if They Return",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.067487+06:00"
-    },
-    {
-      "title": "James Gunn Addresses Margot Robbie's DCU Future as Harley Quinn",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "CBR",
-      "seen_at": "2026-10-30T04:42:33.067534+06:00"
-    },
-    {
-      "title": "5 Marvel Heroes Who Escaped Their Villainous Parents’ Shadows to Become Something Better",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.067654+06:00"
-    },
-    {
-      "title": "Following Absolute Batman #25, Absolute Catwoman Gets Another 6 Issues",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T04:42:33.067702+06:00"
-    },
-    {
-      "title": "Time Runs Out For Spider-Gwen and Spider-Girl in Spider-Man: Incursions First Look [EXCLUSIVE]",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T04:42:33.067823+06:00"
-    },
-    {
-      "title": "New Fortnite Battle Royale Trailer Confirms One Piece's Straw Hat Pirates",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Trailer / PV",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T04:42:33.067872+06:00"
-    },
-    {
-      "title": "‘Rest Well, Captain’: Star Trek Fans Mourn Patrick Stewart in Loving Tributes",
-      "score": 78,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.067976+06:00"
-    },
-    {
-      "title": "Patrick Stewart: MCU Fans Deliver Heartfelt Tributes After Beloved X-Men Star Passes Away",
-      "score": 78,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.068088+06:00"
-    },
-    {
-      "title": "Patrick Stewart, Beloved Star Trek & Avengers: Doomsday Star, Passes Away, Statement Given",
-      "score": 78,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.068198+06:00"
-    },
-    {
-      "title": "Avengers: Doomsday Popcorn Buckets Include Doctor Doom’s Mask, Sentinels, & Much More",
-      "score": 78,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T04:42:33.068305+06:00"
-    },
-    {
-      "title": "GKIDS Releases cocoon Wartime Anime Digitally With Blu-ray Disc Release Shipping on January 19",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T10:17:44.074286+06:00"
-    },
-    {
-      "title": "DC Comics Began Their Best Era of Events 40 Years Ago So Why Doesn’t Anyone Remember It?",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:17:44.074525+06:00"
-    },
-    {
-      "title": "5 Horror Movie Franchises That Lost Their Most Interesting Ideas, Including An Iconic Slasher Series",
-      "score": 77,
-      "pattern": "",
-      "priority_type": "Major Anime Movie",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:17:44.074725+06:00"
-    },
-    {
-      "title": "5 Superhero Schools That Could Turn Any Young Hero Into the Next Marvel or DC Legend",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:17:44.074925+06:00"
-    },
-    {
-      "title": "Forget the Justice League International, This Version of DC’s Greatest Team Is Perfect for the DCU Even If They Are the Worst Justice League",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:17:44.075169+06:00"
-    },
-    {
-      "title": "Tetsuya Chiba, Ashita no Joe’s Legendary Creator, Dies at 87",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Creator / Publisher News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:17:44.075345+06:00"
-    },
-    {
-      "title": "An MCU Fan Favorite’s First Appearance Is Hiding in This Unexpected Piece of Marvel History",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:17:44.075554+06:00"
-    },
-    {
-      "title": "DC All In Saga: Darkseid Vs The World Is Also An Absolute Batman Comic",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T10:17:44.075631+06:00"
-    },
-    {
-      "title": "Talking Off The Top Of Her Head &#8211; Absolute Wonder Woman #25 Spoilers",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T10:17:44.075700+06:00"
-    },
-    {
-      "title": "An Absolute Intervention In Absolute Batman #25 (Spoilers)",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T10:17:44.075761+06:00"
-    },
-    {
-      "title": "Poison Ivy #49 Preview: Ivy's Power Outage Problem",
-      "score": 80,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "Bleeding Cool",
-      "seen_at": "2026-10-30T10:17:44.075831+06:00"
-    },
-    {
-      "title": "Image announces new OGN, HUMBUCKER, from Tiny Onion Editor-in-Chief",
-      "score": 77,
-      "pattern": "",
-      "priority_type": "Major Comic Announcement",
-      "source": "The Beat",
-      "seen_at": "2026-10-30T10:17:44.075902+06:00"
-    },
-    {
-      "title": "‘Dig’ trailer: Archaeology is a dirty business",
-      "score": 78,
-      "pattern": "",
-      "priority_type": "Major Trailer / PV",
-      "source": "AIPT",
-      "seen_at": "2026-10-30T10:17:44.075952+06:00"
-    },
-    {
-      "title": "Clayface Concept Art Unveils a Very Different Version of Tom Rhys Harries’ Batman Villain",
-      "score": 78,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T10:17:44.076144+06:00"
-    },
-    {
-      "title": "Deadline: Takashi Yamazaki's Grandgear Film Casts Sam Nivola, Nico Parker",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Cast / Staff Reveal",
-      "source": "Anime News Network",
-      "seen_at": "2026-10-30T10:17:44.076202+06:00"
-    },
-    {
-      "title": "5 1990s Classic Anime That Are Impossible to Stream Anywhere",
-      "score": 79,
-      "pattern": "",
-      "priority_type": "Major Cast / Staff Reveal",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:17:44.076405+06:00"
-    },
-    {
-      "title": "Spider-Man: Brand New Day Fans Are Just Now Noticing This Sneaky Zendaya Easter Egg",
-      "score": 78,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T10:17:44.076599+06:00"
-    },
-    {
-      "title": "Disney+ Expands Hideo Kojima’s Death Stranding With New Anime, Watch Trailer",
-      "score": 92,
-      "pattern": "",
-      "priority_type": "Major Anime Announcement",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T10:20:25.786222+06:00"
-    },
-    {
-      "title": "DCU Batman Details Confirmed By James Gunn, And Casting “Isn’t Very Far Away”",
-      "score": 92,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:20:25.786448+06:00"
-    },
-    {
-      "title": "Waller: James Gunn Finally Gives Update on Viola Davis DCU Show’s Current Status",
-      "score": 89,
-      "pattern": "",
-      "priority_type": "Major DC News",
-      "source": "SuperHeroHype",
-      "seen_at": "2026-10-30T10:20:25.786643+06:00"
-    },
-    {
-      "title": "3 Anime to Watch If You Miss Fire Force",
-      "score": 88,
-      "pattern": "",
-      "priority_type": "Manga → Anime Adaptation",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:20:25.786825+06:00"
-    },
-    {
-      "title": "40 Years Later, This Dark Fantasy Movie Still Has One of Disney’s Most Disturbing Endings",
-      "score": 88,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:20:25.787031+06:00"
-    },
-    {
-      "title": "Patrick Stewart’s Friend of 50 Years & X-Men Costar Pens Heartwarming Tribute: “A Man To Admire”",
-      "score": 88,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:20:25.787255+06:00"
-    },
-    {
-      "title": "Monarch: Legacy of Monsters Season 3 Fate Revealed, And the MonsterVerse May Not Be the Same",
-      "score": 88,
-      "pattern": "",
-      "priority_type": "New Season / Sequel",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:20:25.787501+06:00"
-    },
-    {
-      "title": "Patrick Stewart’s Inspiring Viral Video Is the Perfect Way to Remember the Late Actor: “Take Care Of Yourself”",
-      "score": 88,
-      "pattern": "",
-      "priority_type": "Major Marvel News",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:20:25.787740+06:00"
-    },
-    {
-      "title": "Crunchyroll Officially Adds All 1,180 One Piece Episodes in Major International Expansion",
-      "score": 87,
-      "pattern": "",
-      "priority_type": "Manga → Anime Adaptation",
-      "source": "CBR",
-      "seen_at": "2026-10-30T10:20:25.788151+06:00"
-    },
-    {
-      "title": "5 Recent Horror Movie Sequels That Are Criminally Underrated, Including Two With A Future MCU Star",
-      "score": 87,
-      "pattern": "",
-      "priority_type": "New Season / Sequel",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:20:25.788364+06:00"
-    },
-    {
-      "title": "American Horror Story: Season 13’s Biggest Strategy May Have Led to One of the Show’s Worst Episodes",
-      "score": 87,
-      "pattern": "",
-      "priority_type": "New Season / Sequel",
-      "source": "ComicBook.com",
-      "seen_at": "2026-10-30T10:20:25.788631+06:00"
-    },
     {
       "title": "Bleach Creator Returns With Closer Look at New Characters Revealed in Anime Finale",
       "score": 86,
@@ -76678,27 +76774,627 @@
       "priority_type": "Major Franchise Update",
       "source": "ComicBook.com",
       "seen_at": "2026-11-01T03:00:04.552168+06:00"
+    },
+    {
+      "title": "Popular Bong Joon Ho Movie That Parasite Fans Love Gets New Trailer for 4K Theatrical Rerelease",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "SuperHeroHype",
+      "seen_at": "2026-11-01T05:58:32.169179+06:00"
+    },
+    {
+      "title": "Jumanji 4 & Dune 3’s Final Trailer Releases Have Avengers: Doomsday Fans Feeling Left Out",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "SuperHeroHype",
+      "seen_at": "2026-11-01T05:58:32.169288+06:00"
+    },
+    {
+      "title": "In 1989, There Were 4 Different Underwater Monster Movies, Including James Cameron’s Masterpiece",
+      "score": 77,
+      "pattern": "",
+      "priority_type": "Major Anime Movie",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T05:58:32.169393+06:00"
+    },
+    {
+      "title": "One of Star Wars’ Most Divisive Characters Is Behind This Unusual Auction Find — and It’s More Affordable Than You’d Think",
+      "score": 77,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T05:58:32.169507+06:00"
+    },
+    {
+      "title": "The Remarried Empress Webtoon Launches Side Stories Ahead of Disney+ Live-Action Series",
+      "score": 80,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Anime News Network",
+      "seen_at": "2026-11-01T05:58:32.169546+06:00"
+    },
+    {
+      "title": "Bleach’s Creator Had Its Ending in Mind From the Very Beginning",
+      "score": 81,
+      "pattern": "",
+      "priority_type": "Major Manga Ending",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T05:58:32.169641+06:00"
+    },
+    {
+      "title": "Exclusive Marvel preview: ‘Fugitive X-Force’ #1 brings back Freedom Force and a long-lost mutant",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "AIPT",
+      "seen_at": "2026-11-01T05:58:32.169703+06:00"
+    },
+    {
+      "title": "First look: DC Vertigo’s ‘Hide Nor Hair’ brings monsters and murder to 1950s Hollywood",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "AIPT",
+      "seen_at": "2026-11-01T05:58:32.169765+06:00"
+    },
+    {
+      "title": "AWA preview: ‘Pickle’s Mommy Is a Murderer!’ puts a pet psychic on the trail of a serial killer",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "AIPT",
+      "seen_at": "2026-11-01T05:58:32.169834+06:00"
+    },
+    {
+      "title": "HBO's Harry Potter Reboot Finally Reveals First Look at the New Hogwarts Castle",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "CBR",
+      "seen_at": "2026-11-01T05:58:32.169874+06:00"
+    },
+    {
+      "title": "10 Masterpiece Anime Space Operas That Are Perfect From Start to Finish",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "CBR",
+      "seen_at": "2026-11-01T05:58:32.169915+06:00"
+    },
+    {
+      "title": "Fallout Season 3 Gets Its Best Filming Update Yet From Walton Goggins",
+      "score": 81,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "SuperHeroHype",
+      "seen_at": "2026-11-01T05:58:32.170008+06:00"
+    },
+    {
+      "title": "Deadpool & Wolverine’s Real Budget Is Way More Than Avengers: Endgame",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "SuperHeroHype",
+      "seen_at": "2026-11-01T05:58:32.170110+06:00"
+    },
+    {
+      "title": "Superman & Bloodsport Kryptonite Bullet Batte Gets DCU Canon Status Update From James Gunn",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major DC News",
+      "source": "SuperHeroHype",
+      "seen_at": "2026-11-01T05:58:32.170204+06:00"
+    },
+    {
+      "title": "Harley Quinn: James Gunn Addresses if Margot Robbie Is Returning to the DCU",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major Cast / Staff Reveal",
+      "source": "SuperHeroHype",
+      "seen_at": "2026-11-01T05:58:32.170249+06:00"
+    },
+    {
+      "title": "Mashle: Magic And Muscles Season 3 To Air On Crunchyroll Beginning In January 2027",
+      "score": 90,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "Anime Hunch",
+      "seen_at": "2026-11-01T06:00:01.136037+06:00"
+    },
+    {
+      "title": "Jurassic Park’s Cancelled Cartoon Trailer Finally Found After 33 Years & It Looked Great – Watch",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.136160+06:00"
+    },
+    {
+      "title": "Final Fantasy 14 Evercold Officially Delayed to February 2027",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.136211+06:00"
+    },
+    {
+      "title": "Hiragi-san's House of Vampires Gets Anime",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Manga → Anime Adaptation",
+      "source": "Anime Corner",
+      "seen_at": "2026-11-01T06:00:01.136257+06:00"
+    },
+    {
+      "title": "Sanrio's Kuromi Character Gets 1st Film in 2027",
+      "score": 88,
+      "pattern": "",
+      "priority_type": "Major Anime Movie",
+      "source": "Anime News Network",
+      "seen_at": "2026-11-01T06:00:01.136301+06:00"
+    },
+    {
+      "title": "HBO's Hit 2-Season Psychological Drama Based on Bestselling Book Finally Returns",
+      "score": 86,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.136590+06:00"
+    },
+    {
+      "title": "DC Studios’ New Green Lantern Animated Series Confirms Episode Count With Promising Update",
+      "score": 85,
+      "pattern": "",
+      "priority_type": "Major Comic Announcement",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.136708+06:00"
+    },
+    {
+      "title": "Comisma, Sumitomo Mitsui Trust Bank Establish Anime Production Fund",
+      "score": 85,
+      "pattern": "",
+      "priority_type": "Major Production News",
+      "source": "Anime News Network",
+      "seen_at": "2026-11-01T06:00:01.136761+06:00"
+    },
+    {
+      "title": "Daredevil's Batman-Inspired Debut, Silver Streak Comics #6 at Auction",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major DC News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.137002+06:00"
+    },
+    {
+      "title": "VisionQuest Star Reveals The Crazy Aftermath of “Overacting” Marvel Had to CGI Out of His Performance",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.137131+06:00"
+    },
+    {
+      "title": "5 Reformed Marvel Villains Who Became Fan Favorites, Including One of Comics’ Most Complex Characters",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.137260+06:00"
+    },
+    {
+      "title": "This Rare Original Piece of Asterix Comic Art Just Sold For More Than Even Spider-Man’s First Appearance",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.137395+06:00"
+    },
+    {
+      "title": "Batman Part II On-Set Accident Details Revealed Following Batmobile & Cast Member Collision",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Cast / Staff Reveal",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.137514+06:00"
+    },
+    {
+      "title": "Infernal Hulk vs. Spider-Man #1 Preview: Spidey's Suicide Mission",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.137735+06:00"
+    },
+    {
+      "title": "MCU Alum Explains How Marvel Studios Will (& Won’t) Use AI to Make Movies",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.137861+06:00"
+    },
+    {
+      "title": "DC Just Made the New 52’s Most Forgotten Character Central to Darkseid’s Plans and It’s Bringing Back a Familiar Crisis",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major DC News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.138004+06:00"
+    },
+    {
+      "title": "Absolute Superman #25 Preview: Superman's Brain Hurts",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Comic Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.138054+06:00"
+    },
+    {
+      "title": "Lucca Comics Museum \"Fumetti\" To Be Established In A Tobacco Factory",
+      "score": 84,
+      "pattern": "",
+      "priority_type": "Major Comic Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.138108+06:00"
+    },
+    {
+      "title": "A Forgotten Sci Fi Classic Officially Confirms Modern Reboot",
+      "score": 82,
+      "pattern": "",
+      "priority_type": "Major Comic Announcement",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.138331+06:00"
+    },
+    {
+      "title": "Demon Slayer Drops Cute New Look at the Coolest Hashira Ahead of Infinity Castle Part 2",
+      "score": 82,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.138452+06:00"
+    },
+    {
+      "title": "Avatar: Seven Havens Confirms It’s Certified Fresh on Rotten Tomatoes With Perfect Score After Finale",
+      "score": 82,
+      "pattern": "",
+      "priority_type": "Major Franchise Update",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.138580+06:00"
+    },
+    {
+      "title": "James Cameron's Greatest Sci-Fi Sequel Secures New Streaming Home as the Franchise Keeps Thriving",
+      "score": 81,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.138837+06:00"
+    },
+    {
+      "title": "Ghost Rider: Kushala #1 Preview: Spirit Rider Tames Vengeance",
+      "score": 80,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.138892+06:00"
+    },
+    {
+      "title": "Happy Halloween 2026 From Around the Anime World, Part III",
+      "score": 80,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "Anime News Network",
+      "seen_at": "2026-11-01T06:00:01.138953+06:00"
+    },
+    {
+      "title": "Master Crime Drama Director Whose Work Tarantino Described as “Fabulous,” Dead at 57",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Cast / Staff Reveal",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.139074+06:00"
+    },
+    {
+      "title": "One Of Marvel’s Best Movies Is Actually A Disney Film You Don’t Realize Is Based On A Comic",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.139207+06:00"
+    },
+    {
+      "title": "DC’s Answer to Ghost Rider Finally Gets an Origin Story, and It Could Make Him a Breakout Hero",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major DC News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.139340+06:00"
+    },
+    {
+      "title": "5 Classic Spider-Man Moments That Changed Everything, Including One the MCU Messed Up",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.139464+06:00"
+    },
+    {
+      "title": "Absolute Batman’s Next Big Introduction Could Change Everything, and the Joker’s Endgame Just Got Very Dark",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major DC News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.139597+06:00"
+    },
+    {
+      "title": "Death Stranding Coming to Disney+ With Brand-New Anime – Watch First Look Trailer",
+      "score": 79,
+      "pattern": "",
+      "priority_type": "Major Trailer / PV",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.139718+06:00"
+    },
+    {
+      "title": "Digimon Officially Returns With New Global Release in 2026",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major Cast / Staff Reveal",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.139940+06:00"
+    },
+    {
+      "title": "Godzilla Officially Replaced By New Monster Stronger Than The Classic Kaiju",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.139981+06:00"
+    },
+    {
+      "title": "After 30 Years, Legendary Action Series to Return for New Spinoff Ahead of Anime Reboot",
+      "score": 78,
+      "pattern": "",
+      "priority_type": "Major Release Date",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.140109+06:00"
+    },
+    {
+      "title": "LUCCA: Frank Miller Announces A New Comic Book With Peach Momoko",
+      "score": 77,
+      "pattern": "",
+      "priority_type": "Major Comic Announcement",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.140159+06:00"
+    },
+    {
+      "title": "Dragon Ball Super Artist Returns With New Look at Original Villain Amid Hiatus",
+      "score": 77,
+      "pattern": "",
+      "priority_type": "New Season / Sequel",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.140279+06:00"
+    },
+    {
+      "title": "10 Classic Toonami Anime Shows That Are Flawless From Start To Finish",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Manga Ending",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.140497+06:00"
+    },
+    {
+      "title": "16-Season Adult-Animated Sitcom Returns as a Streaming Hit Ahead of Special",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Manga Return / Hiatus",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.140737+06:00"
+    },
+    {
+      "title": "My Hero Academia, Frieren & More Anime Return for Spooky New Halloween Makeovers",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Production News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.140858+06:00"
+    },
+    {
+      "title": "Friendly Neighborhood Mary Jane #1 Preview: MJ Gets Producing",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Production News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.140911+06:00"
+    },
+    {
+      "title": "Recasting The Original Jaws for 2026",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.141008+06:00"
+    },
+    {
+      "title": "Every New Anime Coming to Netflix in November 2026",
+      "score": 75,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.141112+06:00"
+    },
+    {
+      "title": "It's the End of an Era for PlayStation's Hit Space Opera on November 11",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major Production News",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.141276+06:00"
+    },
+    {
+      "title": "New X-Men Actor’s Take on Professor X’s Iconic Look Has Fans Worried: “He Seems Against the Role”",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major Cast / Staff Reveal",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.141411+06:00"
+    },
+    {
+      "title": "LUCCA: Frank Miller Says 'Invasive Species' Is Based On COVID Paranoia",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major Comic Adaptation",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.141470+06:00"
+    },
+    {
+      "title": "X-Men: The Animated Series Changed Marvel History 34 Years Ago, But Sidelined Its Best Character for 11 Episodes",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.141607+06:00"
+    },
+    {
+      "title": "DNX #4 Preview: Time Travel Plans Go Hilariously Wrong",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.141666+06:00"
+    },
+    {
+      "title": "5 Excellent Patrick Stewart Performances That Aren’t Professor X or Captain Picard",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.141782+06:00"
+    },
+    {
+      "title": "5 Marvel Comics Mind-Controllers Who Give Jean Grey a Run For the Money (& 1 Is Already in the MCU)",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.141925+06:00"
+    },
+    {
+      "title": "Avengers: Doomsday Theory Casts Doctor Strange As An Agent of Doom Since Infinity War",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major Marvel News",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.142039+06:00"
+    },
+    {
+      "title": "Mark Brooks On Dexter Soy's Absolute Batman #25 Foil Cover That Isn't",
+      "score": 74,
+      "pattern": "",
+      "priority_type": "Major DC News",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.142096+06:00"
+    },
+    {
+      "title": "10 Sci-Fi Anime That Are 10/10 Masterpieces",
+      "score": 73,
+      "pattern": "",
+      "priority_type": "Major Cast / Staff Reveal",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.142315+06:00"
+    },
+    {
+      "title": "Jennifer Lawrence Has a Surprising Response to Returning as Mystique In a Future MCU Movie",
+      "score": 72,
+      "pattern": "",
+      "priority_type": "Major Anime Movie",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.142431+06:00"
+    },
+    {
+      "title": "4 Cult Classic 1997 Sci-Fi Movies That ‘90s Kids Still Have Memorized 30 Years Later",
+      "score": 72,
+      "pattern": "",
+      "priority_type": "Major Anime Movie",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.142555+06:00"
+    },
+    {
+      "title": "Absolute Green Lantern #20 Preview: Strange Homecoming Awaits",
+      "score": 71,
+      "pattern": "",
+      "priority_type": "Major Manga Return / Hiatus",
+      "source": "Bleeding Cool",
+      "seen_at": "2026-11-01T06:00:01.142605+06:00"
+    },
+    {
+      "title": "Bleach’s Creator Almost Killed Off Orihime in the Manga’s Original Ending",
+      "score": 71,
+      "pattern": "",
+      "priority_type": "Major Manga Ending",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.142721+06:00"
+    },
+    {
+      "title": "Interpol Officially Returns By Expanding 'Antics' Album With Comic Book",
+      "score": 70,
+      "pattern": "",
+      "priority_type": "Major Manga Return / Hiatus",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.142758+06:00"
+    },
+    {
+      "title": "Jujutsu Kaisen Highlights Culling Game Roster With New Posters Ahead of Season 4",
+      "score": 69,
+      "pattern": "routine_review",
+      "priority_type": "New Season / Sequel",
+      "source": "ComicBook.com",
+      "seen_at": "2026-11-01T06:00:01.142841+06:00"
+    },
+    {
+      "title": "AIPT Comics Podcast Ep. 402: Halloween horrors with ‘Archie in Hell’ creators Patrick Horvath and Tyler Crook",
+      "score": 69,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "AIPT",
+      "seen_at": "2026-11-01T06:00:01.142927+06:00"
+    },
+    {
+      "title": "Inherit the Winds Anime Reveals 4 More Cast Members, New Visual",
+      "score": 69,
+      "pattern": "",
+      "priority_type": "Major Cast / Staff Reveal",
+      "source": "Anime News Network",
+      "seen_at": "2026-11-01T06:00:01.142975+06:00"
+    },
+    {
+      "title": "7 Greatest Hard Sci-Fi Anime Series Since 2000",
+      "score": 69,
+      "pattern": "",
+      "priority_type": "Major Anime Announcement",
+      "source": "CBR",
+      "seen_at": "2026-11-01T06:00:01.143023+06:00"
     }
   ],
   "adaptive_metrics": {
-    "raw_discovered": 436,
-    "pre_cerebras_rejected": 8704,
-    "hard_rejected": 4862,
-    "duplicate_rejected": 1714,
+    "raw_discovered": 445,
+    "pre_cerebras_rejected": 8748,
+    "hard_rejected": 4882,
+    "duplicate_rejected": 1722,
     "learned_rejected": 0,
-    "passed_to_cerebras": 14937,
-    "cerebras_ranked": 1350,
-    "published": 621,
-    "estimated_candidates_avoided": 8704,
+    "passed_to_cerebras": 14994,
+    "cerebras_ranked": 1359,
+    "published": 629,
+    "estimated_candidates_avoided": 8748,
     "reader_extra_published": 30
   },
   "source_quality": {
     "comicbook.com": {
-      "observations": 4190,
-      "low_score_count": 2004,
-      "total_score": 339408,
+      "observations": 4220,
+      "low_score_count": 2024,
+      "total_score": 341757,
       "avg_score": 81.0,
-      "last_seen": "2026-11-01T03:00:04.552652+06:00"
+      "last_seen": "2026-11-01T06:00:01.143282+06:00"
     },
     "dc.com": {
       "observations": 2,
@@ -76708,18 +77404,18 @@
       "last_seen": "2026-09-23T05:29:31.224921+06:00"
     },
     "animenewsnetwork.com": {
-      "observations": 1233,
-      "low_score_count": 619,
-      "total_score": 100554,
-      "avg_score": 81.6,
-      "last_seen": "2026-11-01T03:00:04.552549+06:00"
+      "observations": 1237,
+      "low_score_count": 621,
+      "total_score": 100876,
+      "avg_score": 81.5,
+      "last_seen": "2026-11-01T06:00:01.143292+06:00"
     },
     "bleedingcool.com": {
-      "observations": 1749,
-      "low_score_count": 1020,
-      "total_score": 140500,
+      "observations": 1760,
+      "low_score_count": 1027,
+      "total_score": 141361,
       "avg_score": 80.3,
-      "last_seen": "2026-11-01T03:00:04.552598+06:00"
+      "last_seen": "2026-11-01T06:00:01.143271+06:00"
     },
     "crunchyroll.com": {
       "observations": 145,
@@ -76729,18 +77425,18 @@
       "last_seen": "2026-09-26T03:06:03.055568+06:00"
     },
     "animecorner.me": {
-      "observations": 255,
+      "observations": 256,
       "low_score_count": 122,
-      "total_score": 20725,
+      "total_score": 20813,
       "avg_score": 81.3,
-      "last_seen": "2026-11-01T03:00:04.552564+06:00"
+      "last_seen": "2026-11-01T06:00:01.143072+06:00"
     },
     "cbr.com": {
-      "observations": 1009,
-      "low_score_count": 738,
-      "total_score": 79350,
+      "observations": 1021,
+      "low_score_count": 747,
+      "total_score": 80279,
       "avg_score": 78.6,
-      "last_seen": "2026-11-01T03:00:04.552618+06:00"
+      "last_seen": "2026-11-01T06:00:01.143296+06:00"
     },
     "oricon.co.jp": {
       "observations": 11,
@@ -76764,11 +77460,11 @@
       "last_seen": "2026-09-22T22:16:16.709537+06:00"
     },
     "aiptcomics.com": {
-      "observations": 210,
-      "low_score_count": 176,
-      "total_score": 16578,
+      "observations": 211,
+      "low_score_count": 177,
+      "total_score": 16647,
       "avg_score": 78.9,
-      "last_seen": "2026-11-01T03:00:04.552557+06:00"
+      "last_seen": "2026-11-01T06:00:01.143287+06:00"
     },
     "superherohype.com": {
       "observations": 839,
@@ -76799,11 +77495,11 @@
       "last_seen": "2026-11-01T03:00:04.552612+06:00"
     },
     "animehunch.com": {
-      "observations": 57,
+      "observations": 58,
       "low_score_count": 27,
-      "total_score": 4645,
-      "avg_score": 81.5,
-      "last_seen": "2026-11-01T03:00:04.552632+06:00"
+      "total_score": 4735,
+      "avg_score": 81.6,
+      "last_seen": "2026-11-01T06:00:01.143053+06:00"
     },
     "marvel.com": {
       "observations": 3,
@@ -76821,23 +77517,23 @@
     }
   },
   "category_coverage": {
-    "Comics": 276,
-    "Anime": 297,
+    "Comics": 279,
+    "Anime": 302,
     "Manga": 48
   },
   "topic_coverage": {
-    "New Season / Sequel": 114,
-    "Major Trailer / PV": 181,
+    "New Season / Sequel": 115,
+    "Major Trailer / PV": 183,
     "Manga → Anime Adaptation": 65,
     "Major Anime Announcement": 15,
     "Major Cast / Staff Reveal": 43,
-    "Major Marvel News": 45,
+    "Major Marvel News": 46,
     "Major DC News": 18,
     "Major Manga Return / Hiatus": 10,
     "Major Manga Ending": 14,
-    "Major Anime Movie": 59,
-    "Major Production News": 5,
-    "Major Release Date": 26,
+    "Major Anime Movie": 60,
+    "Major Production News": 7,
+    "Major Release Date": 27,
     "Major Comic Adaptation": 2,
     "Major Sales / Milestone": 3,
     "Major Creator / Publisher News": 10,
